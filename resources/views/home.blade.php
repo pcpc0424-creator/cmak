@@ -1,139 +1,137 @@
-{{--
-    메인 페이지 (Home) - CMAK 리뉴얼
-    현재 cmak.or.kr 레이아웃 기반 + 최신 트렌드 적용
-
-    구조:
-    1. 메인 3단 레이아웃 (좌측 새소식/협회소식 + 중앙 뉴스탭/공지탭 + 우측 광고)
-    2. 회원사 가로 배너 슬라이더
-    3. 퀵메뉴 아이콘
-    4. 전문가 칼럼 + BookReview
---}}
+{{-- CMAK 메인 페이지 - fullpage 스냅 스크롤 --}}
 @extends('layouts.app')
 
 @section('title', '한국CM협회 - 건설사업관리의 미래를 선도합니다')
 
 @php
     use App\Data\HomeData;
-
-    $latestNews = HomeData::getLatestNews();
-    $associationNews = HomeData::getAssociationNews();
+    $notices = HomeData::getNotices();
+    $pressReleases = HomeData::getPressReleases();
+    $bids = HomeData::getBids();
     $domesticNews = HomeData::getDomesticNews();
     $legalNews = HomeData::getLegalNews();
     $relatedOrgNews = HomeData::getRelatedOrgNews();
-    $notices = HomeData::getNotices();
-    $pressReleases = HomeData::getPressReleases();
-    $memberBanners = HomeData::getMemberBanners();
-    $sidebarAds = HomeData::getSidebarAds();
-    $columns = HomeData::getExpertColumns();
-    $bookReviews = HomeData::getBookReviews();
-    $schedule = HomeData::getSchedule();
-    $bids = HomeData::getBids();
-
-    // 추가 데이터
-    $specialFeatures = HomeData::getSpecialFeatures();
-    $wordBook = HomeData::getWordBook();
+    $news = HomeData::getNews();
     $memberTrends = HomeData::getMemberTrends();
-    $cmCompany = HomeData::getCmCompanyIntro();
-    $cmResources = HomeData::getCmResources();
-    $relatedLinks = HomeData::getRelatedLinks();
+    $resources = HomeData::getCmResources();
 @endphp
 
 @section('content')
-<main id="main-content" class="bg-gray-50 min-h-screen">
 
-    {{-- 메인 배너 슬라이더 --}}
-    @include('components.home.main-banner')
+    {{-- 섹션 1: 메인 비주얼 --}}
+    <section class="fp-section">
+        @include('components.home.hero-section')
+    </section>
 
-    {{-- 메인 콘텐츠 영역 --}}
-    <section class="py-6 lg:py-8">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row gap-6">
+    {{-- 섹션 2: 콘텐츠 + 푸터 --}}
+    <section class="fp-section">
+        <div class="fp-section-inner">
+            <div class="icak-content-section">
+                <div class="icak-content-inner">
 
-                {{-- 좌측 컬럼: 새소식 + 협회소식 --}}
-                <div class="w-full lg:w-[280px] shrink-0 space-y-6">
-                    @include('components.home.latest-news', [
-                        'latestNews' => $latestNews,
-                        'associationNews' => $associationNews
-                    ])
+                    {{-- ===== 1행 ===== --}}
+                    <div class="icak-row">
+                        {{-- 좌: 4칸 가로 --}}
+                        <div class="icak-block-left">
+                            <div class="icak-grid4">
+                                <div class="icak-cell">
+                                    <h3 class="icak-cell-title">국내외소식</h3>
+                                    <ul class="icak-cell-list">
+                                        @foreach(array_slice($domesticNews, 0, 4) as $item)
+                                            <li><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="icak-cell">
+                                    <h3 class="icak-cell-title">입찰소식</h3>
+                                    <ul class="icak-cell-list">
+                                        @foreach(array_slice($bids, 0, 4) as $item)
+                                            <li><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="icak-cell">
+                                    <h3 class="icak-cell-title">법령소식</h3>
+                                    <ul class="icak-cell-list">
+                                        @foreach(array_slice($legalNews, 0, 4) as $item)
+                                            <li><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="icak-cell">
+                                    <h3 class="icak-cell-title">유관기관 소식</h3>
+                                    <ul class="icak-cell-list">
+                                        @foreach(array_slice($relatedOrgNews, 0, 4) as $item)
+                                            <li><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- 우: 3칸 가로 --}}
+                        <div class="icak-block-right">
+                            <div class="icak-grid3">
+                                <a href="/business/education" class="icak-mini-card">CM매뉴얼</a>
+                                <a href="/cmdata/book/1" class="icak-mini-card">Book Review</a>
+                                <a href="/cmdata/wordbook/1" class="icak-mini-card">Word Book</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- ===== 2행 ===== --}}
+                    <div class="icak-row">
+                        {{-- 좌: 4칸 가로 --}}
+                        <div class="icak-block-left">
+                            <div class="icak-grid4">
+                                <div class="icak-cell">
+                                    <h3 class="icak-cell-title">협회소식</h3>
+                                    <ul class="icak-cell-list">
+                                        @foreach(array_slice($news, 0, 4) as $item)
+                                            <li><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="icak-cell">
+                                    <h3 class="icak-cell-title">보도자료</h3>
+                                    <ul class="icak-cell-list">
+                                        @foreach(array_slice($pressReleases, 0, 4) as $item)
+                                            <li><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="icak-cell">
+                                    <h3 class="icak-cell-title">회원동향</h3>
+                                    <ul class="icak-cell-list">
+                                        @foreach(array_slice($memberTrends, 0, 4) as $item)
+                                            <li><a href="{{ $item['link'] }}">{{ $item['company'] }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="icak-cell">
+                                    <h3 class="icak-cell-title">인사·경조사</h3>
+                                    <ul class="icak-cell-list">
+                                        <li><a href="/community/board/1">2026년 신년 인사</a></li>
+                                        <li><a href="/community/board/2">제30회 정기총회 축하</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- 우: 3칸 가로 --}}
+                        <div class="icak-block-right">
+                            <div class="icak-grid3">
+                                <a href="/business/herald" class="icak-mini-card">CM헤럴드</a>
+                                <a href="/archive/cm" class="icak-mini-card">CM자료방</a>
+                                <a href="/intro/members" class="icak-mini-card">CM사 소개</a>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-
-                {{-- 중앙 컬럼: 뉴스탭 + 공지사항탭 --}}
-                <div class="flex-1 min-w-0 space-y-6">
-                    {{-- 뉴스 탭 (국내외소식, 법령소식, 유관기관소식) --}}
-                    @include('components.home.news-tabs', [
-                        'domesticNews' => $domesticNews,
-                        'legalNews' => $legalNews,
-                        'relatedOrgNews' => $relatedOrgNews
-                    ])
-
-                    {{-- 공지사항/보도자료 탭 --}}
-                    @include('components.home.notice-tabs', [
-                        'notices' => $notices,
-                        'pressReleases' => $pressReleases
-                    ])
-                </div>
-
-                {{-- 우측 컬럼: 세로 광고 배너 --}}
-                <aside class="hidden lg:block w-[180px] shrink-0" aria-label="광고">
-                    @include('components.home.sidebar-ads', [
-                        'ads' => $sidebarAds
-                    ])
-                </aside>
-
             </div>
+
+            {{-- 푸터 --}}
+            @include('components.footer')
         </div>
     </section>
 
-    {{-- 회원사 가로 배너 슬라이더 --}}
-    <section class="py-6 bg-white border-y border-gray-200">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-            @include('components.home.member-banners', [
-                'members' => $memberBanners
-            ])
-        </div>
-    </section>
-
-    {{-- 퀵메뉴 아이콘 영역 --}}
-    <section class="py-8 bg-gradient-to-b from-gray-50 to-white">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-            @include('components.home.quick-icons', [
-                'schedule' => $schedule
-            ])
-        </div>
-    </section>
-
-    {{-- 전문가 칼럼 + 기획특집 + 회원동향 (좌측) + BookReview/WordBook/광고 (우측) --}}
-    <section class="py-8 bg-white border-t border-gray-100">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-            @include('components.home.columns-section', [
-                'columns' => $columns,
-                'features' => $specialFeatures,
-                'memberTrends' => $memberTrends,
-                'bookReviews' => $bookReviews,
-                'wordBook' => $wordBook,
-                'sidebarAds' => array_slice($sidebarAds, 4, 5)
-            ])
-        </div>
-    </section>
-
-    {{-- 입·낙찰정보 + CM자료방 --}}
-    <section class="py-8 bg-gray-50">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-            @include('components.home.bids-resources', [
-                'bids' => $bids,
-                'resources' => $cmResources
-            ])
-        </div>
-    </section>
-
-    {{-- 관련기관 링크 배너 --}}
-    <section class="py-8 bg-white border-t border-gray-200">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-            @include('components.home.related-links', [
-                'links' => $relatedLinks
-            ])
-        </div>
-    </section>
-
-</main>
 @endsection

@@ -1,16 +1,6 @@
 /**
- * CMAK (한국CM협회) - 메인 스타일시트
- * 리뉴얼 버전 - 최신 트렌드 적용
- * Updated: 2026-02-13
- *
- * 목차:
- * 1. Font Import
- * 2. Tailwind Base
- * 3. Theme Variables
- * 4. Base Styles
- * 5. Animations
- * 6. Utility Classes
- * 7. Accessibility
+ * CMAK (한국CM협회) - ICAK 스타일 메인 스타일시트
+ * Updated: 2026-03-15
  */
 
 /* ==========================================================================
@@ -32,32 +22,8 @@
    3. Theme Variables
    ========================================================================== */
 @theme {
-    /* Font Family */
     --font-sans: 'Pretendard', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-
-    /* Primary Colors - 신뢰감 있는 블루 계열 */
-    --color-primary-50: #eff6ff;
-    --color-primary-100: #dbeafe;
-    --color-primary-200: #bfdbfe;
-    --color-primary-300: #93c5fd;
-    --color-primary-400: #60a5fa;
-    --color-primary-500: #3b82f6;
-    --color-primary-600: #2563eb;
-    --color-primary-700: #1d4ed8;
-    --color-primary-800: #1e40af;
-    --color-primary-900: #1e3a8a;
-    --color-primary-950: #172554;
-
-    /* Animations */
-    --animate-blob: blob 7s infinite;
-    --animate-float: float 6s ease-in-out infinite;
-    --animate-float-delayed: float 6s ease-in-out infinite 3s;
-    --animate-gradient: gradient 3s ease infinite;
-    --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    --animate-fade-in: fadeIn 0.6s ease-out forwards;
-    --animate-slide-up: slideUp 0.6s ease-out forwards;
-    --animate-slide-down: slideDown 0.6s ease-out forwards;
-    --animate-scale-in: scaleIn 0.3s ease-out forwards;
+    --color-primary-600: #0061c2;
 }
 
 /* ==========================================================================
@@ -67,178 +33,1679 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Reduce motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
 }
 
-/* Focus visible styles for accessibility */
-:focus-visible {
-    outline: 2px solid var(--color-primary-500);
-    outline-offset: 2px;
+/* ==========================================================================
+   5. Fullpage (ICAK fullpage.js 동일 - 스크롤바 없음, 점 네비게이션)
+   ========================================================================== */
+html.fp-enabled,
+.fp-enabled body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.fullpage-wrapper {
+    height: 100%;
+    position: relative;
+    touch-action: none;
+    transition: transform 0.7s ease;
+}
+
+.fp-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.fp-section-inner {
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 우측 점 네비게이션 */
+#fp-nav {
+    position: fixed;
+    z-index: 100;
+    top: 50%;
+    right: 17px;
+    transform: translateY(-50%);
+}
+
+#fp-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#fp-nav ul li {
+    display: block;
+    width: 14px;
+    height: 13px;
+    margin: 7px;
+    position: relative;
+}
+
+#fp-nav ul li a {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+#fp-nav ul li a span {
+    border-radius: 50%;
+    position: absolute;
+    z-index: 1;
+    height: 4px;
+    width: 4px;
+    border: 0;
+    background: #333;
+    left: 50%;
+    top: 50%;
+    margin: -2px 0 0 -2px;
+    transition: all 0.1s ease-in-out;
+}
+
+#fp-nav ul li a.active span {
+    height: 12px;
+    width: 12px;
+    margin: -6px 0 0 -6px;
+    border-radius: 100%;
+}
+
+#fp-nav ul li:hover a span {
+    width: 10px;
+    height: 10px;
+    margin: -5px 0 0 -5px;
 }
 
 /* ==========================================================================
-   5. Animations
+   5b. Top Popup Banner (ICAK 동일)
    ========================================================================== */
-
-/* Blob Animation - 배경 블롭 움직임 */
-@keyframes blob {
-    0% {
-        transform: translate(0px, 0px) scale(1);
-    }
-    33% {
-        transform: translate(30px, -50px) scale(1.1);
-    }
-    66% {
-        transform: translate(-20px, 20px) scale(0.9);
-    }
-    100% {
-        transform: translate(0px, 0px) scale(1);
-    }
+.topPop {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    height: 120px;
+    background: #272936;
+    transition: height 0.3s;
+    overflow: visible;
 }
 
-/* Float Animation - 플로팅 요소 */
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
+.topPop.active {
+    height: 0;
 }
 
-/* Gradient Animation - 그라데이션 텍스트 */
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+.topPopBtn {
+    border: 0;
+    background: #272936;
+    color: #fff;
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    padding: 5px;
+    border-radius: 20px;
+    z-index: -1;
+    font-size: 0.9rem;
+    padding-top: 20px;
+    cursor: pointer;
 }
 
-/* Fade In Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.topPopBtnSpan {
+    display: inline-block;
+    width: 13px;
+    height: 6px;
+    margin-left: 3px;
+    text-indent: -99999em;
+    position: relative;
+    top: -2px;
+    transition: 0.2s;
 }
 
-/* Slide Up Animation */
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.topPopBtnSpan::after {
+    content: '▲';
+    text-indent: 0;
+    display: block;
+    font-size: 8px;
+    color: #fff;
 }
 
-/* Slide Down Animation */
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.topPopBtnSpan.active::after {
+    content: '▼';
 }
 
-/* Scale In Animation */
-@keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* Animation Delay Utilities */
-.animation-delay-2000 {
-    animation-delay: 2s;
-}
-
-.animation-delay-4000 {
-    animation-delay: 4s;
-}
-
-.animation-delay-100 {
-    animation-delay: 100ms;
-}
-
-.animation-delay-200 {
-    animation-delay: 200ms;
-}
-
-.animation-delay-300 {
-    animation-delay: 300ms;
-}
-
-.animation-delay-400 {
-    animation-delay: 400ms;
-}
-
-.animation-delay-500 {
-    animation-delay: 500ms;
-}
-
-/* ==========================================================================
-   6. Utility Classes
-   ========================================================================== */
-
-/* Hide scrollbar but allow scrolling */
-.hide-scrollbar::-webkit-scrollbar {
+.mobile_pop {
     display: none;
 }
-.hide-scrollbar {
-    -ms-overflow-style: none;
+
+.topPopupInner {
+    text-align: center;
+    height: 110px;
+    margin: 5px auto 0;
+    position: relative;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.topPop.active .topPopupInner {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    pointer-events: none;
+}
+
+.topPopupInner .pc_pop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.topPopupInner .pc_pop img {
+    height: 100px;
+    max-width: 550px;
+    object-fit: cover;
+    transition: 0.2s;
+}
+
+.popDiv {
+    z-index: 999;
+}
+
+/* headerUtil (25%, position:relative) */
+.icak-header-util {
+    width: 25%;
+    text-align: right;
+    position: relative;
+}
+
+/* mUtil — absolute 우상단 */
+.icak-mutil {
+    display: flex;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    align-items: center;
+    color: #fff;
+    z-index: 2;
+}
+
+/* 로그인 — ICAK lang1 동일 */
+.icak-login-btn {
+    display: block;
+    line-height: 40px;
+    min-width: 75px;
+    padding: 0 20px 0 10px;
+    border: 2px solid #265de8;
+    border-radius: 25px;
+    font-size: 0.8rem;
+    background: #265de8;
+    color: #fff !important;
+    margin-right: 10px;
+}
+
+/* 검색창 — ICAK topSearch 동일 */
+.icak-search-box {
+    display: flex;
+    align-items: center;
+    position: relative;
+    border: 2px solid #c5c5c5;
+    border-radius: 25px;
+    width: 230px;
+    height: 44px;
+    overflow: hidden;
+    padding-right: 10px;
+    background: #fff;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.icak-search-box input {
+    border: none;
+    background: #fff;
+    color: #656565;
+    font-size: 14px;
+    flex-grow: 1;
+    width: calc(100% - 20px);
+    height: 40px;
+    outline: none;
+    padding: 0 12px;
+}
+.icak-search-box input::placeholder { color: #656565; font-size: 14px; }
+.icak-search-box button { color: #999; background: none; border: none; cursor: pointer; }
+
+.icak-header:not(:hover):not(.scrolled) .icak-search-box {
+    border-color: rgba(255,255,255,0.5);
+    background: transparent;
+}
+.icak-header:not(:hover):not(.scrolled) .icak-search-box input {
+    background: transparent; color: #fff;
+}
+.icak-header:not(:hover):not(.scrolled) .icak-search-box input::placeholder { color: rgba(255,255,255,0.6); }
+.icak-header:not(:hover):not(.scrolled) .icak-search-box button { color: #fff; }
+
+/* ENG — ICAK lang 동일 */
+.icak-lang-btn {
+    display: block;
+    line-height: 40px;
+    min-width: 66px;
+    padding: 0 20px 0 10px;
+    border: 2px solid #515151;
+    border-radius: 25px;
+    font-size: 0.8rem;
+    background: #515151;
+    color: #fff !important;
+}
+
+/* 수주통계 주황 — ICAK oarange_btn 동일 */
+.icak-stat-btn {
+    padding: 5px 24px;
+    color: #fff !important;
+    background: #f56800;
+    border-radius: 20px;
+    border: 0;
+    position: absolute;
+    left: 20px;
+    top: 67px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+.icak-stat-btn:hover { background: #e05500; }
+
+/* 전체메뉴 — ICAK btn-mainMenu 동일 */
+.icak-btn-mainmenu {
+    position: absolute;
+    right: 15px;
+    bottom: 0;
+    width: 50px;
+    z-index: 1001;
+    padding: 10px;
+}
+.icak-hbutton {
+    display: block;
+    position: relative;
+    height: 34px;
+}
+.icak-hbutton span {
+    position: absolute;
+    height: 4px;
+    border-radius: 4px;
+    width: 100%;
+    background-color: #fff;
+    left: 0;
+    transition: 0.2s;
+}
+.icak-hbutton span:nth-child(1) { top: 0; }
+.icak-hbutton span:nth-child(2) { top: 10px; }
+.icak-hbutton span:nth-child(3) { top: 20px; }
+.icak-hbutton span:nth-child(4) {
+    top: 28px; left: 50%; transform: translateX(-50%);
+    width: auto; height: auto; background: none;
+    color: #fff; font-size: 11px; white-space: nowrap; border-radius: 0;
+}
+.icak-header:hover .icak-hbutton span:nth-child(-n+3),
+.icak-header.scrolled .icak-hbutton span:nth-child(-n+3) { background-color: #333; }
+.icak-header:hover .icak-hbutton span:nth-child(4),
+.icak-header.scrolled .icak-hbutton span:nth-child(4) { color: #333; }
+
+/* ==========================================================================
+   전체메뉴 패널 — ICAK mainMenu 동일
+   ========================================================================== */
+.icak-mainmenu {
+    visibility: hidden;
+    position: fixed;
+    right: -100%;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    transition: 0.3s;
+}
+
+.icak-mainmenu.active {
+    visibility: visible;
+    right: 0;
+}
+
+.icak-mainmenu-inner {
+    height: 100%;
+    padding: 125px 30px 30px 30px;
+    background: rgba(13, 21, 44, 0.95);
+    overflow-y: auto;
+    text-align: left;
+}
+
+.icak-mainmenu-inner a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.icak-mainmenu-inner a:hover,
+.icak-mainmenu-inner a:focus {
+    color: #087adb;
+}
+
+.icak-mainmenu-inner > ul {
+    font-size: 0;
+}
+
+.icak-mainmenu-inner > ul > li {
+    width: 16.66%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 0.5rem;
+}
+
+.icak-mainmenu-inner > ul > li > a {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 1rem 0.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+}
+
+.icak-mainmenu-inner > ul > li > .icak-allsub {
+    width: 100%;
+    margin: 1rem 0.25rem 0;
+}
+
+.icak-mainmenu-inner > ul > li .icak-allsub ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+.icak-mainmenu-inner > ul > li .icak-allsub ul li {
+    width: 100%;
+}
+
+.icak-mainmenu-inner > ul > li .icak-allsub ul li a {
+    display: block;
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: #fff;
+    padding: 4px 0;
+    transition: color 0.3s;
+}
+
+/* 모바일 메뉴 버튼 */
+.icak-mobile-btn {
+    position: absolute;
+    right: 10px;
+    top: 30px;
+    padding: 8px;
+    color: #fff;
+}
+.icak-header:hover .icak-mobile-btn,
+.icak-header.scrolled .icak-mobile-btn { color: #333; }
+
+/* Header position - JS로 제어 */
+
+/* ==========================================================================
+   6. ICAK Header
+   ========================================================================== */
+.icak-header {
+    position: fixed;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    z-index: 999;
+    transition: background-color 0.3s, top 0.3s;
+}
+
+.icak-header:hover,
+.icak-header.scrolled {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
+}
+
+.icak-header::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 125px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: 998;
+}
+
+.icak-header:hover::after,
+.icak-header.scrolled::after {
+    display: none;
+}
+
+.icak-header-inner {
+    position: relative;
+    display: flex;
+    max-width: 1420px;
+    margin: 0 auto;
+}
+
+/* Logo */
+.icak-header .icak-logo {
+    position: relative;
+    width: 25%;
+    padding: 25px 0 25px 20px;
+}
+
+.icak-header .icak-logo a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icak-header .icak-logo-icon {
+    width: 48px;
+    height: 48px;
+    background: #0061c2;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.icak-header .icak-logo-text {
+    color: #fff;
+    transition: color 0.3s;
+}
+
+.icak-header:hover .icak-logo-text,
+.icak-header.scrolled .icak-logo-text {
+    color: #212121;
+}
+
+.icak-header .icak-logo-text .logo-main {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.icak-header .icak-logo-text .logo-sub {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+}
+
+/* GNB Navigation */
+.icak-gnb {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin-top: 45px;
+    z-index: 999;
+}
+
+.icak-gnb > li {
+    flex-grow: 1;
+    text-align: center;
+    position: relative;
+}
+
+.icak-gnb > li > a {
+    display: block;
+    color: #fff;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.icak-gnb > li > a > span {
+    position: relative;
+    display: inline-block;
+    line-height: 80px;
+    transition: 0.3s;
+}
+
+.icak-gnb > li > a > span::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 100%;
+    right: 100%;
+    display: block;
+    height: 5px;
+    background-color: #0061c2;
+    transition: 0.3s;
+}
+
+.icak-gnb > li:hover > a > span::after {
+    left: 0;
+    right: 0;
+}
+
+.icak-gnb > li:hover > a {
+    color: #0061c2 !important;
+}
+
+.icak-header:hover .icak-gnb > li > a,
+.icak-header.scrolled .icak-gnb > li > a {
+    color: #212121;
+}
+
+/* Dropdown - ICAK 동일: 전체 화면 너비, translateY 슬라이드 */
+.icak-gnb > li > .icak-sub-wrap {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    transition: 0.2s;
+    z-index: 998;
+}
+
+/* top은 JS에서 헤더 높이 기준으로 동적 설정 */
+
+.icak-gnb > li:hover > .icak-sub-wrap {
+    opacity: 1;
+    visibility: visible;
+}
+
+.icak-sub-area {
+    display: flex;
+    background-color: #fff;
+    border-top: 1px solid #ebedef;
+    transform: translateY(-100%);
+    transition: 0.3s;
+    min-height: 174px;
+}
+
+.icak-gnb > li:hover .icak-sub-area {
+    transform: translateY(0);
+}
+
+/* 좌측 타이틀 패널 - 진한 파란색 배경 */
+.icak-sub-title {
+    width: 25%;
+    background-color: #064277;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 400;
+    padding: 50px 40px 40px 40px;
+    color: #fff;
+    position: relative;
+}
+
+.icak-sub-title::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 1px;
+    background: #fff;
+}
+
+/* 우측 서브메뉴 그리드 - 25% 너비 카드형 */
+.icak-sub-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 60%;
+    padding: 30px 20px;
+}
+
+.icak-sub-list a {
+    width: 25%;
+    padding: 10px;
+    box-sizing: border-box;
+    display: block;
+    border: 1px solid #cdd3dd;
+    font-size: 0.889rem;
+    font-weight: 500;
+    color: #333;
+    line-height: 2.5rem;
+    text-align: center;
+    transition: 0.3s;
+    background-color: #f6f8fa;
+    border-radius: 5px;
+    margin: 5px;
+    width: calc(25% - 10px);
+}
+
+.icak-sub-list a:hover {
+    background-color: #064277;
+    border-color: #064277;
+    color: #fff;
+}
+
+/* 검색창 */
+.icak-search-box {
+    border: 2px solid #c5c5c5;
+    border-radius: 25px;
+    width: 230px;
+    height: 44px;
+    overflow: hidden;
+    padding-right: 10px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.icak-search-box input {
+    border: none;
+    background: transparent;
+    color: #656565;
+    font-size: 14px;
+    flex-grow: 1;
+    width: calc(100% - 20px);
+    height: 40px;
+    outline: none;
+    padding: 0 12px;
+}
+
+.icak-search-box input::placeholder {
+    color: #656565;
+    font-size: 14px;
+}
+
+.icak-header:not(:hover):not(.scrolled) .icak-search-box {
+    border-color: rgba(255,255,255,0.5);
+    background: transparent;
+}
+
+.icak-header:not(:hover):not(.scrolled) .icak-search-box input {
+    color: #fff;
+}
+
+.icak-header:not(:hover):not(.scrolled) .icak-search-box input::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+/* ==========================================================================
+   6. Hero Section (Full-screen)
+   ========================================================================== */
+.icak-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.icak-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+/* 텍스트를 좌측으로 이동 (팝업존이 우측에 있으므로) */
+.icak-hero-text {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-55%, -50%);
+    margin-top: -100px;
+    text-align: left;
+    z-index: 9;
+    color: #fff;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
+}
+
+.icak-hero-text h2 {
+    font-size: 50px;
+    line-height: 1.4;
+    letter-spacing: -0.05em;
+}
+
+.icak-hero-text h2 strong {
+    font-weight: 800;
+}
+
+@keyframes heroBlurIn {
+    from {
+        filter: blur(20px);
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+    to {
+        filter: blur(0);
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* ==========================================================================
+   Popup Zone (히어로 우측 플로팅 카드 - ICAK 동일)
+   ========================================================================== */
+.popupzone-wrapper {
+    width: 452px;
+    border: 1px solid #515151;
+    height: 502px;
+    position: absolute;
+    right: 15%;
+    top: 0;
+    margin-top: 260px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    z-index: 20;
+}
+
+.popupzone-con {
+    position: relative;
+    height: 443px;
+    overflow: hidden;
+}
+
+.popupzone-slide {
+    position: absolute;
+    inset: 0;
+}
+
+/* 배너 이미지 타입 */
+.popupzone-banner-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.popupzone-banner-link img {
+    width: 100%;
+    height: 443px;
+    object-fit: cover;
+}
+
+.popupzone-fallback {
+    width: 100%;
+    height: 443px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a3a5c, #064277);
+    padding: 40px;
+}
+
+.popupzone-fallback span {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* 콘텐츠 타입 (특집/브리프) */
+.popupzone-content {
+    display: block;
+    width: 100%;
+    height: 443px;
+    padding: 70px 54px 50px 54px;
+    position: relative;
+}
+
+.popupzone-special {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+}
+
+.popupzone-brief {
+    background: linear-gradient(135deg, #0f2b4a 0%, #1a4a7a 100%);
+}
+
+.popupzone-category {
+    color: #a0c4ff;
+    font-size: 1rem;
+    line-height: 24px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.popupzone-title {
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 500;
+    padding-top: 20px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 1.5;
+}
+
+.popupzone-desc {
+    color: rgba(255,255,255,0.8);
+    font-size: 1rem;
+    padding-top: 25px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-height: 1.6;
+}
+
+/* 하단 컨트롤 바 */
+.popupzone-bom {
+    width: 100%;
+    height: 59px;
+    background: #141414;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 30px;
+}
+
+.popupzone-bom button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.popupzone-bom button:hover {
+    opacity: 0.7;
+}
+
+.popupzone-page {
+    color: #fff;
+    font-size: 15px;
+    letter-spacing: -1px;
+}
+
+.popupzone-current {
+    color: #dc2829;
+    font-weight: 500;
+}
+
+/* Shortcut Bar (bottom of hero) */
+.icak-shortcut {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    z-index: 20;
+}
+
+.icak-shortcut-title {
+    width: 210px;
+    background: #064277;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0 20px;
+    gap: 6px;
+}
+
+.icak-shortcut-title .blue {
+    color: #7cbffd;
+}
+
+.icak-shortcut-body {
+    flex: 1;
+    background: #fff;
+    border-bottom: 1px solid #c1c1c1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.icak-shortcut-list {
+    display: flex;
+    height: 100%;
+    white-space: nowrap;
+    overflow-x: auto;
     scrollbar-width: none;
 }
 
-/* Custom scrollbar styling */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+.icak-shortcut-list::-webkit-scrollbar {
+    display: none;
 }
 
-::-webkit-scrollbar-track {
-    background: #f1f5f9;
+.icak-shortcut-list a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 24px;
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+.icak-shortcut-list a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    background: #464646;
+}
+
+.icak-shortcut-list a:hover {
+    color: #0061c2;
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   7. Content Section
+   ========================================================================== */
+.icak-content-section {
+    background: #f0f1f3;
+    padding: 130px 0 30px;
+}
+
+.icak-content-inner {
+    max-width: 1420px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.icak-content-inner::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.icak-section-title {
+    font-size: 40px;
+    color: #000;
+    line-height: 150%;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: -2px;
+    margin-bottom: 5px;
+}
+
+.icak-section-title span {
+    color: #0061c2;
+}
+
+.icak-section-subtitle {
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* ===== 2행 2열 그리드 레이아웃 ===== */
+.icak-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+/* 좌측 블록 (넓음) */
+.icak-block-left {
+    flex: 7;
+    min-width: 0;
+}
+
+/* 우측 블록 (좁음) */
+.icak-block-right {
+    flex: 3;
+    min-width: 0;
+}
+
+/* 좌측: 4칸 가로 그리드 */
+.icak-grid4 {
+    display: flex;
+    gap: 0;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 100%;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.icak-cell {
+    flex: 1;
+    min-width: 0;
+    border-right: 1px solid #eef0f4;
+}
+
+.icak-cell:last-child {
+    border-right: none;
+}
+
+.icak-cell-title {
+    padding: 16px 14px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #0a3d7c, #0061c2);
+    text-align: center;
+    letter-spacing: -0.3px;
+    position: relative;
+}
+
+.icak-cell-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #0061c2;
+}
+
+.icak-cell-list {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+}
+
+.icak-cell-list li a {
+    display: block;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #444;
+    border-bottom: 1px solid #f3f4f6;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: all 0.2s;
+    position: relative;
+    padding-left: 22px;
+}
+
+.icak-cell-list li a::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background: #c0c6d0;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.icak-cell-list li:last-child a {
+    border-bottom: none;
+}
+
+.icak-cell-list li a:hover {
+    color: #0061c2;
+    background: #f0f5ff;
+    padding-left: 26px;
+}
+
+.icak-cell-list li a:hover::before {
+    background: #0061c2;
+}
+
+/* 우측: 3칸 가로 미니 카드 */
+.icak-grid3 {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: 100%;
+}
+
+.icak-mini-card {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: -0.3px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.icak-mini-card:last-child {
+    margin-bottom: 0;
+}
+
+/* 각 미니카드 색상 */
+.icak-grid3 .icak-mini-card:nth-child(1) {
+    background: linear-gradient(135deg, #1a5276, #2980b9);
+}
+.icak-grid3 .icak-mini-card:nth-child(2) {
+    background: linear-gradient(135deg, #1e3a5f, #34649e);
+}
+.icak-grid3 .icak-mini-card:nth-child(3) {
+    background: linear-gradient(135deg, #2c3e50, #4a6785);
+}
+
+.icak-mini-card::after {
+    content: '';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.icak-mini-card::before {
+    content: '>';
+    position: absolute;
+    right: 19px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    z-index: 1;
+    transition: all 0.3s;
+}
+
+.icak-mini-card:hover {
+    transform: translateX(-3px);
+    box-shadow: 4px 0 15px rgba(0,0,0,0.15);
+}
+
+.icak-mini-card:hover::after {
+    border-color: rgba(255,255,255,0.7);
+}
+
+.icak-mini-card:hover::before {
+    color: #fff;
+    right: 17px;
+}
+
+/* Content Card */
+.icak-cont {
+    margin-bottom: 25px;
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    padding: 25px 30px;
+    transition: all 0.3s;
+    border-radius: 8px;
+    height: 280px;
+    overflow: hidden;
+}
+
+/* Tab Area */
+.icak-tab-area {
+    margin-bottom: 17px;
+    position: relative;
+}
+
+.icak-tab-area::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.icak-tab-area ul {
+    display: flex;
+    gap: 0;
+}
+
+.icak-tab-area ul li {
+    margin-right: 25px;
+}
+
+.icak-tab-btn {
+    display: block;
+    font-size: 20px;
+    color: #949494;
+    line-height: 38px;
+    padding-bottom: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s;
+    font-weight: 400;
+}
+
+.icak-tab-btn::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 3px;
+    background: #0061c2;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.icak-tab-btn:hover {
+    color: #000;
+    font-weight: bold;
+}
+
+.icak-tab-btn:hover::after {
+    width: 100%;
+    opacity: 1;
+}
+
+.icak-tab-btn.active {
+    color: #373737;
+    font-weight: bold;
+}
+
+.icak-tab-btn.active::after {
+    width: 100%;
+    opacity: 1;
+}
+
+/* More Button */
+.icak-more-btn {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    font-size: 13px;
+    color: #999;
+    transition: color 0.3s;
+}
+
+.icak-more-btn:hover {
+    color: #0061c2;
+}
+
+/* 원형 더보기 버튼 (ICAK 동일) */
+.icak-more-circle {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    transition: all 0.3s;
+}
+
+.icak-more-circle:hover {
+    border-color: #0061c2;
+    color: #0061c2;
+}
+
+/* List */
+.icak-list ul li {
+    border-top: 1px solid #e6e6e6;
+}
+
+.icak-list ul li:first-child {
+    border-top: 0;
+}
+
+.icak-list ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 0;
+    transition: all 0.3s;
+}
+
+.icak-list ul li a p {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 400;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 1;
+    margin-right: 10px;
+    transition: color 0.3s;
+}
+
+.icak-list ul li a .date {
+    font-size: 0.8rem;
+    color: #a0a0a0;
+    font-weight: 300;
+    flex-shrink: 0;
+}
+
+.icak-list ul li a:hover p {
+    color: #0061c2;
+}
+
+/* Thumbnail List */
+.icak-list-thumb ul {
+    display: flex;
+    gap: 3%;
+    margin-top: -10px;
+}
+
+.icak-list-thumb ul li {
+    width: 30.33%;
+}
+
+.icak-list-thumb ul li a {
+    display: block;
+    transition: all 0.3s;
+}
+
+.icak-list-thumb ul li a .img {
+    height: 0;
+    padding-bottom: 59%;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border: 1px solid #cdcdcd;
+    background: #f5f5f5;
+}
+
+.icak-list-thumb ul li a .img img {
+    width: 100%;
+}
+
+.icak-list-thumb ul li a p {
+    font-size: 14px;
+    color: #333;
+    height: 42px;
+    line-height: 21px;
+    overflow: hidden;
+    transition: color 0.3s;
+}
+
+.icak-list-thumb ul li a .date {
+    font-size: 14px;
+    color: #a0a0a0;
+    display: block;
+    line-height: 23px;
+}
+
+.icak-list-thumb ul li a:hover p {
+    color: #0061c2;
+}
+
+/* Right Box Banner Cards - 2x2 그리드 */
+.icak-right-box .icak-banner-card {
+    position: relative;
+    width: calc(50% - 10px);
+}
+
+.icak-banner-card-title {
+    display: block;
+    margin-bottom: 12px;
+    color: #2e3035;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.icak-banner-card .icak-banner-slide {
+    border: 1px solid #dfe1e7;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 200px;
+    background: linear-gradient(135deg, #1a3a5c, #064277);
+}
+
+.icak-banner-card .icak-banner-slide a {
+    display: block;
+    padding: 35px 30px;
+    height: 100%;
+}
+
+.icak-banner-card .icak-banner-slide a strong {
+    display: block;
+    font-size: 1rem;
+    color: #fff;
+    line-height: 150%;
+    margin-bottom: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.icak-banner-card .icak-banner-slide a p {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.8rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+/* Banner List (알림존 style) */
+.icak-banner-list {
+    border: 1px solid #dfe1e7;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 200px;
+    background: #fff;
+}
+
+.icak-banner-list ul li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.3s;
+}
+
+.icak-banner-list ul li:last-child a {
+    border-bottom: none;
+}
+
+.icak-banner-list ul li a:hover {
+    background: #f8f9fa;
+}
+
+.icak-banner-list ul li a p {
+    font-size: 0.85rem;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 1;
+    transition: color 0.3s;
+}
+
+.icak-banner-list ul li a:hover p {
+    color: #0061c2;
+}
+
+.icak-banner-list ul li a .date {
+    font-size: 0.75rem;
+    color: #a0a0a0;
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+/* ==========================================================================
+   8. Footer
+   ========================================================================== */
+.icak-footer {
+    position: relative;
+    background-color: #4e5761;
+}
+
+.icak-footer-top {
+    padding: 15px 20px;
+}
+
+.icak-footer-top-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1420px;
+    margin: 0 auto;
+}
+
+.icak-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+}
+
+.icak-footer-links a {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.icak-footer-links a.privacy {
+    color: #ffcc00;
+    font-weight: 600;
+}
+
+.icak-footer-links a + a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    width: 3px;
+    height: 3px;
+    background: #b5b5b5;
+    transform: translateY(-50%);
+}
+
+.icak-footer-family {
+    position: relative;
+}
+
+.icak-footer-family select {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    padding: 8px 16px;
     border-radius: 4px;
+    font-size: 14px;
+    min-width: 180px;
+    outline: none;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+.icak-footer-bottom {
+    border-top: 1px solid #767f89;
+    padding: 20px;
 }
 
-/* Line clamp utilities */
+.icak-footer-bottom-inner {
+    max-width: 1420px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.icak-footer-logo {
+    flex-shrink: 0;
+}
+
+.icak-footer-logo img {
+    height: 40px;
+}
+
+.icak-footer-info {
+    text-align: center;
+}
+
+.icak-footer-info p {
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.icak-footer-info p strong {
+    color: #fff;
+}
+
+.icak-footer-info .copyright {
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* ==========================================================================
+   9. Animations
+   ========================================================================== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+    animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+/* Scroll down indicator */
+.icak-scroll-txt {
+    position: absolute;
+    z-index: 20;
+    width: 100%;
+    left: 0;
+    bottom: 100px;
+    color: #f2f2f2;
+    font-size: 14px;
+    text-align: center;
+}
+
+@keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+}
+
+.icak-scroll-dot {
+    animation: scrollBounce 1.2s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   10. Utilities
+   ========================================================================== */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
 .line-clamp-1 {
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -253,92 +1720,24 @@ html {
     overflow: hidden;
 }
 
-.line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+.partner-logo {
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: all 0.3s;
 }
 
-/* Glass Effect */
-.glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.glass-dark {
-    background: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Gradient Text */
-.gradient-text {
-    background: linear-gradient(135deg, var(--color-primary-400), #22d3ee, var(--color-primary-400));
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradient 3s ease infinite;
-}
-
-/* Card Hover Effect */
-.card-hover {
-    transition: all 0.3s ease;
-}
-
-.card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-}
-
-/* Button Shine Effect */
-.btn-shine {
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-shine::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
-    transition: left 0.5s;
-}
-
-.btn-shine:hover::before {
-    left: 100%;
-}
-
-/* Smooth Image Loading */
-img {
-    transition: opacity 0.3s ease;
-}
-
-img[loading="lazy"] {
-    opacity: 0;
-}
-
-img[loading="lazy"].loaded {
+.partner-logo:hover {
+    filter: grayscale(0%);
     opacity: 1;
 }
 
-/* ==========================================================================
-   7. Accessibility
-   ========================================================================== */
+img { transition: opacity 0.3s ease; }
+img[loading="lazy"] { opacity: 0; }
+img[loading="lazy"].loaded { opacity: 1; }
 
-/* Screen reader only - improved version */
+/* ==========================================================================
+   11. Accessibility
+   ========================================================================== */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -351,100 +1750,75 @@ img[loading="lazy"].loaded {
     border-width: 0;
 }
 
-/* Make sr-only visible on focus (for skip links) */
-.sr-only.focus\:not-sr-only:focus,
-.focus\:not-sr-only:focus {
-    position: absolute;
-    width: auto;
-    height: auto;
-    padding: 0.5rem 1rem;
-    margin: 0;
-    overflow: visible;
-    clip: auto;
-    white-space: normal;
+:focus-visible {
+    outline: 2px solid #0061c2;
+    outline-offset: 2px;
 }
 
-/* High contrast mode support */
 @media (forced-colors: active) {
-    a:focus,
-    button:focus {
-        outline: 2px solid CanvasText;
-    }
+    a:focus, button:focus { outline: 2px solid CanvasText; }
 }
 
-/* Print styles */
 @media print {
-    header,
-    footer,
-    nav,
-    .ad-banner {
-        display: none;
-    }
-
-    main {
-        margin: 0;
-        padding: 0;
-    }
-
-    a[href]::after {
-        content: " (" attr(href) ")";
-    }
+    header, footer, nav { display: none; }
+    main { margin: 0; padding: 0; }
 }
 
 /* ==========================================================================
-   8. Alpine.js Intersect Plugin Support
+   12. Mobile Responsive
    ========================================================================== */
-
-/* Initial state for scroll animations */
-[x-intersect\:enter] {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-/* Visible state */
-[x-intersect\:enter].intersected {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-/* ==========================================================================
-   9. Grid Layout Fixes for lg breakpoint
-   ========================================================================== */
-@media (min-width: 1024px) {
-    .lg\:grid-cols-2 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+@media screen and (max-width: 1360px) {
+    .topPop { display: none !important; }
+    .topPopHeader { top: 0 !important; }
+    .popupzone-wrapper {
+        width: 400px;
+        right: 6%;
+        margin-top: 0;
     }
-    .lg\:grid-cols-3 {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .lg\:col-span-2 {
-        grid-column: span 2 / span 2;
+    .icak-hero-text {
+        text-align: center;
+        transform: translate(-50%, -60%);
+        top: 40%;
     }
 }
 
-/* ==========================================================================
-   10. Ad Banner Styles
-   ========================================================================== */
-
-.ad-banner {
-    transition: opacity 0.3s ease;
-}
-
-.ad-banner:hover {
-    opacity: 0.95;
-}
-
-/* Ad placeholder pulse effect */
-@keyframes adPulse {
-    0%, 100% {
-        opacity: 0.6;
+@media screen and (max-width: 1024px) {
+    .icak-gnb { display: none; }
+    .icak-header .icak-logo { width: auto; }
+    .icak-header-util { display: none; }
+    .icak-row {
+        flex-direction: column;
     }
-    50% {
-        opacity: 0.8;
+    .icak-grid4 {
+        flex-wrap: wrap;
     }
+    .icak-cell {
+        flex: none;
+        width: 50%;
+        border-bottom: 1px solid #e1e1e1;
+    }
+    .icak-hero-text h2 { font-size: 32px; }
+    .icak-shortcut { display: none; }
+    .icak-section-title { font-size: 28px; }
+    .icak-section-subtitle { font-size: 16px; }
 }
 
-.ad-placeholder {
-    animation: adPulse 2s ease-in-out infinite;
+@media screen and (max-width: 768px) {
+    .icak-right-box .icak-banner-card {
+        width: 100%;
+    }
+    .icak-cont { height: auto; padding: 15px; }
+    .icak-list-thumb ul {
+        flex-wrap: wrap;
+    }
+    .icak-list-thumb ul li {
+        width: 100%;
+    }
+    .icak-footer-top-inner {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .icak-footer-bottom-inner {
+        flex-direction: column;
+    }
 }

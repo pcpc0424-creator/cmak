@@ -4,9 +4,10 @@
     <div class="icak-footer-top">
         <div class="icak-footer-top-inner">
             <div class="icak-footer-links">
-                <a href="/privacy" class="privacy">개인정보처리방침</a>
-                <a href="/intro/location">찾아오시는 길</a>
-                <a href="/intro/contact">부서별 연락처 안내</a>
+                @php $bp = '/cmak'; @endphp
+                <a href="{{ $bp }}/privacy" class="privacy">개인정보처리방침</a>
+                <a href="{{ $bp }}/intro/location">찾아오시는 길</a>
+                <a href="{{ $bp }}/intro/organization">부서별 연락처 안내</a>
             </div>
             <div class="icak-footer-family">
                 <select onchange="if(this.value) window.open(this.value)">

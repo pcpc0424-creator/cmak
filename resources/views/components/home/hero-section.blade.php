@@ -166,20 +166,50 @@
         <span>SCROLL DOWN</span>
     </div>
 
-    {{-- 하단 퀵링크 바 --}}
-    <div class="icak-shortcut hidden lg:flex">
+    {{-- 하단 광고 배너 바 --}}
+    @php
+        $bottomAds = \App\Data\HomeData::getBottomAds();
+    @endphp
+    <div class="icak-shortcut hidden lg:flex"
+         x-data="{
+             scrollEl: null,
+             init() {
+                 this.scrollEl = this.$refs.adScroll;
+                 this.autoScroll();
+             },
+             autoScroll() {
+                 setInterval(() => {
+                     if (!this.scrollEl) return;
+                     const maxScroll = this.scrollEl.scrollWidth - this.scrollEl.clientWidth;
+                     if (this.scrollEl.scrollLeft >= maxScroll - 2) {
+                         this.scrollEl.scrollLeft = 0;
+                     } else {
+                         this.scrollEl.scrollLeft += 1;
+                     }
+                 }, 30);
+             }
+         }"
+         @mouseenter="scrollEl = null"
+         @mouseleave="scrollEl = $refs.adScroll"
+    >
         <div class="icak-shortcut-title">
-            <span><span class="blue">주요사업</span> 안내</span>
+            <span><span class="blue">광고</span> 안내</span>
         </div>
         <div class="icak-shortcut-body">
-            <div class="icak-shortcut-list">
-                <a href="/business/certification">CM능력평가 공시</a>
-                <a href="/business/inspection">자격검정</a>
-                <a href="/business/education">CM전문교육</a>
-                <a href="/business/membership">회원가입</a>
-                <a href="/business/herald">CM Herald</a>
-                <a href="/cmdata/about">CM이란</a>
-                <a href="/cmdata/report">논문/연구보고서</a>
+            <div class="icak-ad-scroll" x-ref="adScroll">
+                @foreach($bottomAds as $ad)
+                    <a href="{{ $ad['link'] }}" target="_blank" rel="noopener noreferrer" class="icak-ad-item">
+                        <img src="{{ $ad['image'] }}" alt="{{ $ad['title'] }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <span class="icak-ad-fallback" style="display:none;">{{ $ad['title'] }}</span>
+                    </a>
+                @endforeach
+                {{-- 무한 스크롤을 위한 복제 --}}
+                @foreach($bottomAds as $ad)
+                    <a href="{{ $ad['link'] }}" target="_blank" rel="noopener noreferrer" class="icak-ad-item">
+                        <img src="{{ $ad['image'] }}" alt="{{ $ad['title'] }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <span class="icak-ad-fallback" style="display:none;">{{ $ad['title'] }}</span>
+                    </a>
+                @endforeach
             </div>
         </div>
     </div>

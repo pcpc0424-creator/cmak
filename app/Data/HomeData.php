@@ -150,25 +150,25 @@ class HomeData
         return [
             [
                 'id' => 1,
-                'category' => '국내',
-                'title' => '국립중앙의료원 신축이전사업, 1조 8천억 원 규모 내년 상반기 첫 삽',
-                'date' => '2026-02-06',
+                'category' => '협회',
+                'title' => '제16회 정기총회 및 신임 회장선출 투표안내',
+                'date' => '2026-03-10',
                 'isNew' => true,
-                'link' => '/news/1',
+                'link' => 'https://www.cmak.or.kr/html/notice/nleague1_r.asp?no=3888&code=1',
             ],
             [
                 'id' => 2,
-                'category' => '국내',
-                'title' => '스마트 건설기술 동향 및 CM 적용 사례 발표',
-                'date' => '2026-02-04',
+                'category' => '협회',
+                'title' => '2026년도 제1차 이사회 개최',
+                'date' => '2026-03-05',
                 'isNew' => true,
                 'link' => '/news/2',
             ],
             [
                 'id' => 3,
-                'category' => '협회',
-                'title' => '2026년도 제1차 이사회 개최',
-                'date' => '2026-02-04',
+                'category' => '국내',
+                'title' => '스마트 건설기술 동향 및 CM 적용 사례 발표',
+                'date' => '2026-02-28',
                 'isNew' => false,
                 'link' => '/news/3',
             ],
@@ -176,17 +176,9 @@ class HomeData
                 'id' => 4,
                 'category' => '국내',
                 'title' => '도심항공모빌리티(UAM) 건설관리 시장 전망',
-                'date' => '2026-02-01',
+                'date' => '2026-02-20',
                 'isNew' => false,
                 'link' => '/news/4',
-            ],
-            [
-                'id' => 5,
-                'category' => '해외',
-                'title' => '해외 CM제도 전수사업 연구 보고서 발간',
-                'date' => '2026-01-28',
-                'isNew' => false,
-                'link' => '/news/5',
             ],
         ];
     }
@@ -242,29 +234,29 @@ class HomeData
             [
                 'id' => 1,
                 'type' => '입찰',
-                'title' => '26-A-00부대 건설사업관리용역(A004)',
-                'date' => '2026-02-07',
-                'link' => '/bids/1',
+                'title' => '2026년도 용역비(계획, 용역비조정) 공고',
+                'date' => '2026-03-12',
+                'link' => 'https://www.cmak.or.kr/html/cmdata/cmreport.asp',
             ],
             [
                 'id' => 2,
                 'type' => '입찰',
-                'title' => '신대방역세권재개발정비사업조합 건설사업관리 CM 용역',
-                'date' => '2026-02-06',
+                'title' => '홍콩 정부청사 신축사업 기본설계용역 공고',
+                'date' => '2026-03-10',
                 'link' => '/bids/2',
             ],
             [
                 'id' => 3,
-                'type' => '낙찰',
-                'title' => '기부채납시설(반포2초·반포2중) 신축공사 건설사업관리',
-                'date' => '2026-02-05',
+                'type' => '입찰',
+                'title' => '광주 광산역세권 도시개발사업 기본설계용역 공고',
+                'date' => '2026-03-08',
                 'link' => '/bids/3',
             ],
             [
                 'id' => 4,
                 'type' => '입찰',
                 'title' => '청년스마트빌리지 조성사업 건설사업관리용역',
-                'date' => '2026-02-04',
+                'date' => '2026-03-05',
                 'link' => '/bids/4',
             ],
         ];
@@ -310,30 +302,39 @@ class HomeData
         return [
             [
                 'id' => 1,
-                'title' => '리모델링 성공수행 핵심키워드는 CM이다',
-                'summary' => '리모델링, 설계·구조·토목 등 철저한 검증 바탕 사업관리 중요.',
-                'author' => '홍길동',
-                'date' => '2026-02-01',
+                'title' => '플래닛 건축학 전문가에게 듣는다',
+                'summary' => '건축과 도시, 그리고 CM의 미래를 전문가의 시각으로 조명합니다.',
+                'author' => '',
+                'date' => '2026-03-10',
                 'isFeatured' => true,
                 'link' => '/cmdata/expert/1',
             ],
             [
                 'id' => 2,
-                'title' => '세계 CM의 날에 부쳐',
+                'title' => '도시속을 누비는 하이스피드 모빌리티 CM이다',
                 'summary' => '',
-                'author' => '김철수',
-                'date' => '2026-01-20',
+                'author' => '',
+                'date' => '2026-03-05',
                 'isFeatured' => false,
                 'link' => '/cmdata/expert/2',
             ],
             [
                 'id' => 3,
-                'title' => '한국CM, 방글라데시 수출',
+                'title' => '도시의 CM은 삶의 질향상',
                 'summary' => '',
-                'author' => '이영희',
-                'date' => '2026-01-15',
+                'author' => '',
+                'date' => '2026-02-28',
                 'isFeatured' => false,
                 'link' => '/cmdata/expert/3',
+            ],
+            [
+                'id' => 4,
+                'title' => '한국CM, 해외수주전 개척',
+                'summary' => '',
+                'author' => '',
+                'date' => '2026-02-20',
+                'isFeatured' => false,
+                'link' => '/cmdata/expert/4',
             ],
         ];
     }
@@ -414,26 +415,26 @@ class HomeData
         return [
             [
                 'id' => 1,
-                'title' => '도로 분야 민간투자사업 재건축 평가위원 통록 이동 공고',
-                'date' => '2025-12-11',
-                'link' => '/news/domestic/1',
+                'title' => '한중, 도심 항공교통 6개사와 \'항공협력 업무협약\'',
+                'date' => '2026-03-10',
+                'link' => 'https://www.cmak.or.kr/html/notice/news_r.asp?no=61412',
             ],
             [
                 'id' => 2,
-                'title' => '2026 민간인증 건축사 업무 및 신뢰도 확보를 위한 개선안',
-                'date' => '2025-12-02',
+                'title' => '국토교통부, 건설산업 혁신방안 발표',
+                'date' => '2026-03-05',
                 'link' => '/news/domestic/2',
             ],
             [
                 'id' => 3,
-                'title' => '국토교통부 이관안에 김이해 건설안에 공수',
-                'date' => '2025-12-01',
+                'title' => '스마트건설 기술개발 로드맵 수립',
+                'date' => '2026-02-28',
                 'link' => '/news/domestic/3',
             ],
             [
                 'id' => 4,
-                'title' => '소비자문, 11월 30일 자전 저지선 소령 - 기반 내 사회 담화',
-                'date' => '2025-11-25',
+                'title' => 'UAM 도심항공교통 인프라 구축 본격화',
+                'date' => '2026-02-20',
                 'link' => '/news/domestic/4',
             ],
         ];
@@ -666,35 +667,27 @@ class HomeData
         return [
             [
                 'id' => 1,
-                'company' => '상아에서 시안만산설비',
-                'title' => '시 하이구이',
-                'image' => '/images/trends/trend1.jpg',
+                'company' => '현대건설',
+                'title' => '에티오피아 신규프로젝트 추진',
                 'link' => '/news/member/1',
             ],
             [
                 'id' => 2,
-                'company' => '15년간 빌치니아 미국 회람 제비대 공장완성 PMIS 구축 운영지원사업 수 ...',
-                'title' => '',
-                'image' => '/images/trends/trend2.jpg',
+                'company' => '대우A&C',
+                'title' => '싱가포르 복합건물 설계공모 도전',
                 'link' => '/news/member/2',
             ],
             [
                 'id' => 3,
-                'company' => '무영아이언&건축사사무소',
-                'title' => '다방면(가)이라한과 BIM 고도화 취진',
+                'company' => '현대건설',
+                'title' => '말레이시아 신규프로젝트 선정',
                 'link' => '/news/member/3',
             ],
             [
                 'id' => 4,
-                'company' => '포스코A&C',
-                'title' => '신본 전면도 사이트 신규 오픈',
+                'company' => '한솔건설',
+                'title' => '베트남 톤 누 프로젝트 공사비 계약',
                 'link' => '/news/member/4',
-            ],
-            [
-                'id' => 5,
-                'company' => '포백에이엔컨설턴트',
-                'title' => '포백에이앤컨설턴트, 2025년 수 제출 포...',
-                'link' => '/news/member/5',
             ],
         ];
     }
@@ -874,70 +867,114 @@ class HomeData
     /**
      * 우측 세로 광고 배너 데이터
      */
+    /**
+     * 우측 세로 광고 배너 데이터 (원본 cmak.or.kr 기준)
+     */
     public static function getSidebarAds(): array
     {
         return [
             [
                 'id' => 1,
-                'title' => '한국CM협회',
-                'type' => 'youtube',
-                'image' => '/images/ads/youtube-banner.png',
-                'link' => 'https://www.youtube.com/@cmak',
+                'title' => '해안건축',
+                'type' => 'ad',
+                'image' => '/cmak/images/ads/2026해안건축.jpg',
+                'link' => 'http://www.haeahn.com',
             ],
             [
                 'id' => 2,
-                'title' => 'E주건',
+                'title' => 'HEERIM',
                 'type' => 'ad',
-                'image' => '/images/ads/ejugun.png',
+                'image' => '/cmak/images/ads/HEERIM25.jpg',
+                'link' => 'https://www.heerim.com',
+            ],
+            [
+                'id' => 3,
+                'title' => 'SHINHWA',
+                'type' => 'ad',
+                'image' => '/cmak/images/ads/SHINHWA25.jpg',
+                'link' => 'http://www.shinhwaeng.com',
+            ],
+            [
+                'id' => 4,
+                'title' => '정림건축',
+                'type' => 'ad',
+                'image' => '/cmak/images/ads/A3_JUNGLIM.png',
+                'link' => 'http://www.junglim.com',
+            ],
+            [
+                'id' => 5,
+                'title' => 'POSCO A&C',
+                'type' => 'ad',
+                'image' => '/cmak/images/ads/POSCO25.jpg',
+                'link' => 'https://www.poscoanc.com',
+            ],
+        ];
+    }
+
+    /**
+     * 하단 광고 배너 데이터 (원본 cmak.or.kr 기준)
+     */
+    public static function getBottomAds(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'title' => 'theM',
+                'image' => '/cmak/images/ads/250922_theM.jpg',
+                'link' => '#',
+            ],
+            [
+                'id' => 2,
+                'title' => '무영씨엠',
+                'image' => '/cmak/images/ads/2026무영씨엠.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 3,
-                'title' => 'TOPEC',
-                'type' => 'ad',
-                'image' => '/images/ads/topec.png',
+                'title' => '삼우씨엠',
+                'image' => '/cmak/images/ads/2026삼우씨엠.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 4,
-                'title' => 'KunWol',
-                'type' => 'ad',
-                'image' => '/images/ads/kunwol.png',
+                'title' => '전인씨엠',
+                'image' => '/cmak/images/ads/2026전인씨엠.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 5,
-                'title' => '양평 건축사 후반 JX베이',
-                'type' => 'ad',
-                'image' => '/images/ads/jxbay.png',
+                'title' => 'TOMOON',
+                'image' => '/cmak/images/ads/B5 TOMOON.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 6,
-                'title' => '대건에비뉴제조건축사사무소',
-                'type' => 'ad',
-                'image' => '/images/ads/daegun.png',
+                'title' => 'TOPEC',
+                'image' => '/cmak/images/ads/B6 TOPEC.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 7,
-                'title' => 'MOOYOUNG CM',
-                'type' => 'ad',
-                'image' => '/images/ads/mooyoung.png',
+                'title' => 'KUNWON',
+                'image' => '/cmak/images/ads/B1 KUNWON.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 8,
-                'title' => '부일엔지니어링건축사사무소',
-                'type' => 'ad',
-                'image' => '/images/ads/buil.png',
+                'title' => 'CMAK 01',
+                'image' => '/cmak/images/ads/CMAK01_3003.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 9,
-                'title' => 'SAMOO CM',
-                'type' => 'ad',
-                'image' => '/images/ads/samoo.png',
+                'title' => 'CMAK 02',
+                'image' => '/cmak/images/ads/CMAK02.jpg',
+                'link' => '#',
+            ],
+            [
+                'id' => 10,
+                'title' => 'CMAK 03',
+                'image' => '/cmak/images/ads/CMAK03.jpg',
                 'link' => '#',
             ],
         ];

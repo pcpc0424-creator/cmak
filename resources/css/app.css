@@ -205,8 +205,8 @@ html.fp-enabled,
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     overflow: hidden;
+    width: 100%;
 }
 
 .topPop.active .topPopupInner {
@@ -221,17 +221,38 @@ html.fp-enabled,
     align-items: center;
     justify-content: center;
     gap: 10px;
+    width: 100%;
+}
+
+.pc_pop_item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a3a5c, #2d6da8);
 }
 
 .topPopupInner .pc_pop img {
     height: 100px;
-    max-width: 550px;
+    max-width: 450px;
     object-fit: cover;
     transition: 0.2s;
 }
 
+.pc_pop_label {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
 .popDiv {
     z-index: 999;
+    width: 100%;
 }
 
 /* headerUtil (25%, position:relative) */
@@ -461,6 +482,27 @@ html.fp-enabled,
 }
 .icak-header:hover .icak-mobile-btn,
 .icak-header.scrolled .icak-mobile-btn { color: #333; }
+
+/* IPMA KOREA 주황 버튼 — 로그인/검색 아래 배치 */
+.icak-special-btn {
+    position: absolute;
+    right: 75px;
+    bottom: 8px;
+    display: inline-block;
+    background: #e67e22;
+    color: #fff !important;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+.icak-special-btn:hover {
+    background: #d35400;
+    text-decoration: none;
+}
 
 /* Header position - JS로 제어 */
 
@@ -943,7 +985,7 @@ html.fp-enabled,
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 75px;
+    height: 100px;
     display: flex;
     z-index: 20;
 }
@@ -1045,7 +1087,7 @@ html.fp-enabled,
 }
 
 .icak-ad-item img {
-    height: 50px;
+    height: 70px;
     width: auto;
     object-fit: contain;
 }
@@ -1208,13 +1250,305 @@ html.fp-enabled,
     letter-spacing: 0.5px;
 }
 
-/* 콘텐츠 + 사이드바 광고 래퍼 */
+/* 콘텐츠 + 사이드바 광고 래퍼 (레거시) */
 .icak-content-with-sidebar {
     max-width: 1420px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
     gap: 16px;
+}
+
+/* 새 메인 레이아웃 (좌측 콘텐츠 + 우측 이미지 카드) */
+.icak-content-main {
+    max-width: 1420px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.icak-content-left {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.icak-content-right {
+    width: 320px;
+    flex-shrink: 0;
+}
+
+/* 이미지 카드 2x3 그리드 */
+.icak-image-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    height: 100%;
+}
+
+.icak-image-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 12px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.04);
+    transition: all 0.3s;
+    text-align: center;
+    gap: 8px;
+}
+
+.icak-image-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,97,194,0.15);
+    border-color: #0061c2;
+}
+
+.icak-image-card-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #0a3d7c, #0061c2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2px;
+}
+
+.icak-image-card-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: #fff;
+}
+
+.icak-image-card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.icak-image-card-text strong {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.icak-image-card-text span {
+    font-size: 11px;
+    color: #888;
+}
+
+/* 3셀 그리드 (1행) */
+.icak-grid3-row {
+    display: flex;
+    gap: 0;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+.icak-grid3-row .icak-cell {
+    flex: 1;
+    min-width: 0;
+    border-right: 1px solid #eef0f4;
+    display: flex;
+    flex-direction: column;
+}
+
+.icak-grid3-row .icak-cell:last-child {
+    border-right: none;
+}
+
+/* 6개 탭 영역 */
+.icak-tabs-section {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+.icak-tabs-header {
+    display: flex;
+    background: linear-gradient(135deg, #1a3a5c, #2d6da8);
+    overflow-x: auto;
+}
+
+.icak-tab-btn {
+    flex: 1;
+    padding: 12px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    letter-spacing: -0.3px;
+}
+
+.icak-tab-btn:last-child {
+    border-right: none;
+}
+
+.icak-tab-btn:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+}
+
+.icak-tab-btn.active {
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+    position: relative;
+}
+
+.icak-tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 3px;
+    background: #fff;
+    border-radius: 3px 3px 0 0;
+}
+
+.icak-tabs-body {
+    padding: 0;
+}
+
+.icak-tabs-body .icak-cell-list {
+    margin: 0;
+    padding: 4px 0;
+}
+
+.icak-tabs-body .icak-cell-more {
+    border-top: 1px solid #eef0f4;
+}
+
+/* N 뱃지 (새 글 표시) */
+.icak-new-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    border-radius: 50%;
+    margin-left: 4px;
+    vertical-align: middle;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+/* 관공서 배너 */
+.icak-gov-banner {
+    max-width: 1420px;
+    margin: 16px auto 0;
+    padding: 0 20px;
+}
+
+.icak-gov-banner-inner {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.04);
+    overflow: hidden;
+    height: 60px;
+}
+
+.icak-gov-banner-label {
+    background: linear-gradient(135deg, #0a3d7c, #0061c2);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.icak-gov-marquee {
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+}
+
+.icak-gov-marquee-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    height: 100%;
+    animation: marquee-scroll 40s linear infinite;
+}
+
+.icak-gov-marquee-track.paused {
+    animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.icak-gov-link {
+    padding: 0 18px;
+    font-size: 13px;
+    color: #555;
+    font-weight: 500;
+    white-space: nowrap;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #eef0f4;
+    transition: color 0.2s, background 0.2s;
+}
+
+.icak-gov-link:hover {
+    color: #0061c2;
+    background: #f0f5ff;
+}
+
+.icak-gov-img-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    height: 100%;
+    flex-shrink: 0;
+    border-right: 1px solid #eef0f4;
+    transition: background 0.2s;
+}
+
+.icak-gov-img-link:hover {
+    background: #f0f5ff;
+}
+
+.icak-gov-img-link img {
+    height: 40px;
+    min-width: 80px;
+    width: auto;
+    object-fit: contain;
+    display: block;
 }
 
 .icak-content-inner {
@@ -2133,11 +2467,25 @@ img[loading="lazy"].loaded { opacity: 1; }
     .icak-shortcut { display: none; }
     .icak-sidebar-ads { display: none; }
     .icak-content-with-sidebar { flex-direction: column; }
+    .icak-content-main { flex-direction: column; }
+    .icak-content-right { width: 100%; }
+    .icak-image-cards { grid-template-columns: repeat(3, 1fr); }
     .icak-section-title { font-size: 28px; }
     .icak-expert-bar { flex-direction: column; height: auto; }
     .icak-expert-bar-label { width: 100%; padding: 10px 16px; justify-content: center; }
     .icak-expert-bar-items { padding: 10px 16px; }
     .icak-expert-bar-more { border-left: none; border-top: 1px solid #eef0f4; width: 100%; justify-content: center; padding: 10px; }
+    .icak-grid3-row { flex-wrap: wrap; }
+    .icak-grid3-row .icak-cell { flex: none; width: 100%; border-right: none; border-bottom: 1px solid #eef0f4; }
+    .icak-grid3-row .icak-cell:last-child { border-bottom: none; }
+    .icak-tabs-header { flex-wrap: wrap; }
+    .icak-tab-btn { flex: none; width: 33.33%; }
+    .icak-gov-banner-inner { flex-direction: column; height: auto; }
+    .icak-gov-banner-label { width: 100%; padding: 10px 16px; justify-content: center; }
+    .icak-gov-marquee-track { animation-duration: 20s; }
+    .icak-gov-link { border-right: none; padding: 6px 12px; }
+    .icak-gov-img-link { border-right: none; padding: 4px 8px; }
+    .icak-gov-img-link img { height: 30px; min-width: 60px; }
     .icak-section-subtitle { font-size: 16px; }
 }
 

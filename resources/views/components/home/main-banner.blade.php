@@ -24,6 +24,11 @@
             'alt' => '한국CM협회 - 자격검정',
             'link' => '/business/inspection',
         ],
+        [
+            'image' => $basePath . '/images/banners/main_visual5.jpg',
+            'alt' => '한국CM협회 메인 배너 5',
+            'link' => '#',
+        ],
     ];
 @endphp
 

@@ -865,8 +865,115 @@ class HomeData
     }
 
     /**
-     * 우측 세로 광고 배너 데이터
+     * 인사·경조사 데이터
      */
+    public static function getPersonnelEvents(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'title' => '2026년 신년 인사',
+                'date' => '2026-01-02',
+                'link' => '/cmak/community/board/1',
+            ],
+            [
+                'id' => 2,
+                'title' => '제30회 정기총회 축하',
+                'date' => '2025-12-20',
+                'link' => '/cmak/community/board/2',
+            ],
+            [
+                'id' => 3,
+                'title' => '김영수 前회장 훈장 수여',
+                'date' => '2025-12-15',
+                'link' => '/cmak/community/board/3',
+            ],
+            [
+                'id' => 4,
+                'title' => '이사회 위원 위촉식',
+                'date' => '2025-12-10',
+                'link' => '/cmak/community/board/4',
+            ],
+        ];
+    }
+
+    /**
+     * 관공서/유관기관 배너 링크
+     */
+    public static function getGovernmentLinks(): array
+    {
+        return [
+            [
+                'name' => '국토교통부',
+                'link' => 'https://www.molit.go.kr',
+            ],
+            [
+                'name' => '나라장터',
+                'link' => 'https://www.g2b.go.kr',
+            ],
+            [
+                'name' => '조달청',
+                'link' => 'https://www.pps.go.kr',
+            ],
+            [
+                'name' => '한국건설기술연구원',
+                'link' => 'https://www.kict.re.kr',
+            ],
+            [
+                'name' => '대한건축사협회',
+                'link' => 'https://www.kira.or.kr',
+            ],
+            [
+                'name' => '건설기술인협회',
+                'link' => 'https://www.kocea.or.kr',
+            ],
+            [
+                'name' => '한국건설관리학회',
+                'link' => 'https://www.kicem.or.kr',
+            ],
+            [
+                'name' => '대한건설정책연구원',
+                'link' => 'https://www.ricon.re.kr',
+            ],
+        ];
+    }
+
+    /**
+     * 회원사 하단 롤링 배너 (이미지)
+     */
+    public static function getRollingBanners(): array
+    {
+        return [
+            ['name' => 'SHINHWA', 'image' => '/cmak/images/ads/ad_01.jpg', 'link' => 'http://www.shinhwaeng.com'],
+            ['name' => 'JUNGLIM CM', 'image' => '/cmak/images/ads/ad_02.jpg', 'link' => 'http://www.junglim.com'],
+            ['name' => '포스코A&C', 'image' => '/cmak/images/ads/ad_03.jpg', 'link' => 'https://www.poscoanc.com'],
+            ['name' => 'PCM (해안건축)', 'image' => '/cmak/images/ads/ad_04.jpg', 'link' => 'http://www.haeahn.com'],
+            ['name' => 'heerim (희림)', 'image' => '/cmak/images/ads/ad_05.jpg', 'link' => 'https://www.heerim.com'],
+            ['name' => 'KUNWON (건원)', 'image' => '/cmak/images/ads/ad_11.jpg', 'link' => '#'],
+            ['name' => 'THE M', 'image' => '/cmak/images/ads/ad_12.jpg', 'link' => '#'],
+            ['name' => 'MOOYOUNG CM', 'image' => '/cmak/images/ads/ad_13.jpg', 'link' => '#'],
+            ['name' => 'SAMOO C.M.', 'image' => '/cmak/images/ads/ad_14.jpg', 'link' => '#'],
+            ['name' => 'JEONIN CM', 'image' => '/cmak/images/ads/ad_15.jpg', 'link' => '#'],
+            ['name' => 'TOMOON (토문)', 'image' => '/cmak/images/ads/ad_16.jpg', 'link' => '#'],
+            ['name' => 'TOPEC', 'image' => '/cmak/images/ads/ad_17.jpg', 'link' => '#'],
+        ];
+    }
+
+    /**
+     * 관련기관 롤링 배너 (원본 cmak.or.kr 푸터)
+     */
+    public static function getPartnerBanners(): array
+    {
+        return [
+            ['name' => 'CMAK YouTube', 'image' => '/cmak/images/banners/partners/cmak_youtube.jpg', 'link' => 'https://www.youtube.com/channel/UCcVZEpnpnFrPzG73IvT_48Q'],
+            ['name' => '정책브리핑', 'image' => '/cmak/images/banners/partners/korea_policy.jpg', 'link' => 'https://www.korea.kr'],
+            ['name' => '기획재정부', 'image' => '/cmak/images/banners/partners/moef.jpg', 'link' => 'https://www.moef.go.kr'],
+            ['name' => '국토교통부', 'image' => '/cmak/images/banners/partners/molit.jpg', 'link' => 'http://www.molit.go.kr'],
+            ['name' => '나라장터', 'image' => '/cmak/images/banners/partners/g2b.jpg', 'link' => 'https://www.g2b.go.kr'],
+            ['name' => '정부24', 'image' => '/cmak/images/banners/partners/gov24.jpg', 'link' => 'https://www.gov.kr'],
+        ];
+    }
+
     /**
      * 우측 세로 광고 배너 데이터 (원본 cmak.or.kr 기준)
      */
@@ -919,62 +1026,104 @@ class HomeData
         return [
             [
                 'id' => 1,
-                'title' => 'theM',
-                'image' => '/cmak/images/ads/250922_theM.jpg',
+                'title' => 'SHINHWA',
+                'image' => '/cmak/images/ads/ad_01.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 2,
-                'title' => '무영씨엠',
-                'image' => '/cmak/images/ads/2026무영씨엠.jpg',
+                'title' => 'JUNGLIM CM',
+                'image' => '/cmak/images/ads/ad_02.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 3,
-                'title' => '삼우씨엠',
-                'image' => '/cmak/images/ads/2026삼우씨엠.jpg',
+                'title' => '포스코A&C',
+                'image' => '/cmak/images/ads/ad_03.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 4,
-                'title' => '전인씨엠',
-                'image' => '/cmak/images/ads/2026전인씨엠.jpg',
+                'title' => 'PCM (해안건축)',
+                'image' => '/cmak/images/ads/ad_04.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 5,
-                'title' => 'TOMOON',
-                'image' => '/cmak/images/ads/B5 TOMOON.jpg',
+                'title' => 'heerim (희림)',
+                'image' => '/cmak/images/ads/ad_05.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 6,
-                'title' => 'TOPEC',
-                'image' => '/cmak/images/ads/B6 TOPEC.jpg',
+                'title' => 'SHINHWA',
+                'image' => '/cmak/images/ads/ad_06.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 7,
-                'title' => 'KUNWON',
-                'image' => '/cmak/images/ads/B1 KUNWON.jpg',
+                'title' => 'JUNGLIM CM',
+                'image' => '/cmak/images/ads/ad_07.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 8,
-                'title' => 'CMAK 01',
-                'image' => '/cmak/images/ads/CMAK01_3003.jpg',
+                'title' => '포스코A&C',
+                'image' => '/cmak/images/ads/ad_08.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 9,
-                'title' => 'CMAK 02',
-                'image' => '/cmak/images/ads/CMAK02.jpg',
+                'title' => 'PCM (해안건축)',
+                'image' => '/cmak/images/ads/ad_09.jpg',
                 'link' => '#',
             ],
             [
                 'id' => 10,
-                'title' => 'CMAK 03',
-                'image' => '/cmak/images/ads/CMAK03.jpg',
+                'title' => 'heerim (희림)',
+                'image' => '/cmak/images/ads/ad_10.jpg',
+                'link' => '#',
+            ],
+            [
+                'id' => 11,
+                'title' => 'KUNWON (건원엔지니어링)',
+                'image' => '/cmak/images/ads/ad_11.jpg',
+                'link' => '#',
+            ],
+            [
+                'id' => 12,
+                'title' => 'THE M',
+                'image' => '/cmak/images/ads/ad_12.jpg',
+                'link' => '#',
+            ],
+            [
+                'id' => 13,
+                'title' => 'MOOYOUNG CM (무영씨엠)',
+                'image' => '/cmak/images/ads/ad_13.jpg',
+                'link' => '#',
+            ],
+            [
+                'id' => 14,
+                'title' => 'SAMOO C.M. (삼우씨엠)',
+                'image' => '/cmak/images/ads/ad_14.jpg',
+                'link' => '#',
+            ],
+            [
+                'id' => 15,
+                'title' => 'JEONIN CM (전인CM)',
+                'image' => '/cmak/images/ads/ad_15.jpg',
+                'link' => '#',
+            ],
+            [
+                'id' => 16,
+                'title' => 'TOMOON (토문)',
+                'image' => '/cmak/images/ads/ad_16.jpg',
+                'link' => '#',
+            ],
+            [
+                'id' => 17,
+                'title' => 'TOPEC',
+                'image' => '/cmak/images/ads/ad_17.jpg',
                 'link' => '#',
             ],
         ];

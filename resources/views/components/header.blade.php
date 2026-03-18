@@ -8,11 +8,14 @@
     <div class="popDiv">
         <div class="topPopupInner" id="topPopInner">
             <div class="pc_pop">
-                <a href="{{ $basePath }}/business/certification" target="_self">
-                    <img src="{{ $basePath }}/images/ads/banner_top1.jpg" alt="CM능력평가 공시" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22550%22 height=%22110%22%3E%3Crect fill=%22%23364058%22 width=%22550%22 height=%22110%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23fff%22 font-size=%2218%22 font-family=%22sans-serif%22%3E2026 CM능력평가 공시 안내%3C/text%3E%3C/svg%3E'">
+                <a href="{{ $basePath }}/business/certification" target="_self" class="pc_pop_item">
+                    <span class="pc_pop_label">CM능력평가공시</span>
                 </a>
-                <a href="{{ $basePath }}/business/inspection" target="_self">
-                    <img src="{{ $basePath }}/images/ads/banner_top2.jpg" alt="자격검정" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22550%22 height=%22110%22%3E%3Crect fill=%22%23364058%22 width=%22550%22 height=%22110%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23fff%22 font-size=%2218%22 font-family=%22sans-serif%22%3E건설사업관리사 자격검정%3C/text%3E%3C/svg%3E'">
+                <a href="{{ $basePath }}/intro/history" target="_self" class="pc_pop_item">
+                    <span class="pc_pop_label">CM30년</span>
+                </a>
+                <a href="{{ $basePath }}/business/inspection" target="_self" class="pc_pop_item">
+                    <span class="pc_pop_label">건설사업관리사자격검정</span>
                 </a>
             </div>
         </div>
@@ -117,9 +120,6 @@
 
         {{-- headerUtil (25%) --}}
         <div class="icak-header-util">
-            {{-- 수주통계 주황 버튼: absolute left:20px top:67px --}}
-            <button type="button" class="icak-stat-btn" onclick="location.href='/business/certification'">CM능력평가</button>
-
             {{-- mUtil: 로그인 + 검색 + ENG — absolute top:15px right:20px --}}
             <div class="icak-mutil">
                 <a href="{{ $basePath }}/login" class="icak-login-btn">로그인</a>
@@ -129,6 +129,9 @@
                 </form>
                 <a href="#" class="icak-lang-btn">ENG</a>
             </div>
+
+            {{-- IPMA KOREA 버튼 --}}
+            <a href="https://www.ipma.world/" target="_blank" rel="noopener noreferrer" class="icak-special-btn">IPMA KOREA</a>
 
             {{-- 전체메뉴: absolute right:15px bottom:0 --}}
             <div class="icak-btn-mainmenu">

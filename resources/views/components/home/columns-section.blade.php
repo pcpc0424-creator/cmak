@@ -78,7 +78,7 @@
                     </div>
                     <h2 class="text-lg font-bold text-gray-900">기획특집</h2>
                 </div>
-                <a href="/cmdata/feature" class="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1">
+                <a href="/cmdata/special" class="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1">
                     더보기
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -133,7 +133,7 @@
                     </div>
                     <h2 class="text-lg font-bold text-gray-900">회원동향</h2>
                 </div>
-                <a href="/news/member" class="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1">
+                <a href="/notice/member" class="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1">
                     더보기
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>

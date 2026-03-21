@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BoardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -7,7 +8,7 @@ Route::get('/', function () {
 });
 
 // ============================================
-// 협회소개
+// 협회소개 (정적 페이지)
 // ============================================
 Route::get('/intro/greeting', fn() => view('intro.greeting'));
 Route::get('/intro/about', fn() => view('intro.about'));
@@ -20,7 +21,7 @@ Route::get('/intro/organization', fn() => view('intro.organization'));
 Route::get('/intro', fn() => redirect('intro/greeting'));
 
 // ============================================
-// 협회업무
+// 협회업무 (정적 페이지)
 // ============================================
 Route::get('/business/membership', fn() => view('business.membership'));
 Route::get('/business/certification', fn() => view('business.certification'));
@@ -33,46 +34,86 @@ Route::get('/business/consma', fn() => view('business.consma'));
 Route::get('/business', fn() => redirect('business/membership'));
 
 // ============================================
-// CM자료방
+// CM자료방 (DB 연동 게시판)
 // ============================================
+// CM이란 - 정적 페이지
 Route::get('/cmdata/about', fn() => view('cmdata.about'));
-Route::get('/cmdata/law', fn() => view('cmdata.law'));
-Route::get('/cmdata/report', fn() => view('cmdata.report'));
-Route::get('/cmdata/global', fn() => view('cmdata.global'));
-Route::get('/cmdata/case', fn() => view('cmdata.case'));
-Route::get('/cmdata/seminar', fn() => view('cmdata.seminar'));
-Route::get('/cmdata/expert', fn() => view('cmdata.expert'));
-Route::get('/cmdata/special', fn() => view('cmdata.special'));
-Route::get('/cmdata/etc', fn() => view('cmdata.etc'));
+
+// DB 연동 게시판들
+$cmdataBoards = [
+    'report'    => 'research',
+    'law'       => 'cm_law',
+    'seminar'   => 'education_seminar',
+    've'        => 've',
+    'expert'    => 'expert_column',
+    'special'   => 'special_feature',
+    'etc'       => 'etc_data',
+    'press'     => 'press',
+    'case'      => 'cm_case',
+    'education' => 'education',
+];
+foreach ($cmdataBoards as $slug => $boardType) {
+    Route::get("/cmdata/{$slug}", fn(\Illuminate\Http\Request $r) => app(BoardController::class)->index($r, $boardType, "cmdata.{$slug}"));
+}
 Route::get('/cmdata', fn() => redirect('cmdata/about'));
 
 // ============================================
-// 알림마당
+// 알림마당 (DB 연동 게시판)
 // ============================================
-Route::get('/notice/news', fn() => view('notice.news'));
-Route::get('/notice/bids', fn() => view('notice.bids'));
-Route::get('/notice/law', fn() => view('notice.law'));
-Route::get('/notice/association', fn() => view('notice.association'));
-Route::get('/notice/member', fn() => view('notice.member'));
-Route::get('/notice/org', fn() => view('notice.org'));
-Route::get('/notice/press', fn() => view('notice.press'));
+$noticeBoards = [
+    'news'        => 'news_domestic',
+    'bids'        => 'news_bid',
+    'law'         => 'news_law',
+    'association' => 'news_association',
+    'press'       => 'news_press',
+    'member'      => 'member_trend',
+    'org'         => 'news_bid',
+    'online'      => 'online_news',
+    'schedule'    => 'schedule',
+];
+foreach ($noticeBoards as $slug => $boardType) {
+    Route::get("/notice/{$slug}", fn(\Illuminate\Http\Request $r) => app(BoardController::class)->index($r, $boardType, "notice.{$slug}"));
+}
 Route::get('/notice', fn() => redirect('notice/news'));
 
 // ============================================
-// 참여마당
+// 참여마당 (DB 연동 게시판)
 // ============================================
-Route::get('/community/faq', fn() => view('community.faq'));
-Route::get('/community/board', fn() => view('community.board'));
-Route::get('/community/bookreview', fn() => view('community.bookreview'));
-Route::get('/community/wordbook', fn() => view('community.wordbook'));
-Route::get('/community/jobs', fn() => view('community.jobs'));
+$communityBoards = [
+    'faq'        => 'faq',
+    'board'      => 'free_board',
+    'survey'     => 'survey',
+    'bookreview' => 'book_review',
+    'wordbook'   => 'wordbook',
+    'gallery'    => 'gallery',
+    'job-offer'  => 'job_offer',
+    'job-seek'   => 'job_seek',
+];
+foreach ($communityBoards as $slug => $boardType) {
+    Route::get("/community/{$slug}", fn(\Illuminate\Http\Request $r) => app(BoardController::class)->index($r, $boardType, "community.{$slug}"));
+}
 Route::get('/community', fn() => redirect('community/faq'));
 
 // ============================================
-// 관련사이트
+// 게시글 상세 보기
+// ============================================
+Route::get('/board/{boardType}/{id}', [BoardController::class, 'show'])->where('id', '[0-9]+');
+
+// ============================================
+// 관련사이트 (정적 페이지)
 // ============================================
 Route::get('/reference/domestic', fn() => view('reference.domestic'));
 Route::get('/reference/overseas', fn() => view('reference.overseas'));
 Route::get('/reference/media', fn() => view('reference.media'));
 Route::get('/reference/bidding', fn() => view('reference.bidding'));
 Route::get('/reference', fn() => redirect('reference/domestic'));
+
+// ============================================
+// 기타
+// ============================================
+Route::get('/privacy', fn() => view('privacy'));
+
+// ============================================
+// 관리자 페이지
+// ============================================
+Route::prefix('admin')->middleware(['admin'])->group(base_path('routes/admin.php'));

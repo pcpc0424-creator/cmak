@@ -88,7 +88,7 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                                <a href="/cmak/bids" class="icak-cell-more">더보기 +</a>
+                                <a href="/cmak/notice/bids" class="icak-cell-more">더보기 +</a>
                             </div>
                             <div class="icak-cell">
                                 <div class="icak-cell-title">
@@ -107,19 +107,25 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                                <a href="/cmak/news/legal" class="icak-cell-more">더보기 +</a>
+                                <a href="/cmak/notice/law" class="icak-cell-more">더보기 +</a>
                             </div>
                         </div>
 
-                        {{-- ===== 2행: 6개 탭 전환 ===== --}}
-                        <div class="icak-tabs-section" x-data="{ activeTab: 'domestic' }">
-                            <div class="icak-tabs-header">
+                        {{-- ===== 2행: 6개 탭 전환 (2그룹) ===== --}}
+                        <div class="icak-tabs-section" x-data="{ tabGroup: 'group1', activeTab: 'domestic' }">
+                            <div class="icak-tab-group-header">
+                                <button class="icak-tab-group-btn" :class="{ 'active': tabGroup === 'group1' }" @click="tabGroup = 'group1'; activeTab = 'domestic'">그룹 탭1</button>
+                                <button class="icak-tab-group-btn" :class="{ 'active': tabGroup === 'group2' }" @click="tabGroup = 'group2'; activeTab = 'member'">그룹 탭2</button>
+                            </div>
+                            <div class="icak-tabs-header" x-show="tabGroup === 'group1'">
                                 <button class="icak-tab-btn" :class="{ 'active': activeTab === 'domestic' }" @click="activeTab = 'domestic'">국내외소식</button>
-                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'member' }" @click="activeTab = 'member'">회원동향</button>
-                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'org' }" @click="activeTab = 'org'">유관기관</button>
-                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'personnel' }" @click="activeTab = 'personnel'">인사경조사</button>
-                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'column' }" @click="activeTab = 'column'">전문가 칼럼</button>
                                 <button class="icak-tab-btn" :class="{ 'active': activeTab === 'press' }" @click="activeTab = 'press'">보도자료</button>
+                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'org' }" @click="activeTab = 'org'">유관기관</button>
+                            </div>
+                            <div class="icak-tabs-header" x-show="tabGroup === 'group2'">
+                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'member' }" @click="activeTab = 'member'">회원동향</button>
+                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'column' }" @click="activeTab = 'column'">전문가 칼럼</button>
+                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'personnel' }" @click="activeTab = 'personnel'">인사경조사</button>
                             </div>
                             <div class="icak-tabs-body">
                                 {{-- 국내외소식 --}}
@@ -136,7 +142,7 @@
                                             </li>
                                         @endforeach
                                     </ul>
-                                    <a href="/cmak/news/domestic" class="icak-cell-more">더보기 +</a>
+                                    <a href="/cmak/notice/news" class="icak-cell-more">더보기 +</a>
                                 </div>
                                 {{-- 회원동향 --}}
                                 <div x-show="activeTab === 'member'" x-transition>
@@ -145,7 +151,7 @@
                                             <li><a href="{{ $item['link'] }}">{{ $item['company'] }} - {{ $item['title'] }}</a></li>
                                         @endforeach
                                     </ul>
-                                    <a href="/cmak/news/member" class="icak-cell-more">더보기 +</a>
+                                    <a href="/cmak/notice/member" class="icak-cell-more">더보기 +</a>
                                 </div>
                                 {{-- 유관기관 --}}
                                 <div x-show="activeTab === 'org'" x-transition>
@@ -161,7 +167,7 @@
                                             </li>
                                         @endforeach
                                     </ul>
-                                    <a href="/cmak/news/org" class="icak-cell-more">더보기 +</a>
+                                    <a href="/cmak/notice/org" class="icak-cell-more">더보기 +</a>
                                 </div>
                                 {{-- 인사경조사 --}}
                                 <div x-show="activeTab === 'personnel'" x-transition>
@@ -214,7 +220,7 @@
                                     <span>CM 업무 가이드</span>
                                 </div>
                             </a>
-                            <a href="/cmak/cmdata/book/1" class="icak-image-card">
+                            <a href="/cmak/community/bookreview" class="icak-image-card">
                                 <div class="icak-image-card-icon">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                                 </div>
@@ -223,7 +229,7 @@
                                     <span>추천 도서</span>
                                 </div>
                             </a>
-                            <a href="/cmak/cmdata/wordbook/1" class="icak-image-card">
+                            <a href="/cmak/community/wordbook" class="icak-image-card">
                                 <div class="icak-image-card-icon">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                                 </div>
@@ -241,7 +247,7 @@
                                     <span>월간 소식지</span>
                                 </div>
                             </a>
-                            <a href="/cmak/archive/cm" class="icak-image-card">
+                            <a href="/cmak/cmdata/report" class="icak-image-card">
                                 <div class="icak-image-card-icon">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                                 </div>

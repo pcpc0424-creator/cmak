@@ -26,7 +26,7 @@
     </a>
 
     {{-- 주요행사 일정 --}}
-    <a href="{{ $schedule['link'] ?? '/schedule' }}" class="group flex flex-col items-center p-3 rounded-xl hover:bg-white hover:shadow-md transition-all duration-200 relative">
+    <a href="{{ $schedule['link'] ?? '#' }}" class="group flex flex-col items-center p-3 rounded-xl hover:bg-white hover:shadow-md transition-all duration-200 relative">
         <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-cyan-600 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform shadow-lg shadow-cyan-500/20 relative">
             <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -42,7 +42,7 @@
     </a>
 
     {{-- 부서별연락처 --}}
-    <a href="/intro/contact" class="group flex flex-col items-center p-3 rounded-xl hover:bg-white hover:shadow-md transition-all duration-200">
+    <a href="/intro/departments" class="group flex flex-col items-center p-3 rounded-xl hover:bg-white hover:shadow-md transition-all duration-200">
         <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform shadow-lg shadow-emerald-500/20">
             <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>

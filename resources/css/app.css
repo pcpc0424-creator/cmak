@@ -1076,9 +1076,8 @@ html.fp-enabled,
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding: 8px 16px;
+    padding: 0;
     flex-shrink: 0;
-    border-right: 1px solid #e5e5e5;
     transition: background 0.2s;
 }
 
@@ -1087,7 +1086,7 @@ html.fp-enabled,
 }
 
 .icak-ad-item img {
-    height: 70px;
+    height: 100%;
     width: auto;
     object-fit: contain;
 }
@@ -1215,7 +1214,7 @@ html.fp-enabled,
 /* 섹션 헤더 */
 .icak-section-header {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
 }
 
 .icak-section-header-inner {
@@ -1233,7 +1232,7 @@ html.fp-enabled,
 }
 
 .icak-section-header-title {
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 800;
     color: #1a1a1a;
     letter-spacing: 2px;
@@ -1245,7 +1244,7 @@ html.fp-enabled,
 }
 
 .icak-section-header-sub {
-    font-size: 13px;
+    font-size: 14px;
     color: #888;
     letter-spacing: 0.5px;
 }
@@ -1273,7 +1272,7 @@ html.fp-enabled,
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 .icak-content-right {
@@ -1334,13 +1333,13 @@ html.fp-enabled,
 }
 
 .icak-image-card-text strong {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
     color: #1a1a1a;
 }
 
 .icak-image-card-text span {
-    font-size: 11px;
+    font-size: 12.5px;
     color: #888;
 }
 
@@ -1376,18 +1375,40 @@ html.fp-enabled,
     border: 1px solid rgba(0,0,0,0.04);
 }
 
+.icak-tab-group-header {
+    display: flex;
+    background: linear-gradient(135deg, #082d5c, #004a99);
+}
+
+.icak-tab-group-btn {
+    flex: 1;
+    padding: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.icak-tab-group-btn.active {
+    color: #fff;
+    background: rgba(255,255,255,0.15);
+}
+
 .icak-tabs-header {
     display: flex;
-    background: linear-gradient(135deg, #1a3a5c, #2d6da8);
+    background: linear-gradient(135deg, #0a3d7c, #0061c2);
     overflow-x: auto;
 }
 
 .icak-tab-btn {
     flex: 1;
-    padding: 12px 8px;
-    font-size: 13px;
+    padding: 11px 8px;
+    font-size: 14.5px;
     font-weight: 600;
-    color: rgba(255,255,255,0.7);
+    color: #fff;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -1426,11 +1447,6 @@ html.fp-enabled,
 
 .icak-tabs-body {
     padding: 0;
-}
-
-.icak-tabs-body .icak-cell-list {
-    margin: 0;
-    padding: 4px 0;
 }
 
 .icak-tabs-body .icak-cell-more {
@@ -1627,8 +1643,8 @@ html.fp-enabled,
 }
 
 .icak-cell-title {
-    padding: 14px 14px;
-    font-size: 14px;
+    padding: 12px 14px;
+    font-size: 15.5px;
     font-weight: 700;
     color: #fff;
     background: linear-gradient(135deg, #0a3d7c, #0061c2);
@@ -1674,14 +1690,14 @@ html.fp-enabled,
 .icak-cell-list {
     list-style: none;
     margin: 0;
-    padding: 6px 0;
+    padding: 4px 0;
     flex: 1;
 }
 
 .icak-cell-list li a {
     display: block;
     padding: 9px 14px;
-    font-size: 13px;
+    font-size: 14.5px;
     color: #444;
     border-bottom: 1px solid #f3f4f6;
     overflow: hidden;
@@ -1724,8 +1740,8 @@ html.fp-enabled,
 .icak-cell-more {
     display: block;
     text-align: center;
-    padding: 8px;
-    font-size: 11px;
+    padding: 7px;
+    font-size: 12.5px;
     color: #0061c2;
     font-weight: 600;
     border-top: 1px solid #eef0f4;
@@ -1946,7 +1962,7 @@ html.fp-enabled,
     margin-right: 25px;
 }
 
-.icak-tab-btn {
+.icak-tab-area .icak-tab-btn {
     display: block;
     font-size: 20px;
     color: #949494;
@@ -1960,7 +1976,7 @@ html.fp-enabled,
     font-weight: 400;
 }
 
-.icak-tab-btn::after {
+.icak-tab-area .icak-tab-btn::after {
     content: '';
     display: block;
     width: 0;
@@ -1970,22 +1986,22 @@ html.fp-enabled,
     transition: all 0.3s;
 }
 
-.icak-tab-btn:hover {
+.icak-tab-area .icak-tab-btn:hover {
     color: #000;
     font-weight: bold;
 }
 
-.icak-tab-btn:hover::after {
+.icak-tab-area .icak-tab-btn:hover::after {
     width: 100%;
     opacity: 1;
 }
 
-.icak-tab-btn.active {
+.icak-tab-area .icak-tab-btn.active {
     color: #373737;
     font-weight: bold;
 }
 
-.icak-tab-btn.active::after {
+.icak-tab-area .icak-tab-btn.active::after {
     width: 100%;
     opacity: 1;
 }

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\RelatedSiteController;
 use App\Http\Controllers\Admin\OnlineApplicationController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\EnglishContentController;
+use App\Http\Controllers\Admin\EnglishItemController;
 
 // Auth (no admin middleware)
 Route::withoutMiddleware('admin')->group(function () {
@@ -21,7 +22,7 @@ Route::withoutMiddleware('admin')->group(function () {
 Route::post('logout', [AuthController::class, 'logout'])->name('admin.logout');
 
 // Dashboard
-Route::get('/', fn() => redirect('/cmak/admin/dashboard'));
+Route::get('/', fn() => redirect()->route('admin.dashboard'));
 Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
 // Posts (board_type parameter)
@@ -61,5 +62,11 @@ Route::post('online-applications/{online_application}/entries', [OnlineApplicati
 // Accounts (admin only)
 Route::resource('accounts', AccountController::class)->names('admin.accounts');
 
-// English Contents
-Route::resource('english-contents', EnglishContentController::class)->names('admin.english-contents');
+// English Contents (편집/삭제만 - 페이지 추가는 코드 작업 필요)
+Route::resource('english-contents', EnglishContentController::class)
+    ->only(['index', 'edit', 'update', 'destroy'])
+    ->names('admin.english-contents');
+
+// English Items (수정/삭제만 - 추가는 코드 작업 필요)
+Route::put('english-contents/{englishContent}/items/{item}', [EnglishItemController::class, 'update'])->name('admin.english-items.update');
+Route::delete('english-contents/{englishContent}/items/{item}', [EnglishItemController::class, 'destroy'])->name('admin.english-items.destroy');

@@ -114,6 +114,47 @@ Route::get('/reference', fn() => redirect('reference/domestic'));
 Route::get('/privacy', fn() => view('privacy'));
 
 // ============================================
+// English pages
+// ============================================
+Route::prefix('eng')->group(function () {
+    Route::get('/', fn() => view('eng.home'));
+
+    // About CMAK
+    Route::get('/about/greeting',     fn() => view('eng.about.greeting'));
+    Route::get('/about/purpose',      fn() => view('eng.about.purpose'));
+    Route::get('/about/history',      fn() => view('eng.about.history'));
+    Route::get('/about/organization', fn() => view('eng.about.organization'));
+    Route::get('/about/scheme',       fn() => view('eng.about.scheme'));
+    Route::get('/about/contact',      fn() => view('eng.about.contact'));
+    Route::get('/about',              fn() => redirect('eng/about/greeting'));
+
+    // International CM Day
+    Route::get('/cmday/introduction', fn() => view('eng.cmday.introduction'));
+    Route::get('/cmday/members',      fn() => view('eng.cmday.members'));
+    Route::get('/cmday/celebrations', fn() => view('eng.cmday.celebrations'));
+    Route::get('/cmday/registration', fn() => view('eng.cmday.registration'));
+    Route::get('/cmday',              fn() => redirect('eng/cmday/introduction'));
+
+    // IPMA Korea
+    Route::get('/ipma/about',         fn() => view('eng.ipma.about'));
+    Route::get('/ipma/certification', fn() => view('eng.ipma.certification'));
+    Route::get('/ipma/education',     fn() => view('eng.ipma.education'));
+    Route::get('/ipma/news',          fn() => view('eng.ipma.news'));
+    Route::get('/ipma/membership',    fn() => view('eng.ipma.membership'));
+    Route::get('/ipma/resources',     fn() => view('eng.ipma.resources'));
+    Route::get('/ipma',               fn() => redirect('eng/ipma/about'));
+
+    // CMAK News
+    Route::get('/news/publications', fn() => view('eng.news.publications'));
+    Route::get('/news/seminars',     fn() => view('eng.news.seminars'));
+    Route::get('/news/conferences',  fn() => view('eng.news.conferences'));
+    Route::get('/news',              fn() => redirect('eng/news/publications'));
+
+    // Membership
+    Route::get('/membership', fn() => view('eng.membership'));
+});
+
+// ============================================
 // 관리자 페이지
 // ============================================
 Route::prefix('admin')->middleware(['admin'])->group(base_path('routes/admin.php'));

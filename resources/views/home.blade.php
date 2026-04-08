@@ -111,97 +111,102 @@
                             </div>
                         </div>
 
-                        {{-- ===== 2행: 6개 탭 전환 (2그룹) ===== --}}
-                        <div class="icak-tabs-section" x-data="{ tabGroup: 'group1', activeTab: 'domestic' }">
-                            <div class="icak-tab-group-header">
-                                <button class="icak-tab-group-btn" :class="{ 'active': tabGroup === 'group1' }" @click="tabGroup = 'group1'; activeTab = 'domestic'">그룹 탭1</button>
-                                <button class="icak-tab-group-btn" :class="{ 'active': tabGroup === 'group2' }" @click="tabGroup = 'group2'; activeTab = 'member'">그룹 탭2</button>
+                        {{-- ===== 2행: 두 그룹 동시 노출 (PC: 좌우 / 모바일: 상하) ===== --}}
+                        <div class="icak-tab-groups-wrap">
+                            {{-- 그룹 1: 국내외소식 / 보도자료 / 유관기관 --}}
+                            <div class="icak-tabs-section" x-data="{ activeTab: 'domestic' }">
+                                <div class="icak-tabs-header">
+                                    <button class="icak-tab-btn" :class="{ 'active': activeTab === 'domestic' }" @click="activeTab = 'domestic'">국내외소식</button>
+                                    <button class="icak-tab-btn" :class="{ 'active': activeTab === 'press' }" @click="activeTab = 'press'">보도자료</button>
+                                    <button class="icak-tab-btn" :class="{ 'active': activeTab === 'org' }" @click="activeTab = 'org'">유관기관</button>
+                                </div>
+                                <div class="icak-tabs-body">
+                                    {{-- 국내외소식 --}}
+                                    <div x-show="activeTab === 'domestic'" x-transition>
+                                        <ul class="icak-cell-list">
+                                            @foreach(array_slice($domesticNews, 0, 4) as $item)
+                                                <li>
+                                                    <a href="{{ $item['link'] }}">
+                                                        {{ $item['title'] }}
+                                                        @if(isset($item['date']) && (strtotime($today) - strtotime($item['date'])) < 86400 * 2)
+                                                            <span class="icak-new-badge">N</span>
+                                                        @endif
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        <a href="/cmak/notice/news" class="icak-cell-more">더보기 +</a>
+                                    </div>
+                                    {{-- 보도자료 --}}
+                                    <div x-show="activeTab === 'press'" x-transition>
+                                        <ul class="icak-cell-list">
+                                            @foreach(array_slice($pressReleases, 0, 4) as $item)
+                                                <li>
+                                                    <a href="{{ $item['link'] }}">
+                                                        {{ $item['title'] }}
+                                                        @if(isset($item['date']) && (strtotime($today) - strtotime($item['date'])) < 86400 * 2)
+                                                            <span class="icak-new-badge">N</span>
+                                                        @endif
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        <a href="/cmak/notice/press" class="icak-cell-more">더보기 +</a>
+                                    </div>
+                                    {{-- 유관기관 --}}
+                                    <div x-show="activeTab === 'org'" x-transition>
+                                        <ul class="icak-cell-list">
+                                            @foreach(array_slice($relatedOrgNews, 0, 4) as $item)
+                                                <li>
+                                                    <a href="{{ $item['link'] }}">
+                                                        {{ $item['title'] }}
+                                                        @if(isset($item['date']) && (strtotime($today) - strtotime($item['date'])) < 86400 * 2)
+                                                            <span class="icak-new-badge">N</span>
+                                                        @endif
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        <a href="/cmak/notice/org" class="icak-cell-more">더보기 +</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="icak-tabs-header" x-show="tabGroup === 'group1'">
-                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'domestic' }" @click="activeTab = 'domestic'">국내외소식</button>
-                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'press' }" @click="activeTab = 'press'">보도자료</button>
-                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'org' }" @click="activeTab = 'org'">유관기관</button>
-                            </div>
-                            <div class="icak-tabs-header" x-show="tabGroup === 'group2'">
-                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'member' }" @click="activeTab = 'member'">회원동향</button>
-                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'column' }" @click="activeTab = 'column'">전문가 칼럼</button>
-                                <button class="icak-tab-btn" :class="{ 'active': activeTab === 'personnel' }" @click="activeTab = 'personnel'">인사경조사</button>
-                            </div>
-                            <div class="icak-tabs-body">
-                                {{-- 국내외소식 --}}
-                                <div x-show="activeTab === 'domestic'" x-transition>
-                                    <ul class="icak-cell-list">
-                                        @foreach(array_slice($domesticNews, 0, 4) as $item)
-                                            <li>
-                                                <a href="{{ $item['link'] }}">
-                                                    {{ $item['title'] }}
-                                                    @if(isset($item['date']) && (strtotime($today) - strtotime($item['date'])) < 86400 * 2)
-                                                        <span class="icak-new-badge">N</span>
-                                                    @endif
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                    <a href="/cmak/notice/news" class="icak-cell-more">더보기 +</a>
+
+                            {{-- 그룹 2: 회원동향 / 전문가 칼럼 / 인사경조사 --}}
+                            <div class="icak-tabs-section" x-data="{ activeTab: 'member' }">
+                                <div class="icak-tabs-header">
+                                    <button class="icak-tab-btn" :class="{ 'active': activeTab === 'member' }" @click="activeTab = 'member'">회원동향</button>
+                                    <button class="icak-tab-btn" :class="{ 'active': activeTab === 'column' }" @click="activeTab = 'column'">전문가 칼럼</button>
+                                    <button class="icak-tab-btn" :class="{ 'active': activeTab === 'personnel' }" @click="activeTab = 'personnel'">인사경조사</button>
                                 </div>
-                                {{-- 회원동향 --}}
-                                <div x-show="activeTab === 'member'" x-transition>
-                                    <ul class="icak-cell-list">
-                                        @foreach(array_slice($memberTrends, 0, 4) as $item)
-                                            <li><a href="{{ $item['link'] }}">{{ $item['company'] }} - {{ $item['title'] }}</a></li>
-                                        @endforeach
-                                    </ul>
-                                    <a href="/cmak/notice/member" class="icak-cell-more">더보기 +</a>
-                                </div>
-                                {{-- 유관기관 --}}
-                                <div x-show="activeTab === 'org'" x-transition>
-                                    <ul class="icak-cell-list">
-                                        @foreach(array_slice($relatedOrgNews, 0, 4) as $item)
-                                            <li>
-                                                <a href="{{ $item['link'] }}">
-                                                    {{ $item['title'] }}
-                                                    @if(isset($item['date']) && (strtotime($today) - strtotime($item['date'])) < 86400 * 2)
-                                                        <span class="icak-new-badge">N</span>
-                                                    @endif
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                    <a href="/cmak/notice/org" class="icak-cell-more">더보기 +</a>
-                                </div>
-                                {{-- 인사경조사 --}}
-                                <div x-show="activeTab === 'personnel'" x-transition>
-                                    <ul class="icak-cell-list">
-                                        @foreach(array_slice($personnelEvents, 0, 4) as $item)
-                                            <li><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
-                                        @endforeach
-                                    </ul>
-                                    <a href="/cmak/community/board" class="icak-cell-more">더보기 +</a>
-                                </div>
-                                {{-- 전문가 칼럼 --}}
-                                <div x-show="activeTab === 'column'" x-transition>
-                                    <ul class="icak-cell-list">
-                                        @foreach(array_slice($expertColumns, 0, 4) as $item)
-                                            <li><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
-                                        @endforeach
-                                    </ul>
-                                    <a href="/cmak/cmdata/expert" class="icak-cell-more">더보기 +</a>
-                                </div>
-                                {{-- 보도자료 --}}
-                                <div x-show="activeTab === 'press'" x-transition>
-                                    <ul class="icak-cell-list">
-                                        @foreach(array_slice($pressReleases, 0, 4) as $item)
-                                            <li>
-                                                <a href="{{ $item['link'] }}">
-                                                    {{ $item['title'] }}
-                                                    @if(isset($item['date']) && (strtotime($today) - strtotime($item['date'])) < 86400 * 2)
-                                                        <span class="icak-new-badge">N</span>
-                                                    @endif
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                    <a href="/cmak/notice/press" class="icak-cell-more">더보기 +</a>
+                                <div class="icak-tabs-body">
+                                    {{-- 회원동향 --}}
+                                    <div x-show="activeTab === 'member'" x-transition>
+                                        <ul class="icak-cell-list">
+                                            @foreach(array_slice($memberTrends, 0, 4) as $item)
+                                                <li><a href="{{ $item['link'] }}">{{ $item['company'] }} - {{ $item['title'] }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                        <a href="/cmak/notice/member" class="icak-cell-more">더보기 +</a>
+                                    </div>
+                                    {{-- 전문가 칼럼 --}}
+                                    <div x-show="activeTab === 'column'" x-transition>
+                                        <ul class="icak-cell-list">
+                                            @foreach(array_slice($expertColumns, 0, 4) as $item)
+                                                <li><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                        <a href="/cmak/cmdata/expert" class="icak-cell-more">더보기 +</a>
+                                    </div>
+                                    {{-- 인사경조사 --}}
+                                    <div x-show="activeTab === 'personnel'" x-transition>
+                                        <ul class="icak-cell-list">
+                                            @foreach(array_slice($personnelEvents, 0, 4) as $item)
+                                                <li><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                        <a href="/cmak/community/board" class="icak-cell-more">더보기 +</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

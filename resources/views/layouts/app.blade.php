@@ -7,6 +7,7 @@
     <title>@yield('title', '한국CM협회 - CMAK')</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+    <link rel="preload" as="image" href="/cmak/images/banners/main_visual1.jpg">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 

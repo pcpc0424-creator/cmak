@@ -807,7 +807,7 @@ html.fp-enabled,
     transform: translate(-55%, -50%);
     margin-top: -100px;
     text-align: left;
-    z-index: 9;
+    z-index: 15;
     color: #fff;
     text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
 }
@@ -820,6 +820,23 @@ html.fp-enabled,
 
 .icak-hero-text h2 strong {
     font-weight: 800;
+}
+
+.icak-hero-eyebrow {
+    display: inline-block;
+    padding: 8px 18px;
+    margin-bottom: 18px;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-shadow: none;
 }
 
 @keyframes heroBlurIn {
@@ -1367,6 +1384,18 @@ html.fp-enabled,
 }
 
 /* 6개 탭 영역 */
+.icak-tab-groups-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 900px) {
+    .icak-tab-groups-wrap {
+        grid-template-columns: 1fr;
+    }
+}
+
 .icak-tabs-section {
     background: #fff;
     border-radius: 12px;

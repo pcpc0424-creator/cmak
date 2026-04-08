@@ -8,71 +8,73 @@ use Illuminate\Http\Request;
 
 class EnglishContentController extends Controller
 {
-    protected string $basePath = '';
-
     public function index(Request $request)
     {
-        $query = EnglishContent::query();
+        $section = $request->input('section');
 
-        if ($request->filled('section')) {
-            $query->where('section', $request->input('section'));
+        $query = EnglishContent::query()->orderBy('section')->orderBy('sort_order');
+        if ($section) {
+            $query->where('section', $section);
         }
 
-        $contents = $query->latest()->paginate(15)->withQueryString();
+        $contents = $query->get()->groupBy('section');
+        $sectionLabels = EnglishContent::sectionLabels();
 
-        return view('admin.english-contents.index', compact('contents'));
-    }
-
-    public function create()
-    {
-        return view('admin.english-contents.create');
-    }
-
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'section' => ['required', 'string', 'max:100'],
-            'content' => ['required', 'string'],
-            'is_active' => ['boolean'],
-        ]);
-
-        EnglishContent::create($validated);
-
-        return redirect($this->basePath . '/admin/english-contents')
-            ->with('success', '영문 콘텐츠가 등록되었습니다.');
-    }
-
-    public function show(EnglishContent $englishContent)
-    {
-        return view('admin.english-contents.show', compact('englishContent'));
+        return view('admin.english-contents.index', compact('contents', 'sectionLabels', 'section'));
     }
 
     public function edit(EnglishContent $englishContent)
     {
-        return view('admin.english-contents.edit', compact('englishContent'));
+        $sectionLabels = EnglishContent::sectionLabels();
+        $englishContent->load('items');
+        return view('admin.english-contents.edit', [
+            'content' => $englishContent,
+            'sectionLabels' => $sectionLabels,
+            'items' => $englishContent->items,
+        ]);
     }
 
     public function update(Request $request, EnglishContent $englishContent)
     {
-        $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'section' => ['required', 'string', 'max:100'],
-            'content' => ['required', 'string'],
-            'is_active' => ['boolean'],
-        ]);
-
+        $validated = $this->validateRequest($request, $englishContent->id);
         $englishContent->update($validated);
 
-        return redirect($this->basePath . '/admin/english-contents')
-            ->with('success', '영문 콘텐츠가 수정되었습니다.');
+        return redirect()->route('admin.english-contents.index')
+            ->with('success', '영문 페이지가 수정되었습니다.');
     }
 
     public function destroy(EnglishContent $englishContent)
     {
         $englishContent->delete();
 
-        return redirect($this->basePath . '/admin/english-contents')
-            ->with('success', '영문 콘텐츠가 삭제되었습니다.');
+        return redirect()->route('admin.english-contents.index')
+            ->with('success', '영문 페이지가 삭제되었습니다.');
+    }
+
+    protected function validateRequest(Request $request, $ignoreId = null): array
+    {
+        $slugRule = ['required', 'string', 'max:255'];
+        if ($ignoreId) {
+            $slugRule[] = 'unique:english_contents,slug,' . $ignoreId;
+        } else {
+            $slugRule[] = 'unique:english_contents,slug';
+        }
+
+        $validated = $request->validate([
+            'slug' => $slugRule,
+            'section' => ['required', 'string', 'max:100'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:500'],
+            'eyebrow' => ['nullable', 'string', 'max:255'],
+            'hero_image' => ['nullable', 'string', 'max:500'],
+            'content' => ['nullable', 'string'],
+            'sort_order' => ['nullable', 'integer'],
+            'is_published' => ['nullable'],
+        ]);
+
+        $validated['is_published'] = $request->has('is_published');
+        $validated['sort_order'] = $validated['sort_order'] ?? 0;
+
+        return $validated;
     }
 }

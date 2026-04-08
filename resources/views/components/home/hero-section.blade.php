@@ -5,29 +5,40 @@
     $basePath = '/cmak';
     $slides = [
         [
-            'title' => '건설사업관리의',
+            'eyebrow' => 'CMAK · Since 1996',
+            'title' => '대한민국 건설사업관리의',
             'highlight' => '미래를 선도합니다',
             'image' => $basePath . '/images/banners/main_visual1.jpg',
         ],
         [
-            'title' => '2026년',
-            'highlight' => 'CM 능력평가 공시',
+            'eyebrow' => '2026 CM 능력평가 공시',
+            'title' => '신뢰받는 CM,',
+            'highlight' => '능력으로 증명합니다',
             'image' => $basePath . '/images/banners/main_visual2.jpg',
         ],
         [
-            'title' => '전문가 양성을 위한',
-            'highlight' => 'CM 자격검정',
+            'eyebrow' => '전문가 양성',
+            'title' => '체계적인 교육과 자격으로',
+            'highlight' => 'CM 전문가를 양성합니다',
             'image' => $basePath . '/images/banners/main_visual3.jpg',
         ],
         [
-            'title' => '함께 성장하는',
-            'highlight' => 'CM 전문교육',
+            'eyebrow' => 'CM 전문교육',
+            'title' => '함께 배우고 함께 성장하는',
+            'highlight' => 'CMAK 전문교육 프로그램',
             'image' => $basePath . '/images/banners/main_visual4.jpg',
         ],
         [
-            'title' => 'IPMA KOREA',
+            'eyebrow' => 'IPMA KOREA',
+            'title' => '세계와 함께하는',
             'highlight' => '글로벌 CM 네트워크',
             'image' => $basePath . '/images/banners/main_visual5.jpg',
+        ],
+        [
+            'eyebrow' => 'Sustainable Construction',
+            'title' => '지속가능한 건설로',
+            'highlight' => '내일의 가치를 만듭니다',
+            'image' => $basePath . '/images/banners/main_visual6.jpg',
         ],
     ];
 @endphp
@@ -64,12 +75,13 @@
             <div
                 x-show="current === {{ $index }}"
                 x-transition:enter="transition ease-out duration-700"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
+                x-transition:enter-start="opacity-0 translate-y-4"
+                x-transition:enter-end="opacity-100 translate-y-0"
                 x-transition:leave="transition ease-in duration-300"
                 x-transition:leave-start="opacity-100"
                 x-transition:leave-end="opacity-0"
             >
+                <span class="icak-hero-eyebrow">{{ $slide['eyebrow'] }}</span>
                 <h2>{{ $slide['title'] }}<br><strong>{{ $slide['highlight'] }}</strong></h2>
             </div>
         @endforeach

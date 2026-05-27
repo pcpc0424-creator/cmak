@@ -51,11 +51,51 @@
                 </div>
             @endif
 
+            {{-- 게시판별 추가 필드 (config/boards.php의 fields) --}}
+            @if(!empty($boardConfig['fields']))
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-md border border-gray-200">
+                    @foreach($boardConfig['fields'] as $fieldKey => $field)
+                        <div>
+                            <label for="meta_{{ $fieldKey }}" class="block text-sm font-medium text-gray-700 mb-1">{{ $field['label'] }}</label>
+                            @if(($field['type'] ?? 'text') === 'select')
+                                <select name="meta[{{ $fieldKey }}]" id="meta_{{ $fieldKey }}"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                    <option value="">선택하세요</option>
+                                    @foreach(($field['options'] ?? []) as $optKey => $optLabel)
+                                        <option value="{{ $optKey }}" {{ old('meta.'.$fieldKey) === $optKey ? 'selected' : '' }}>{{ $optLabel }}</option>
+                                    @endforeach
+                                </select>
+                            @elseif(($field['type'] ?? 'text') === 'date')
+                                <input type="text"
+                                       name="meta[{{ $fieldKey }}]"
+                                       id="meta_{{ $fieldKey }}"
+                                       value="{{ old('meta.'.$fieldKey) }}"
+                                       placeholder="yyyy-mm-dd"
+                                       pattern="\d{4}-\d{2}-\d{2}"
+                                       maxlength="10"
+                                       oninput="this.value=this.value.replace(/[^\d-]/g,'');if(this.value.replace(/-/g,'').length>=8&&!this.value.includes('-')){var v=this.value.replace(/-/g,'');this.value=v.slice(0,4)+'-'+v.slice(4,6)+'-'+v.slice(6,8);}"
+                                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            @elseif(($field['type'] ?? 'text') === 'textarea')
+                                <textarea name="meta[{{ $fieldKey }}]" id="meta_{{ $fieldKey }}" rows="3"
+                                          placeholder="{{ $field['placeholder'] ?? '' }}"
+                                          class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">{{ old('meta.'.$fieldKey) }}</textarea>
+                            @else
+                                <input type="{{ $field['type'] ?? 'text' }}"
+                                       name="meta[{{ $fieldKey }}]"
+                                       id="meta_{{ $fieldKey }}"
+                                       value="{{ old('meta.'.$fieldKey) }}"
+                                       placeholder="{{ $field['placeholder'] ?? '' }}"
+                                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
             {{-- 내용 --}}
             <div>
                 <label for="content" class="block text-sm font-medium text-gray-700 mb-1">내용 <span class="text-red-500">*</span></label>
                 <textarea name="content" id="content" rows="15" required
-                          class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                           placeholder="내용을 입력하세요">{{ old('content') }}</textarea>
                 @error('content')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -122,4 +162,8 @@
         </div>
     </form>
 </div>
+
+@push('scripts')
+@include('admin.partials.tinymce-editor')
+@endpush
 @endsection

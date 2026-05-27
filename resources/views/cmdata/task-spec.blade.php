@@ -1,0 +1,21 @@
+@extends('layouts.sub')
+
+@section('title', 'CM표준과업내용서 - 한국CM협회')
+@section('category', 'CM자료방')
+@section('category-link', '/cmak/cmdata/about')
+@section('page-title', 'CM표준과업내용서')
+
+@section('side-menu')
+    @include('cmdata._side-menu')
+@endsection
+
+@section('content')
+<div class="sub-content-card">
+    <h2 class="sub-content-title">CM표준과업내용서</h2>
+    <p class="sub-content-desc">CM표준과업내용서를 다운로드할 수 있습니다.</p>
+
+    <div style="margin-top:20px; padding:20px; background:#f6f9fc; border:1px solid #dde3ed; border-radius:8px;">
+        <a href="/cmak/legacy/upload/data/CM2.hwp" style="display:inline-block; padding:10px 20px; background:#0061c2; color:#fff; border-radius:4px; text-decoration:none; font-weight:600;">📄 CM표준과업내용서 다운로드 (HWP)</a>
+    </div>
+</div>
+@endsection

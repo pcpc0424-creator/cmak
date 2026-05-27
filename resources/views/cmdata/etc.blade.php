@@ -12,8 +12,14 @@
 @section('content')
 <div class="sub-content-card">
     <h2 class="sub-content-title">기타자료</h2>
-    <p class="sub-content-desc">CM 관련 기타자료를 열람할 수 있습니다.</p>
+    <p class="sub-content-desc">기타자료방입니다.</p>
 
-    @include('components.board-list')
+    @include('components.board-list', [
+        'columns' => [
+            ['label' => '제목', 'field' => 'title', 'tdStyle' => ''],
+            ['label' => '등록일', 'field' => 'published_at', 'style' => 'width:110px; white-space:nowrap;', 'tdStyle' => 'text-align:center; color:#888; font-size:12px; white-space:nowrap;'],
+            ['label' => '첨부파일', 'field' => 'attachment', 'style' => 'width:70px;', 'tdStyle' => 'text-align:center;'],
+        ],
+    ])
 </div>
 @endsection

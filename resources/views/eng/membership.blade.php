@@ -99,9 +99,9 @@
     </ol>
 
     <div class="eng-info-box">
-        <dt>Email</dt><dd>cmak@cmak.or.kr</dd>
-        <dt>Telephone</dt><dd>+82-2-585-4712 ~ 3</dd>
-        <dt>Address</dt><dd>7F, Platinum Tower, 398 Seocho-daero, Seocho-gu, Seoul 06619, Republic of Korea</dd>
+        <dt>Email</dt><dd>margaretwon@cmak.or.kr</dd>
+        <dt>Telephone</dt><dd>(+82)10-2858-8788</dd>
+        <dt>Address</dt><dd>(06673) 4F, Union Bldg. 88, Seocho-daero, Seocho-gu, Seoul, Republic of Korea</dd>
     </div>
 </div>
 @endsection

@@ -1,9 +1,9 @@
 @extends('layouts.sub')
 
-@section('title', '협회안내 - 한국CM협회')
+@section('title', '설립목적 및 주요사업 - 한국CM협회')
 @section('category', '협회소개')
-@section('category-link', '/intro/greeting')
-@section('page-title', '협회안내')
+@section('category-link', '/cmak/intro/about')
+@section('page-title', '설립목적 및 주요사업')
 
 @section('side-menu')
     @include('intro._side-menu')
@@ -11,74 +11,59 @@
 
 @section('content')
 <div class="sub-content-card">
-    <h2 class="sub-content-title">협회안내</h2>
-    <p class="sub-content-desc">한국CM협회의 설립목적과 주요사업을 소개합니다.</p>
+    <h2 class="sub-content-title">설립목적</h2>
 
-    <div class="sub-section">
-        <h3 class="sub-section-title">설립목적</h3>
-        <p>
-            한국CM협회는 「건설산업기본법」 제50조에 의거하여 설립된 법정단체로서,
-            건설사업관리(CM)의 발전과 건설산업의 선진화를 목적으로 합니다.
-            CM 전문기업의 권익을 보호하고, CM 제도의 발전과 관련 기술의 향상을 도모하며,
-            건설산업의 국제 경쟁력 강화에 기여합니다.
-        </p>
-    </div>
+    <div class="sub-section" style="text-align:center;">
+        <img src="/cmak/images/intro/about/intro2_1img1.gif" alt="한국CM협회 설립근거는, 민법 제32조 (비영리 사단법인)" style="max-width:314px; width:100%;">
 
-    <div class="sub-section">
-        <h3 class="sub-section-title">주요사업</h3>
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
-            @php
-                $services = [
-                    ['icon' => '📊', 'title' => 'CM능력평가·공시', 'desc' => '건설사업관리 기업의 능력을 객관적으로 평가하고 공시합니다.'],
-                    ['icon' => '📝', 'title' => '자격검정', 'desc' => '건설사업관리사(CMP) 자격검정 시험을 주관합니다.'],
-                    ['icon' => '🎓', 'title' => 'CM전문교육', 'desc' => '체계적인 교육 프로그램으로 CM 전문인력을 양성합니다.'],
-                    ['icon' => '📋', 'title' => 'CM실적관리', 'desc' => 'CM 실적의 유지관리 및 확인서 발급 업무를 수행합니다.'],
-                    ['icon' => '🔬', 'title' => '정책연구', 'desc' => 'CM 제도 발전을 위한 정책 연구 및 건의 활동을 합니다.'],
-                    ['icon' => '🌐', 'title' => '국제교류', 'desc' => 'CONSMA 등 국제 활동을 통해 글로벌 네트워크를 구축합니다.'],
-                ];
-            @endphp
-            @foreach($services as $service)
-                <div class="sub-info-box" style="display:flex; gap:12px; align-items:flex-start;">
-                    <span style="font-size:24px; line-height:1;">{{ $service['icon'] }}</span>
-                    <div>
-                        <dt>{{ $service['title'] }}</dt>
-                        <dd>{{ $service['desc'] }}</dd>
-                    </div>
-                </div>
-            @endforeach
+        <div style="margin-top:10px;">
+            <img src="/cmak/images/intro/about/intro2_1img2.gif" alt="회원의 품위 보전, 권익 옹호" style="max-width:155px; width:33%;"><img src="/cmak/images/intro/about/intro2_1img3.gif" alt="CM 체계확립 및 확대 보급" style="max-width:159px; width:34%;"><img src="/cmak/images/intro/about/intro2_1img4.gif" alt="CM 체계를 통한 건설산업 및 국민경제 발전에 기여" style="max-width:156px; width:33%;">
+        </div>
+
+        <div style="margin-top:0;">
+            <img src="/cmak/images/intro/about/intro2_1img5.gif" alt="" style="max-width:553px; width:100%;">
+        </div>
+
+        <div style="max-width:552px; margin:0 auto;">
+            <img src="/cmak/images/intro/about/intro2_1img6.gif" alt="주요사업" style="width:100%; display:block;">
+            <img src="/cmak/images/intro/about/intro2_1img7.gif" alt="주요사업 및 활동" style="width:100%; display:block;">
         </div>
     </div>
 
-    <div class="sub-section">
-        <h3 class="sub-section-title">협회 개요</h3>
-        <table class="sub-table">
-            <tbody>
-                <tr>
-                    <td style="background:#f0f4fa; font-weight:600; width:150px; text-align:center;">명칭</td>
-                    <td>사단법인 한국CM협회 (Construction Management Association of Korea)</td>
-                </tr>
-                <tr>
-                    <td style="background:#f0f4fa; font-weight:600; text-align:center;">설립일</td>
-                    <td>1996년 5월</td>
-                </tr>
-                <tr>
-                    <td style="background:#f0f4fa; font-weight:600; text-align:center;">설립근거</td>
-                    <td>건설산업기본법 제50조</td>
-                </tr>
-                <tr>
-                    <td style="background:#f0f4fa; font-weight:600; text-align:center;">회원사</td>
-                    <td>178개사</td>
-                </tr>
-                <tr>
-                    <td style="background:#f0f4fa; font-weight:600; text-align:center;">소재지</td>
-                    <td>서울특별시 서초구 서초대로 398 플라티넘타워 7층</td>
-                </tr>
-                <tr>
-                    <td style="background:#f0f4fa; font-weight:600; text-align:center;">대표전화</td>
-                    <td>02-585-4712~3</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="sub-section" style="margin-top:30px;">
+        <h3 class="sub-section-title">주요사업 목록 (텍스트)</h3>
+        <ul style="padding-left:22px; line-height:2;">
+            <li>CM의 이론체계확립을 위한 조사연구</li>
+            <li>CM의 실용화 방안 구축을 위한 산·학협동 활동</li>
+            <li>관련제도의 발전을 위한 조사·연구 및 개선건의</li>
+            <li>CM관련 인력 및 기술의 개발관리 지원</li>
+            <li>각종 자료 및 정보의 수집·보급과 관련 정보화사업 지원</li>
+            <li>정부 또는 다른 기관이나 단체로부터 위탁받은 업무의 수행</li>
+            <li>기타 CM의 발전에 필요한 제반 사업의 수행 등</li>
+        </ul>
+    </div>
+</div>
+
+<div class="sub-content-card" style="margin-top:30px;">
+    <h2 class="sub-content-title">CI 소개</h2>
+
+    <div class="sub-section" style="text-align:center;">
+        <img src="/cmak/images/intro/about/ici_img1.gif" alt="CMAK Logo" style="max-width:264px;">
+    </div>
+
+    <div class="sub-section" style="margin-top:20px;">
+        <p style="line-height:2;">
+            투명성 또는 청렴성을 뜻하는 전체의 <span style="color:#0066cc;">파란 색상</span>은 하늘을 나타내며,
+        </p>
+        <p style="line-height:2;">
+            맨 윗부분의 다섯개의 막대 형상은 <span style="color:#0066cc;">건설물과 CM의 비상 즉 세계화</span>를 상징하고,
+        </p>
+        <p style="line-height:2;">
+            맨 아래의 수평적 막대 형상은 <span style="color:#0066cc;">땅 위에 설치된 건설물을 사람이 이용 함으로서 3자가 조화를 이루며 영구히 살아갈 수 있도록 하는 건설산업의 탄탄한 기반구축</span>을 의미함.
+        </p>
+        <p style="line-height:2;">
+            또한 이들 중앙의 CMAK는 <span style="color:#0066cc;">이러한 건설산업을 우리 협회가 중심이 되어 견인해 나간다</span>는 뜻임.
+        </p>
     </div>
 </div>
 @endsection

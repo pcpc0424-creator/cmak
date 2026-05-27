@@ -223,8 +223,110 @@
             .sub-content-card { padding: 24px; }
         }
         @media (max-width: 768px) {
-            .sub-page-hero h1 { font-size: 1.5rem; }
-            .sub-content-card { padding: 20px; }
+            /* 가로 스크롤 원천 차단 */
+            html, body { overflow-x: hidden; }
+            .sub-page-body, .sub-page-container, .sub-content { max-width: 100%; overflow-x: hidden; }
+
+            .sub-page-hero { padding: 120px 16px 30px; }
+            .sub-page-hero h1 { font-size: 1.35rem; word-break: keep-all; }
+            .sub-page-breadcrumb { flex-wrap: wrap; font-size: 12px; gap: 4px; word-break: keep-all; }
+
+            .sub-page-container { padding: 20px 12px 40px; gap: 16px; }
+
+            /* 사이드 메뉴 — 메뉴명이 잘리지 않게 2줄 허용, 글자 세로쌓임 방지 */
+            .sub-side-title { font-size: 16px; padding: 14px 16px; }
+            .sub-side-list a {
+                flex: 1 1 33%;
+                min-width: 0;
+                padding: 11px 6px;
+                font-size: 12.5px;
+                line-height: 1.35;
+                word-break: keep-all;
+                overflow-wrap: break-word;
+                text-align: center;
+            }
+
+            /* 본문 카드 */
+            .sub-content-card { padding: 16px 14px; border-radius: 6px; max-width: 100%; }
+            .sub-content-title { font-size: 17px; padding-bottom: 12px; margin-bottom: 6px; word-break: keep-all; }
+            .sub-content-desc { font-size: 13px; margin-bottom: 20px; word-break: keep-all; }
+
+            .sub-section { margin-bottom: 28px; max-width: 100%; }
+            .sub-section-title { font-size: 15px; margin-bottom: 12px; word-break: keep-all; }
+            .sub-section p { font-size: 13.5px; line-height: 1.75; word-break: keep-all; overflow-wrap: break-word; }
+            .sub-section ul, .sub-section ol { padding-left: 20px !important; font-size: 13.5px; line-height: 1.75; }
+            .sub-section ul li, .sub-section ol li { word-break: keep-all; overflow-wrap: break-word; }
+
+            /* 테이블 — 좁은 화면에서 콘텐츠가 글자 세로쌓임 없이 자연스럽게 wrap */
+            .sub-table { font-size: 12.5px; table-layout: auto; width: 100%; }
+            .sub-table thead th {
+                padding: 8px 6px;
+                white-space: normal;
+                word-break: keep-all;
+                overflow-wrap: break-word;
+                font-size: 12px;
+                line-height: 1.4;
+            }
+            .sub-table tbody td {
+                padding: 8px 6px;
+                word-break: keep-all;
+                overflow-wrap: break-word;
+                line-height: 1.55;
+            }
+            .sub-table tbody td a { word-break: break-all; overflow-wrap: anywhere; }
+
+            /* 테이블이 넘치면 테이블만 가로 스크롤 (페이지 스크롤 X) */
+            .sub-section > .sub-table,
+            .sub-section .sub-table-wrap {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* 이미지 — 원본 지정 width 무시하고 컨테이너 맞춤 */
+            .sub-content-card img { max-width: 100% !important; height: auto !important; }
+
+            /* 인포 박스 */
+            .sub-info-box { padding: 16px 18px; }
+            .sub-info-box dd { font-size: 13px; word-break: keep-all; overflow-wrap: break-word; }
+
+            /* 역대 ConsMa 배너 높이 조정 */
+            .consma-banner { padding-top: 50% !important; }
+            .consma-btn { right: 10px !important; bottom: 10px !important; padding: 6px 12px !important; font-size: 11px !important; }
+
+            /* 부서별 업무 카드 */
+            .dept-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+            .dept-header { padding: 12px 14px !important; flex-direction: column !important; align-items: flex-start !important; gap: 2px !important; }
+            .dept-duties { padding: 12px 18px !important; }
+            .dept-duties li { font-size: 12.5px !important; }
+
+            /* 연혁 페이지 */
+            .history-year-img { max-width: 100% !important; }
+            .history-events { padding-left: 16px !important; font-size: 13px !important; }
+            .history-events li { word-break: keep-all; overflow-wrap: break-word; }
+
+            /* 인라인 style grid (회원가입 절차, 혜택 박스 등) — 2~3열짜리 모바일 1열 */
+            [style*="grid-template-columns"][style*="minmax"] {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* 가로 flex 박스 래핑 & 간격 축소 */
+            [style*="display:flex"][style*="flex-wrap"] { gap: 6px !important; }
+
+            /* 회원가입 STEP 박스 등 고정 너비 min-width 해제 */
+            .sub-content-card [style*="min-width:120px"],
+            .sub-content-card [style*="min-width:280px"],
+            .sub-content-card [style*="min-width:250px"],
+            .sub-content-card [style*="min-width:200px"] {
+                min-width: 0 !important;
+            }
+        }
+        @media (max-width: 480px) {
+            .sub-page-hero h1 { font-size: 1.2rem; }
+            .sub-content-card { padding: 14px 10px; }
+            .sub-side-list a { font-size: 12px; padding: 10px 4px; flex: 1 1 50%; }
+            .sub-table { font-size: 11.5px; }
+            .sub-table thead th, .sub-table tbody td { padding: 6px 4px; font-size: 11px; }
         }
     </style>
 </head>
@@ -274,13 +376,49 @@
         var header = document.getElementById('mainHeader');
         if (header) header.classList.add('scrolled');
 
-        // 팝업 닫기
+        // === 팝업 (서브 페이지에서는 기본 접힘, 토글 가능) ===
         var topPop = document.getElementById('topPop');
-        if (topPop) topPop.classList.add('active');
-
-        // 드롭다운 위치
+        var topPopBtn = document.getElementById('topPopBtn');
+        var topPopBtnSpan = document.getElementById('topPopBtnSpan');
         var subWraps = document.querySelectorAll('.icak-sub-wrap');
-        subWraps.forEach(function(sw) { sw.style.top = '125px'; });
+        var POPUP_HEIGHT = window.innerWidth <= 1024 ? 70 : 120;
+        var HEADER_HEIGHT = 125;
+        var popupOpen = false;
+
+        function applyHeaderTop(open) {
+            var headerTop = open ? POPUP_HEIGHT : 0;
+            if (header) header.style.top = headerTop + 'px';
+            var heroEl = document.querySelector('.sub-page-hero');
+            if (heroEl) heroEl.style.paddingTop = (headerTop + HEADER_HEIGHT + 55) + 'px';
+            subWraps.forEach(function(sw) { sw.style.top = (headerTop + HEADER_HEIGHT) + 'px'; });
+        }
+
+        if (topPop) {
+            topPop.classList.add('active');
+            if (topPopBtnSpan) topPopBtnSpan.classList.add('active');
+            applyHeaderTop(false);
+
+            if (topPopBtn) {
+                topPopBtn.addEventListener('click', function() {
+                    popupOpen = !popupOpen;
+                    if (popupOpen) {
+                        topPop.classList.remove('active');
+                        if (topPopBtnSpan) topPopBtnSpan.classList.remove('active');
+                    } else {
+                        topPop.classList.add('active');
+                        if (topPopBtnSpan) topPopBtnSpan.classList.add('active');
+                    }
+                    applyHeaderTop(popupOpen);
+                });
+            }
+
+            window.addEventListener('resize', function() {
+                POPUP_HEIGHT = window.innerWidth <= 1024 ? 70 : 120;
+                applyHeaderTop(popupOpen);
+            });
+        } else {
+            subWraps.forEach(function(sw) { sw.style.top = HEADER_HEIGHT + 'px'; });
+        }
 
         // 전체메뉴 토글
         var mainMenu = document.getElementById('mainMenu');

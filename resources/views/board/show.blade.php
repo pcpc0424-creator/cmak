@@ -4,6 +4,21 @@
 @section('category', $boardConfig['menu'] ?? '')
 @section('page-title', $boardConfig['name'] ?? '')
 
+@section('side-menu')
+    @php
+        $menuToSideMenu = [
+            '알림마당' => 'notice._side-menu',
+            'CM자료방' => 'cmdata._side-menu',
+            '협회업무' => 'business._side-menu',
+            '참여마당' => 'community._side-menu',
+        ];
+        $sideMenuView = $menuToSideMenu[$boardConfig['menu'] ?? ''] ?? null;
+    @endphp
+    @if($sideMenuView)
+        @include($sideMenuView)
+    @endif
+@endsection
+
 @section('content')
 <div class="sub-content-card">
     <h2 class="sub-content-title" style="font-size:18px; margin-bottom:16px;">{{ $post->title }}</h2>
@@ -16,6 +31,23 @@
         <span>조회: {{ number_format($post->view_count) }}</span>
     </div>
 
+    @if(!empty($boardConfig['show_metadata']) && !empty($boardConfig['fields']) && $post->metadata)
+        <div style="margin-bottom:24px; border:1px solid #e8ecf1; border-radius:6px; overflow:hidden;">
+            <table class="sub-table" style="margin:0;">
+                <tbody>
+                    @foreach($boardConfig['fields'] as $key => $field)
+                        @if(!empty($post->metadata[$key]))
+                            <tr>
+                                <td style="background:#f8f9fb; font-weight:bold; width:120px; text-align:center; font-size:13px;">{{ $field['label'] }}</td>
+                                <td style="font-size:13px;">{{ $post->metadata[$key] }}</td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+
     <div style="min-height:200px; padding:16px 0; line-height:1.8; font-size:14px; color:#333;">
         @php
             $content = $post->content;
@@ -25,7 +57,15 @@
             }
             // <HTML>, <HEAD> 등 문서 레벨 태그 제거
             $content = preg_replace('/<\/?(html|head|meta|!doctype)[^>]*>/i', '', $content);
+            // 이미지 경로 보정 — 원본 사이트 상대경로를 절대경로로 변환
+            $content = preg_replace('/src=["\']\/upload\//i', 'src="/cmak/legacy/upload/', $content);
+            $content = preg_replace('/src=["\']\.\.\/\.\.\/upload\//i', 'src="/cmak/legacy/upload/', $content);
+            $content = preg_replace('/src=["\']upload\//i', 'src="/cmak/legacy/upload/', $content);
+            // 이미지 반응형 처리
+            $content = preg_replace('/<img\b/i', '<img style="max-width:100%; height:auto;"', $content);
             $content = trim($content);
+            // 이중 인코딩된 HTML 엔티티 복원
+            $content = html_entity_decode($content, ENT_QUOTES, 'UTF-8');
             // HTML 블록 태그가 없는 순수 텍스트면 줄바꿈을 <br>로 변환
             if (!preg_match('/<(div|p|br|table|ul|ol|h[1-6])/i', $content)) {
                 $content = nl2br(e($content));

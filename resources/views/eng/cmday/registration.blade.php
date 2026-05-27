@@ -55,7 +55,7 @@
         <dt>Event</dt><dd>International CM Day &mdash; Korea Celebration</dd>
         <dt>Venue</dt><dd>To be announced</dd>
         <dt>Registration Fee</dt><dd>Free for CMAK members; standard fee applies for non-members</dd>
-        <dt>Inquiries</dt><dd>cmak@cmak.or.kr / +82-2-585-4712</dd>
+        <dt>Inquiries</dt><dd>margaretwon@cmak.or.kr / (+82)10-2858-8788</dd>
     </div>
 
     <h3>Registration Form</h3>

@@ -2,7 +2,7 @@
 
 return [
     'herald' => [
-        'name' => '회보',
+        'name' => 'CM Herald',
         'menu' => '협회업무',
         'category' => null,
         'has_attachments' => true,
@@ -11,7 +11,7 @@ return [
         'fields' => [],
     ],
     'certification_exam' => [
-        'name' => '자격검정시험',
+        'name' => '건설사업관리사자격검정',
         'menu' => '협회업무',
         'category' => null,
         'has_attachments' => true,
@@ -29,7 +29,7 @@ return [
         'fields' => [],
     ],
     'cm_performance' => [
-        'name' => 'CM능력평가/공시',
+        'name' => 'CM능력평가공시',
         'menu' => '협회업무',
         'category' => null,
         'has_attachments' => true,
@@ -38,7 +38,7 @@ return [
         'fields' => [],
     ],
     'research' => [
-        'name' => '연구자료',
+        'name' => '논문 및 연구보고서',
         'menu' => 'CM자료방',
         'category' => null,
         'has_attachments' => true,
@@ -47,7 +47,7 @@ return [
         'fields' => [],
     ],
     'cm_law' => [
-        'name' => 'CM관련법령',
+        'name' => '법령정보조회',
         'menu' => 'CM자료방',
         'category' => null,
         'has_attachments' => true,
@@ -56,7 +56,7 @@ return [
         'fields' => [],
     ],
     'education_seminar' => [
-        'name' => '교육세미나',
+        'name' => '교육 및 세미나사례',
         'menu' => 'CM자료방',
         'category' => null,
         'has_attachments' => true,
@@ -83,7 +83,7 @@ return [
         'fields' => [],
     ],
     'special_feature' => [
-        'name' => '특집',
+        'name' => '기획/특집',
         'menu' => 'CM자료방',
         'category' => null,
         'has_attachments' => true,
@@ -109,8 +109,17 @@ return [
         'has_issue_number' => false,
         'fields' => [],
     ],
+    'cm_overseas' => [
+        'name' => 'CM해외공급사업',
+        'menu' => 'CM자료방',
+        'category' => null,
+        'has_attachments' => true,
+        'has_summary' => false,
+        'has_issue_number' => false,
+        'fields' => [],
+    ],
     'cm_case' => [
-        'name' => 'CM사례',
+        'name' => '수행사례',
         'menu' => 'CM자료방',
         'category' => null,
         'has_attachments' => true,
@@ -143,6 +152,20 @@ return [
         'has_attachments' => true,
         'has_summary' => false,
         'has_issue_number' => false,
+        'fields' => [
+            'ordering_office' => ['label' => '발주자', 'type' => 'text', 'placeholder' => '예: 한국철도공사'],
+            'announcement_date' => ['label' => '공고일', 'type' => 'date'],
+            'deadline_date' => ['label' => '마감일', 'type' => 'date'],
+        ],
+        'show_metadata' => true,
+    ],
+    'news_org' => [
+        'name' => '유관기관소식',
+        'menu' => '알림마당',
+        'category' => null,
+        'has_attachments' => true,
+        'has_summary' => false,
+        'has_issue_number' => false,
         'fields' => [],
     ],
     'news_law' => [
@@ -152,7 +175,13 @@ return [
         'has_attachments' => true,
         'has_summary' => false,
         'has_issue_number' => false,
-        'fields' => [],
+        'fields' => [
+            'law_category' => ['label' => '법령 구분', 'type' => 'select', 'options' => [
+                'law' => '법·시행령·시행규칙',
+                'rule' => '훈령·지침·고시',
+                'preview' => '입법예고',
+            ]],
+        ],
     ],
     'news_association' => [
         'name' => '협회소식',
@@ -165,6 +194,15 @@ return [
     ],
     'news_press' => [
         'name' => '보도자료',
+        'menu' => '알림마당',
+        'category' => null,
+        'has_attachments' => true,
+        'has_summary' => false,
+        'has_issue_number' => false,
+        'fields' => [],
+    ],
+    'news_personnel' => [
+        'name' => '인사경조사',
         'menu' => '알림마당',
         'category' => null,
         'has_attachments' => true,
@@ -227,17 +265,22 @@ return [
         'fields' => [],
     ],
     'book_review' => [
-        'name' => 'BookReview',
-        'menu' => '참여마당',
+        'name' => 'Book Review',
+        'menu' => '알림마당',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => true,
         'has_issue_number' => false,
-        'fields' => [],
+        'fields' => [
+            'book_title' => ['label' => '책제목', 'type' => 'text'],
+            'book_author' => ['label' => '저자', 'type' => 'text'],
+            'publisher' => ['label' => '출판사', 'type' => 'text'],
+        ],
+        'show_metadata' => true,
     ],
     'wordbook' => [
-        'name' => 'CM용어사전',
-        'menu' => '참여마당',
+        'name' => 'Word Book',
+        'menu' => '알림마당',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => false,
@@ -260,7 +303,20 @@ return [
         'has_attachments' => true,
         'has_summary' => false,
         'has_issue_number' => false,
-        'fields' => [],
+        'fields' => [
+            'company' => ['label' => '회사명', 'type' => 'text'],
+            'company_address' => ['label' => '회사주소', 'type' => 'text'],
+            'contact' => ['label' => '연락처', 'type' => 'text'],
+            'manager' => ['label' => '담당자', 'type' => 'text'],
+            'region' => ['label' => '근무지역', 'type' => 'text'],
+            'employment_type' => ['label' => '고용형태', 'type' => 'text'],
+            'career' => ['label' => '경력구분', 'type' => 'text'],
+            'education' => ['label' => '최종학력', 'type' => 'text'],
+            'salary' => ['label' => '급여조건', 'type' => 'text'],
+            'deadline' => ['label' => '마감일', 'type' => 'date'],
+            'recruit_content' => ['label' => '모집내용', 'type' => 'textarea'],
+        ],
+        'show_metadata' => true,
     ],
     'job_seek' => [
         'name' => '구직',
@@ -269,6 +325,11 @@ return [
         'has_attachments' => true,
         'has_summary' => false,
         'has_issue_number' => false,
-        'fields' => [],
+        'fields' => [
+            'region' => ['label' => '지역', 'type' => 'text'],
+            'age' => ['label' => '연령', 'type' => 'text'],
+            'desired_job' => ['label' => '희망직종', 'type' => 'text'],
+        ],
+        'show_metadata' => true,
     ],
 ];

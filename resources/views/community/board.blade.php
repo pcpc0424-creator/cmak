@@ -14,6 +14,7 @@
     <h2 class="sub-content-title">자유게시판</h2>
     <p class="sub-content-desc">건설사업관리에 관한 자유로운 의견을 나누는 공간입니다.</p>
 
+    @php $replyPrefix = true; @endphp
     @include('components.board-list')
 </div>
 @endsection

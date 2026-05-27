@@ -22,13 +22,32 @@ class BoardController extends Controller
 
         if ($request->filled('search')) {
             $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('content', 'like', "%{$search}%");
-            });
+            $searchField = $request->input('search_field', '');
+
+            if ($searchField === 'title') {
+                $query->where('title', 'like', "%{$search}%");
+            } elseif ($searchField === 'author') {
+                $query->where('author', 'like', "%{$search}%");
+            } elseif (str_starts_with($searchField, 'metadata.')) {
+                $key = str_replace('metadata.', '', $searchField);
+                $query->where('metadata->' . $key, 'like', "%{$search}%");
+            } else {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                      ->orWhere('content', 'like', "%{$search}%");
+                });
+            }
         }
 
-        $posts = $query->orderByDesc('published_at')
+        // config/boards.php의 fields 기반 metadata 필터링
+        foreach (($boardConfig['fields'] ?? []) as $fieldKey => $field) {
+            if ($request->filled($fieldKey)) {
+                $query->where('metadata->' . $fieldKey, $request->input($fieldKey));
+            }
+        }
+
+        $posts = $query->with('attachments')
+            ->orderByDesc('published_at')
             ->paginate($perPage)
             ->withQueryString();
 

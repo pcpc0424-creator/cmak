@@ -45,8 +45,8 @@
     <p>To apply for IPMA Korea membership, please contact the IPMA Korea secretariat by email or phone. Our team will guide you through the application process and provide the application form, fee information and required supporting documents.</p>
 
     <div class="eng-info-box">
-        <dt>Email</dt><dd>cmak@cmak.or.kr</dd>
-        <dt>Telephone</dt><dd>+82-2-585-4712 ~ 3</dd>
+        <dt>Email</dt><dd>margaretwon@cmak.or.kr</dd>
+        <dt>Telephone</dt><dd>(+82)10-2858-8788</dd>
     </div>
 </div>
 @endsection

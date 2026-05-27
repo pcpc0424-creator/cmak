@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="eng-footer-info">
-                <p><strong>7F, Platinum Tower, 398 Seocho-daero, Seocho-gu, Seoul, Republic of Korea &nbsp; TEL : +82-2-585-4712~3</strong></p>
+                <p><strong>(06673) 4F, Union Bldg. 88, Seocho-daero, Seocho-gu, Seoul, Republic of Korea &nbsp; TEL : (+82)10-2858-8788 &nbsp; FAX : (+82)2-585-2689</strong></p>
                 <p class="copyright">Copyright &copy; 1996-{{ date('Y') }} Construction Management Association of Korea. All rights reserved.</p>
             </div>
         </div>

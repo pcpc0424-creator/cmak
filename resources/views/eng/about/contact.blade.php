@@ -27,13 +27,15 @@
     <div class="eng-info-box">
         <dl>
             <dt>Address</dt>
-            <dd>7F, Platinum Tower, 398 Seocho-daero, Seocho-gu, Seoul 06619, Republic of Korea</dd>
+            <dd>(06673) 4F, Union Bldg. 88, Seocho-daero, Seocho-gu, Seoul, Republic of Korea</dd>
             <dt>Telephone</dt>
-            <dd>+82-2-585-4712 ~ 3</dd>
+            <dd>(+82)10-2858-8788</dd>
             <dt>Fax</dt>
-            <dd>+82-2-585-4714</dd>
+            <dd>(+82)2-585-2689</dd>
             <dt>Email</dt>
-            <dd>cmak@cmak.or.kr</dd>
+            <dd>margaretwon@cmak.or.kr</dd>
+            <dt>Homepage</dt>
+            <dd>www.cmak.or.kr</dd>
             <dt>Office Hours</dt>
             <dd>Monday – Friday, 09:00 – 18:00 (KST)<br>Closed on weekends and Korean public holidays</dd>
         </dl>
@@ -43,14 +45,10 @@
     <div class="eng-contact-grid">
         <div>
             <p><strong>By Subway</strong><br>
-            Gangnam Station (Line 2 / Shinbundang Line), Exit 7. Approximately 5 minutes' walk along Seocho-daero toward Gyodae Station.</p>
-            <p><strong>By Bus</strong><br>
-            Numerous city bus routes serve the Gangnam area. Get off at the "Gangnam Station" bus stop and walk approximately 5 minutes.</p>
-            <p><strong>From Incheon International Airport</strong><br>
-            Take the Airport Limousine Bus 6020 / 6009 (approximately 80 minutes), or use the AREX express train + subway transfer at Seoul Station.</p>
+            100m from Exit 4 of Naebang Station on Subway Line No. 7</p>
         </div>
         <div class="eng-map">
-            <iframe src="https://maps.google.com/maps?q=398+Seocho-daero,+Seocho-gu,+Seoul,+South+Korea&hl=en&gl=us&z=17&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            <iframe src="https://www.google.com/maps?q=서울특별시+서초구+서초대로+88+유니온빌딩&output=embed&hl=en" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
         </div>
     </div>
 </div>

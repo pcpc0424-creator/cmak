@@ -7,7 +7,7 @@
                 @php $bp = '/cmak'; @endphp
                 <a href="{{ $bp }}/privacy" class="privacy">개인정보처리방침</a>
                 <a href="{{ $bp }}/intro/location">찾아오시는 길</a>
-                <a href="{{ $bp }}/intro/organization">부서별 연락처 안내</a>
+                <a href="{{ $bp }}/intro/departments">부서별 연락처 안내</a>
             </div>
             <div class="icak-footer-family">
                 <select onchange="if(this.value) window.open(this.value)">
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="icak-footer-info">
-                <p><strong>서울특별시 서초구 서초대로 398 플라티넘타워 7층 &nbsp; TEL : 02-585-4712~3</strong></p>
+                <p><strong>(06673) 서울특별시 서초구 서초대로88 (방배동 938-7, 유니온빌딩 4층) &nbsp; TEL : 02-585-4712~4 &nbsp; FAX : 02-585-2689</strong></p>
                 <p class="copyright">Copyright &copy; 1996-{{ date('Y') }} 한국CM협회 Construction Management Association of Korea</p>
             </div>
         </div>

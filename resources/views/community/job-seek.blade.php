@@ -14,6 +14,15 @@
     <h2 class="sub-content-title">구직</h2>
     <p class="sub-content-desc">구직 정보입니다.</p>
 
-    @include('components.board-list')
+    @include('components.board-list', [
+        'columns' => [
+            ['label' => '등록일', 'field' => 'published_at', 'style' => 'width:90px; white-space:nowrap;', 'tdStyle' => 'text-align:center; color:#888; font-size:12px; white-space:nowrap;'],
+            ['label' => '이름', 'field' => 'author', 'style' => 'width:70px;', 'tdStyle' => 'text-align:center; color:#888; font-size:12px;'],
+            ['label' => '제목', 'field' => 'title', 'tdStyle' => ''],
+            ['label' => '연령', 'field' => 'metadata.age', 'style' => 'width:55px;', 'tdStyle' => 'text-align:center; color:#888; font-size:12px;'],
+            ['label' => '지역', 'field' => 'metadata.region', 'style' => 'width:70px;', 'tdStyle' => 'text-align:center; color:#888; font-size:12px;'],
+            ['label' => '희망직종', 'field' => 'metadata.desired_job', 'style' => 'width:100px;', 'tdStyle' => 'text-align:center; color:#888; font-size:12px;'],
+        ],
+    ])
 </div>
 @endsection

@@ -1,9 +1,9 @@
 @extends('layouts.sub')
 
-@section('title', '회원현황 - 한국CM협회')
+@section('title', '회원사 - 한국CM협회')
 @section('category', '협회소개')
-@section('category-link', '/intro/greeting')
-@section('page-title', '회원현황')
+@section('category-link', '/cmak/intro/members')
+@section('page-title', '회원사')
 
 @section('side-menu')
     @include('intro._side-menu')
@@ -11,83 +11,89 @@
 
 @section('content')
 <div class="sub-content-card">
-    <h2 class="sub-content-title">회원현황</h2>
-    <p class="sub-content-desc">한국CM협회 회원사 현황입니다. (총 178개사)</p>
+    <h2 class="sub-content-title">회원사 명단</h2>
+    <p class="sub-content-desc">회사명 검색시 (주) 넣지 말고 검색해 주세요. &nbsp; [전체 {{ $members->total() }}개]</p>
 
-    {{-- 검색 바 --}}
-    <div style="display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap;">
-        <select style="padding:8px 12px; border:1px solid #dde3ed; border-radius:4px; font-size:13px; color:#444;">
-            <option>전체</option>
-            <option>회사명</option>
-            <option>지역</option>
+    {{-- 검색 폼: 검색구분 + 검색어 --}}
+    <form method="GET" action="/cmak/intro/members" style="display:flex; gap:6px; align-items:center; margin:20px 0 10px; flex-wrap:wrap;">
+        <select name="search_type"
+            style="padding:7px 10px; border:1px solid #c8d0db; border-radius:3px; font-size:13px; min-width:90px;">
+            <option value="용역" {{ ($searchType ?? '') === '용역' ? 'selected' : '' }}>용역</option>
+            <option value="시공" {{ ($searchType ?? '') === '시공' ? 'selected' : '' }}>시공</option>
+            <option value="회사명" {{ ($searchType ?? '') === '회사명' ? 'selected' : '' }}>회사명</option>
+            <option value="주소" {{ ($searchType ?? '') === '주소' ? 'selected' : '' }}>주소</option>
         </select>
-        <input type="text" placeholder="검색어를 입력하세요" style="flex:1; min-width:200px; padding:8px 12px; border:1px solid #dde3ed; border-radius:4px; font-size:13px;">
-        <button style="padding:8px 20px; background:#0061c2; color:#fff; border:none; border-radius:4px; font-size:13px; font-weight:600; cursor:pointer;">검색</button>
+        <input type="text" name="q" value="{{ $search }}" placeholder="검색어를 입력하세요"
+            style="flex:1; min-width:200px; padding:7px 10px; border:1px solid #c8d0db; border-radius:3px; font-size:13px;">
+        <button type="submit"
+            style="padding:7px 18px; background:#0061c2; color:#fff; border:none; border-radius:3px; font-size:13px; font-weight:600; cursor:pointer; letter-spacing:0.5px;">SEARCH</button>
+        @if($search !== '' || ($searchType ?? '') !== '' || ($selectedInitial ?? '') !== '')
+            <a href="/cmak/intro/members"
+                style="padding:7px 14px; background:#f3f4f6; color:#555; border:1px solid #c8d0db; border-radius:3px; font-size:13px; text-decoration:none;">초기화</a>
+        @endif
+    </form>
+
+    {{-- 자음 인덱스 + 페이지 표시 --}}
+    @php
+        $keepParams = array_filter([
+            'search_type' => $searchType ?? null,
+            'q' => $search ?? null,
+        ], fn($v) => $v !== null && $v !== '');
+        $baseQuery = http_build_query($keepParams);
+    @endphp
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0; padding:10px 12px; background:#f8f9fb; border:1px solid #e5e8ee; border-radius:3px; flex-wrap:wrap;">
+        <div style="display:flex; gap:2px; flex-wrap:wrap; font-size:13px;">
+            <a href="/cmak/intro/members{{ $baseQuery ? '?'.$baseQuery : '' }}"
+                style="padding:3px 8px; color:{{ empty($selectedInitial) ? '#0061c2' : '#555' }}; font-weight:{{ empty($selectedInitial) ? '700' : '400' }}; text-decoration:none;">전체</a>
+            @foreach(['ㄱ','ㄴ','ㄷ','ㄹ','ㅁ','ㅂ','ㅅ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'] as $cho)
+                <a href="/cmak/intro/members?initial={{ urlencode($cho) }}{{ $baseQuery ? '&'.$baseQuery : '' }}"
+                    style="padding:3px 8px; color:{{ ($selectedInitial ?? '') === $cho ? '#0061c2' : '#555' }}; font-weight:{{ ($selectedInitial ?? '') === $cho ? '700' : '400' }}; text-decoration:none;">{{ $cho }}</a>
+            @endforeach
+        </div>
+        <div style="font-size:13px; color:#555;">
+            Page No. : <strong style="color:#0061c2;">{{ $members->currentPage() }}</strong> / {{ max(1, $members->lastPage()) }}
+        </div>
     </div>
 
-    {{-- 회원사 테이블 --}}
     <div style="overflow-x:auto;">
         <table class="sub-table">
             <thead>
-                <tr>
-                    <th style="width:50px;">No.</th>
-                    <th style="width:80px;">구분</th>
+                <tr style="background:#EDEFDE;">
+                    <th style="width:50px;">번호</th>
+                    <th style="width:70px;">지역</th>
                     <th>회사명</th>
-                    <th style="width:130px;">대표전화</th>
+                    <th style="width:110px;">대표자</th>
+                    <th style="width:130px;">연락처</th>
                     <th style="width:130px;">FAX</th>
-                    <th style="width:120px;">홈페이지</th>
+                    <th>주소</th>
                 </tr>
             </thead>
             <tbody>
-                @php
-                    $members = [
-                        ['no' => 178, 'type' => '정회원', 'name' => '건일엔지니어링', 'phone' => '(054)284-0195', 'fax' => '(054)284-0196', 'url' => 'kunileng.co.kr'],
-                        ['no' => 177, 'type' => '정회원', 'name' => '제이앤건축사사무소', 'phone' => '064-727-4567', 'fax' => '064-727-4566', 'url' => ''],
-                        ['no' => 176, 'type' => '정회원', 'name' => '가우리안', 'phone' => '(031)900-1600', 'fax' => '(031)900-1692', 'url' => 'gaurian.com'],
-                        ['no' => 175, 'type' => '정회원', 'name' => '간삼종합건축사사무소', 'phone' => '(02)2250-6000', 'fax' => '(02)2253-0244', 'url' => 'gansam.com'],
-                        ['no' => 174, 'type' => '정회원', 'name' => 'CM지성건축사사무소', 'phone' => '(02)718-6650', 'fax' => '(02)718-6658', 'url' => 'cmjisung.com'],
-                        ['no' => 173, 'type' => '정회원', 'name' => '건축종합건축사사무소', 'phone' => '(02)514-0025', 'fax' => '(02)512-4664', 'url' => ''],
-                        ['no' => 172, 'type' => '정회원', 'name' => '건축사사무소 가온', 'phone' => '02-408-0108', 'fax' => '070-4495-6977', 'url' => 'gaonarchi.com'],
-                        ['no' => 171, 'type' => '정회원', 'name' => '건원엔지니어링', 'phone' => '(02)3458-2800', 'fax' => '(02)556-3523', 'url' => 'kunwoneng.com'],
-                        ['no' => 170, 'type' => '정회원', 'name' => '건축사사무소 광장', 'phone' => '(031)898-3535', 'fax' => '(031)624-4793', 'url' => 'kwangjangarch.com'],
-                        ['no' => 169, 'type' => '정회원', 'name' => '금남건설', 'phone' => '(02)2210-0500', 'fax' => '(02)2210-0199', 'url' => 'kne.co.kr'],
-                        ['no' => 168, 'type' => '정회원', 'name' => '해안건축', 'phone' => '(02)2190-2000', 'fax' => '(02)2190-2099', 'url' => 'haeahn.com'],
-                        ['no' => 167, 'type' => '정회원', 'name' => '희림종합건축사사무소', 'phone' => '(02)3438-8800', 'fax' => '(02)3438-8899', 'url' => 'heerim.com'],
-                        ['no' => 166, 'type' => '정회원', 'name' => '신화엔지니어링', 'phone' => '(02)519-0041', 'fax' => '(02)519-0043', 'url' => 'shinhwaeng.com'],
-                        ['no' => 165, 'type' => '정회원', 'name' => '정림건축종합건축사사무소', 'phone' => '(02)708-8600', 'fax' => '(02)708-8700', 'url' => 'junglim.com'],
-                        ['no' => 164, 'type' => '정회원', 'name' => '포스코A&C', 'phone' => '(054)220-6114', 'fax' => '(054)220-6100', 'url' => 'poscoanc.com'],
-                    ];
-                @endphp
-                @foreach($members as $member)
+                @forelse($members as $i => $m)
                     <tr>
-                        <td style="text-align:center;">{{ $member['no'] }}</td>
-                        <td style="text-align:center;">{{ $member['type'] }}</td>
-                        <td style="font-weight:500;">{{ $member['name'] }}</td>
-                        <td style="text-align:center; font-size:13px;">{{ $member['phone'] }}</td>
-                        <td style="text-align:center; font-size:13px;">{{ $member['fax'] }}</td>
-                        <td style="text-align:center;">
-                            @if($member['url'])
-                                <a href="http://{{ $member['url'] }}" target="_blank" style="color:#0061c2; font-size:12px;">{{ $member['url'] }}</a>
+                        <td style="text-align:center;">{{ ($members->currentPage() - 1) * $members->perPage() + $i + 1 }}</td>
+                        <td style="text-align:center; font-size:13px;">{{ $m->region ?: '-' }}</td>
+                        <td style="font-weight:500;">
+                            @if($m->website)
+                                <a href="{{ str_starts_with($m->website, 'http') ? $m->website : 'http://'.$m->website }}" target="_blank" style="color:#0061c2;">{{ $m->company_name }}</a>
                             @else
-                                <span style="color:#ccc;">-</span>
+                                {{ $m->company_name }}
                             @endif
                         </td>
+                        <td style="text-align:center;">{{ $m->representative ?: '-' }}</td>
+                        <td style="text-align:center; font-size:13px; white-space:nowrap;">{{ $m->phone ?: '-' }}</td>
+                        <td style="text-align:center; font-size:13px; white-space:nowrap;">{{ $m->fax ?: '-' }}</td>
+                        <td style="font-size:13px; color:#555;">{{ $m->address ?: '-' }}</td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr><td colspan="7" style="text-align:center; padding:30px; color:#888;">검색 결과가 없습니다.</td></tr>
+                @endforelse
             </tbody>
         </table>
     </div>
 
-    {{-- 페이지네이션 --}}
-    <div style="display:flex; justify-content:center; gap:4px; margin-top:24px;">
-        <span style="padding:6px 10px; font-size:13px; color:#999;">◀</span>
-        <span style="padding:6px 10px; font-size:13px; background:#0061c2; color:#fff; border-radius:4px; font-weight:600;">1</span>
-        @for($i = 2; $i <= 10; $i++)
-            <a href="#" style="padding:6px 10px; font-size:13px; color:#666; text-decoration:none;">{{ $i }}</a>
-        @endfor
-        <span style="padding:6px 10px; font-size:13px; color:#666;">…</span>
-        <a href="#" style="padding:6px 10px; font-size:13px; color:#666; text-decoration:none;">18</a>
-        <span style="padding:6px 10px; font-size:13px; color:#666;">▶</span>
+    <div style="margin-top:24px;">
+        {{ $members->links() }}
     </div>
 </div>
 @endsection

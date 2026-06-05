@@ -29,10 +29,10 @@
 
             {{-- 작성자 --}}
             <div>
-                <label for="author" class="block text-sm font-medium text-gray-700 mb-1">작성자 <span class="text-red-500">*</span></label>
+                <label for="author" class="block text-sm font-medium text-gray-700 mb-1">{{ $boardConfig['author_label'] ?? '작성자' }} <span class="text-red-500">*</span></label>
                 <input type="text" name="author" id="author" value="{{ old('author') }}" required
                        class="w-full sm:w-1/2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
-                       placeholder="작성자명을 입력하세요">
+                       placeholder="{{ $boardConfig['author_label'] ?? '작성자' }}명을 입력하세요">
                 @error('author')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -73,7 +73,7 @@
                                        placeholder="yyyy-mm-dd"
                                        pattern="\d{4}-\d{2}-\d{2}"
                                        maxlength="10"
-                                       oninput="this.value=this.value.replace(/[^\d-]/g,'');if(this.value.replace(/-/g,'').length>=8&&!this.value.includes('-')){var v=this.value.replace(/-/g,'');this.value=v.slice(0,4)+'-'+v.slice(4,6)+'-'+v.slice(6,8);}"
+                                       oninput="var v=this.value.replace(/[^\d]/g,'').slice(0,8);var o=v.slice(0,4);if(v.length>4)o+='-'+v.slice(4,6);if(v.length>6)o+='-'+v.slice(6,8);this.value=o;"
                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                             @elseif(($field['type'] ?? 'text') === 'textarea')
                                 <textarea name="meta[{{ $fieldKey }}]" id="meta_{{ $fieldKey }}" rows="3"

@@ -19,8 +19,8 @@
                 [
                     'photo' => '/cmak/images/intro/org/intro2_4img6.png',
                     'name' => '배영휘',
-                    'title' => '회장 (6대~11대)',
-                    'period' => '2009.03.27 ~ 2027.04.23',
+                    'title' => '배영휘 회장 (6대~11대)',
+                    'period' => '2009.03.27 ~ 2027.04.27',
                 ],
                 [
                     'photo' => '/cmak/images/intro/org/intro2_4img5.jpg',

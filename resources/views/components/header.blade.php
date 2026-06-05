@@ -32,10 +32,10 @@
         {{-- 로고 (25%) --}}
         <h1 class="icak-logo">
             <a href="{{ $basePath }}">
-                <span class="icak-logo-icon">CM</span>
+                <img src="{{ $basePath }}/images/logo.png" alt="CMAK" style="height:48px; width:auto;">
                 <span class="icak-logo-text">
-                    <strong>한국CM협회</strong>
-                    <em>CMAK</em>
+                    <span class="logo-main">한국건설관리협회</span>
+                    <span class="logo-sub">The Construction Management Association of Korea</span>
                 </span>
             </a>
         </h1>

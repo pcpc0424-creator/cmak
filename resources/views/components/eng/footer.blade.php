@@ -21,12 +21,7 @@
     <div class="eng-footer-bottom">
         <div class="eng-footer-bottom-inner">
             <div class="eng-footer-logo">
-                <div class="flex items-center gap-2">
-                    <div class="w-10 h-10 bg-white/20 rounded flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">CM</span>
-                    </div>
-                    <span class="text-white font-bold">CMAK</span>
-                </div>
+                <img src="/cmak/images/logo.png" alt="CMAK" style="height:45px; width:auto; filter:brightness(0) invert(1);">
             </div>
             <div class="eng-footer-info">
                 <p><strong>(06673) 4F, Union Bldg. 88, Seocho-daero, Seocho-gu, Seoul, Republic of Korea &nbsp; TEL : (+82)10-2858-8788 &nbsp; FAX : (+82)2-585-2689</strong></p>

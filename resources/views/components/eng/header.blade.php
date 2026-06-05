@@ -9,12 +9,12 @@
             ['title' => 'Organization', 'link' => "$bp/eng/about/organization"],
             ['title' => 'Scheme of Work', 'link' => "$bp/eng/about/scheme"],
             ['title' => 'Contact Us', 'link' => "$bp/eng/about/contact"],
+            ['title' => 'Q&A', 'link' => "$bp/eng/about/qna"],
         ]],
         ['title' => 'International CM Day', 'link' => "$bp/eng/cmday/introduction", 'sub' => [
             ['title' => 'Introduction', 'link' => "$bp/eng/cmday/introduction"],
             ['title' => 'Participating Members', 'link' => "$bp/eng/cmday/members"],
             ['title' => 'Celebrations', 'link' => "$bp/eng/cmday/celebrations"],
-            ['title' => 'Registration', 'link' => "$bp/eng/cmday/registration"],
         ]],
         ['title' => 'IPMA Korea', 'link' => "$bp/eng/ipma/about", 'sub' => [
             ['title' => 'About', 'link' => "$bp/eng/ipma/about"],
@@ -37,11 +37,7 @@
     <div class="eng-header-inner">
         <h1 class="eng-logo">
             <a href="{{ $bp }}/eng">
-                <span class="eng-logo-icon">CM</span>
-                <span class="eng-logo-text">
-                    <strong>CMAK</strong>
-                    <em>Construction Management Association of Korea</em>
-                </span>
+                <img src="{{ $bp }}/images/logo_header.png" alt="CMAK" style="height:50px; width:auto;">
             </a>
         </h1>
 

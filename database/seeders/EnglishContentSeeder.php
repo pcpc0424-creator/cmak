@@ -36,6 +36,9 @@ class EnglishContentSeeder extends Seeder
             ['slug' => 'about/contact', 'section' => 'about', 'sort_order' => 6,
              'title' => 'Contact Us',
              'description' => 'Get in touch with the CMAK secretariat in Seoul, Korea.'],
+            ['slug' => 'about/qna', 'section' => 'about', 'sort_order' => 7,
+             'title' => 'Q&A',
+             'description' => 'Frequently asked questions about CMAK and construction management.'],
 
             // International CM Day
             ['slug' => 'cmday/introduction', 'section' => 'cmday', 'sort_order' => 1,

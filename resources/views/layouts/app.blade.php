@@ -65,9 +65,13 @@
         var POPUP_HEIGHT = 120;
         var HEADER_HEIGHT = 125;
 
+        function getPopupHeight() {
+            return window.innerWidth <= 1024 ? 70 : POPUP_HEIGHT;
+        }
+
         // === 헤더/팝업 위치 업데이트 ===
         function updatePositions() {
-            var headerTop = popupOpen ? POPUP_HEIGHT : 0;
+            var headerTop = popupOpen ? getPopupHeight() : 0;
 
             if (header) {
                 header.style.top = headerTop + 'px';

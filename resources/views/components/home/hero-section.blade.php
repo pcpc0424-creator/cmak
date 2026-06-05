@@ -61,25 +61,30 @@
     {{-- 배경 슬라이드 --}}
     @foreach($slides as $index => $slide)
         <div
-            class="absolute inset-0 transition-opacity duration-1000"
+            class="absolute inset-0 transition-opacity ease-in-out"
+            style="transition-duration: 1200ms; will-change: opacity;"
             :class="current === {{ $index }} ? 'opacity-100 z-10' : 'opacity-0 z-0'"
         >
-            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ $slide['image'] }}')"></div>
+            <div class="absolute inset-0 bg-cover bg-center hero-bg-zoom"
+                 :class="current === {{ $index }} ? 'is-active' : ''"
+                 style="background-image: url('{{ $slide['image'] }}')"></div>
             <div class="absolute inset-0 bg-black/40"></div>
         </div>
     @endforeach
 
-    {{-- 텍스트 (좌측 중앙) --}}
-    <div class="icak-hero-text" style="width: 900px; max-width: 90vw;">
+    {{-- 텍스트 (좌측 중앙) - 슬라이드들이 같은 위치에 절대배치되어 자연스럽게 교차 --}}
+    <div class="icak-hero-text" style="width: 900px; max-width: 90vw; position: relative;">
         @foreach($slides as $index => $slide)
             <div
                 x-show="current === {{ $index }}"
-                x-transition:enter="transition ease-out duration-700"
-                x-transition:enter-start="opacity-0 translate-y-4"
-                x-transition:enter-end="opacity-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-300"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
+                x-transition:enter="hero-text-enter"
+                x-transition:enter-start="hero-text-enter-start"
+                x-transition:enter-end="hero-text-enter-end"
+                x-transition:leave="hero-text-leave"
+                x-transition:leave-start="hero-text-leave-start"
+                x-transition:leave-end="hero-text-leave-end"
+                class="{{ $index === 0 ? '' : 'absolute inset-0' }}"
+                style="will-change: opacity, transform;"
             >
                 <span class="icak-hero-eyebrow">{{ $slide['eyebrow'] }}</span>
                 <h2>{{ $slide['title'] }}<br><strong>{{ $slide['highlight'] }}</strong></h2>

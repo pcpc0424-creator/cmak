@@ -132,7 +132,7 @@ class HomeData
      */
     public static function getRelatedOrgNews(): array
     {
-        $posts = self::getPostsByBoard('news_bid', 5);
+        $posts = self::getPostsByBoard('news_org', 5);
         return array_map(fn($p) => array_merge($p, ['link' => '/cmak/notice/org']), $posts);
     }
 
@@ -177,20 +177,8 @@ class HomeData
      */
     public static function getPersonnelEvents(): array
     {
-        $rows = DB::table('posts')
-            ->where('board_type', 'news_association')
-            ->where('is_published', 1)
-            ->whereNull('deleted_at')
-            ->orderByDesc('published_at')
-            ->offset(5)->limit(4)
-            ->get(['id', 'title', 'published_at']);
-
-        return $rows->map(fn($r) => [
-            'id' => $r->id,
-            'title' => $r->title,
-            'date' => $r->published_at ? date('Y-m-d', strtotime($r->published_at)) : '',
-            'link' => '/cmak/community/board',
-        ])->toArray();
+        $posts = self::getPostsByBoard('news_personnel', 5);
+        return array_map(fn($p) => array_merge($p, ['link' => '/cmak/notice/personnel']), $posts);
     }
 
     /**

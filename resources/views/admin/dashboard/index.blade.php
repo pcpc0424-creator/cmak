@@ -96,11 +96,11 @@
                     @forelse($recentPosts ?? [] as $post)
                         <tr class="hover:bg-slate-50 transition">
                             <td class="px-6 py-4">
-                                <a href="/admin/posts/{{ $post->id }}/edit" class="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline">
+                                <a href="{{ url('/admin/posts/' . $post->board_type . '/' . $post->id . '/edit') }}" class="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline">
                                     {{ $post->title }}
                                 </a>
                             </td>
-                            <td class="px-6 py-4 text-sm text-slate-600">{{ $post->board ?? '-' }}</td>
+                            <td class="px-6 py-4 text-sm text-slate-600">{{ config('boards.' . $post->board_type . '.name') ?? $post->board_type }}</td>
                             <td class="px-6 py-4 text-sm text-slate-600">{{ $post->author ?? '-' }}</td>
                             <td class="px-6 py-4 text-sm text-slate-500">{{ $post->created_at?->format('Y-m-d') ?? '-' }}</td>
                         </tr>

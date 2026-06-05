@@ -16,7 +16,7 @@
     <div class="sub-section" style="margin-top:20px;">
         <div style="border:1px solid #e0e0e0; border-radius:8px; overflow:hidden;">
             <iframe
-                src="https://www.google.com/maps?q=서울특별시+서초구+서초대로+88+유니온빌딩&output=embed&hl=ko"
+                src="https://www.google.com/maps?q=서울특별시+서초구+서초대로+88&output=embed&hl=ko"
                 width="100%" height="450" style="border:0; display:block;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>

@@ -48,7 +48,7 @@
             100m from Exit 4 of Naebang Station on Subway Line No. 7</p>
         </div>
         <div class="eng-map">
-            <iframe src="https://www.google.com/maps?q=서울특별시+서초구+서초대로+88+유니온빌딩&output=embed&hl=en" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            <iframe src="https://www.google.com/maps?q=88+Seocho-daero,+Seocho-gu,+Seoul,+South+Korea&output=embed&hl=en" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
         </div>
     </div>
 </div>

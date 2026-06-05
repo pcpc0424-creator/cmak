@@ -36,7 +36,7 @@
                     <select name="region" id="region"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         <option value="">선택하세요</option>
-                        @foreach(['서울', '경기', '부산', '대전', '대구', '광주', '기타'] as $region)
+                        @foreach(['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주','기타'] as $region)
                             <option value="{{ $region }}" {{ old('region', $memberCompany->region) == $region ? 'selected' : '' }}>{{ $region }}</option>
                         @endforeach
                     </select>
@@ -47,11 +47,15 @@
 
                 {{-- 업종 --}}
                 <div>
-                    <label for="business_type" class="block text-sm font-medium text-gray-700 mb-1">업종</label>
-                    <input type="text" name="business_type" id="business_type" value="{{ old('business_type', $memberCompany->business_type) }}"
-                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
-                           placeholder="업종을 입력하세요">
-                    @error('business_type')
+                    <label for="company_type" class="block text-sm font-medium text-gray-700 mb-1">업종</label>
+                    <select name="company_type" id="company_type"
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                        <option value="">선택하세요</option>
+                        @foreach(['용역','시공','설계','감리','엔지니어링','CM','기타'] as $type)
+                            <option value="{{ $type }}" {{ old('company_type', $memberCompany->company_type) == $type ? 'selected' : '' }}>{{ $type }}</option>
+                        @endforeach
+                    </select>
+                    @error('company_type')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

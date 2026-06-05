@@ -16,10 +16,10 @@
             <form action="{{ url('/admin/related-sites') }}" method="GET" class="flex items-center gap-2 flex-1">
                 <select name="site_type" class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                     <option value="">전체 유형</option>
-                    <option value="domestic" {{ request('site_type') === 'domestic' ? 'selected' : '' }}>국내</option>
-                    <option value="overseas" {{ request('site_type') === 'overseas' ? 'selected' : '' }}>해외</option>
-                    <option value="media" {{ request('site_type') === 'media' ? 'selected' : '' }}>언론</option>
-                    <option value="bidding" {{ request('site_type') === 'bidding' ? 'selected' : '' }}>입찰정보</option>
+                    <option value="domestic" {{ request('site_type') === 'domestic' ? 'selected' : '' }}>국내관련기관</option>
+                    <option value="international" {{ request('site_type') === 'international' ? 'selected' : '' }}>해외관련기관</option>
+                    <option value="media" {{ request('site_type') === 'media' ? 'selected' : '' }}>언론관련기관</option>
+                    <option value="government" {{ request('site_type') === 'government' ? 'selected' : '' }}>입찰관련기관</option>
                 </select>
                 <button type="submit"
                         class="inline-flex items-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-md hover:bg-gray-700 transition">
@@ -65,7 +65,7 @@
                                 </td>
                                 <td class="px-4 py-3 text-center">
                                     @php
-                                        $typeLabels = ['domestic' => '국내', 'overseas' => '해외', 'media' => '언론', 'bidding' => '입찰정보'];
+                                        $typeLabels = ['domestic' => '국내', 'international' => '해외', 'media' => '언론', 'government' => '입찰'];
                                     @endphp
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                         {{ $typeLabels[$site->site_type] ?? $site->site_type }}

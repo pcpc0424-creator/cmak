@@ -13,18 +13,18 @@
 <div class="sub-content-card">
     <h2 class="sub-content-title">설립목적</h2>
 
-    <div class="sub-section" style="text-align:center;">
+    <div class="sub-section">
         <img src="/cmak/images/intro/about/intro2_1img1.gif" alt="한국CM협회 설립근거는, 민법 제32조 (비영리 사단법인)" style="max-width:314px; width:100%;">
 
-        <div style="margin-top:10px;">
-            <img src="/cmak/images/intro/about/intro2_1img2.gif" alt="회원의 품위 보전, 권익 옹호" style="max-width:155px; width:33%;"><img src="/cmak/images/intro/about/intro2_1img3.gif" alt="CM 체계확립 및 확대 보급" style="max-width:159px; width:34%;"><img src="/cmak/images/intro/about/intro2_1img4.gif" alt="CM 체계를 통한 건설산업 및 국민경제 발전에 기여" style="max-width:156px; width:33%;">
-        </div>
+        <div style="max-width:553px; margin:10px 0 0;">
+            <div style="display:flex; gap:6px;">
+                <img src="/cmak/images/intro/about/intro2_1img2.gif" alt="회원의 품위 보전, 권익 옹호" style="flex:1; min-width:0; height:auto;">
+                <img src="/cmak/images/intro/about/intro2_1img3.gif" alt="CM 체계확립 및 확대 보급" style="flex:1; min-width:0; height:auto;">
+                <img src="/cmak/images/intro/about/intro2_1img4.gif" alt="CM 체계를 통한 건설산업 및 국민경제 발전에 기여" style="flex:1; min-width:0; height:auto;">
+            </div>
 
-        <div style="margin-top:0;">
-            <img src="/cmak/images/intro/about/intro2_1img5.gif" alt="" style="max-width:553px; width:100%;">
-        </div>
+            <img src="/cmak/images/intro/about/intro2_1img5.gif" alt="" style="width:100%; display:block;">
 
-        <div style="max-width:552px; margin:0 auto;">
             <img src="/cmak/images/intro/about/intro2_1img6.gif" alt="주요사업" style="width:100%; display:block;">
             <img src="/cmak/images/intro/about/intro2_1img7.gif" alt="주요사업 및 활동" style="width:100%; display:block;">
         </div>

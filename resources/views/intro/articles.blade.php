@@ -15,13 +15,13 @@
     <p class="sub-content-desc">한국CM협회의 정관 및 제규정을 열람할 수 있습니다.</p>
 
     {{-- 탭 메뉴 --}}
-    <div style="display:flex; gap:0; margin-top:20px; border-bottom:2px solid #064277;">
-        <button @click="tab='articles'" :style="tab==='articles' ? 'background:#064277; color:#fff; font-weight:700;' : 'background:#f3f4f6; color:#555;'"
-            style="padding:10px 24px; border:1px solid #ccc; border-bottom:none; border-radius:6px 6px 0 0; font-size:14px; cursor:pointer; margin-right:2px;">정관</button>
-        <button @click="tab='fee'" :style="tab==='fee' ? 'background:#064277; color:#fff; font-weight:700;' : 'background:#f3f4f6; color:#555;'"
-            style="padding:10px 24px; border:1px solid #ccc; border-bottom:none; border-radius:6px 6px 0 0; font-size:14px; cursor:pointer; margin-right:2px;">회비규정</button>
-        <button @click="tab='evaluation'" :style="tab==='evaluation' ? 'background:#064277; color:#fff; font-weight:700;' : 'background:#f3f4f6; color:#555;'"
-            style="padding:10px 24px; border:1px solid #ccc; border-bottom:none; border-radius:6px 6px 0 0; font-size:14px; cursor:pointer;">CM능력평가공시업무처리규정</button>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; padding-bottom:14px; border-bottom:2px solid #064277;">
+        <button @click="tab='articles'" :style="tab==='articles' ? 'background:#064277; color:#fff; font-weight:700; border:2px solid #064277;' : 'background:#fff; color:#064277; font-weight:600; border:2px solid #064277;'"
+            style="padding:10px 24px; border-radius:6px; font-size:14px; cursor:pointer;">정관</button>
+        <button @click="tab='fee'" :style="tab==='fee' ? 'background:#064277; color:#fff; font-weight:700; border:2px solid #064277;' : 'background:#fff; color:#064277; font-weight:600; border:2px solid #064277;'"
+            style="padding:10px 24px; border-radius:6px; font-size:14px; cursor:pointer;">회비규정</button>
+        <button @click="tab='evaluation'" :style="tab==='evaluation' ? 'background:#064277; color:#fff; font-weight:700; border:2px solid #064277;' : 'background:#fff; color:#064277; font-weight:600; border:2px solid #064277;'"
+            style="padding:10px 24px; border-radius:6px; font-size:14px; cursor:pointer;">CM능력평가공시업무처리규정</button>
     </div>
 
     {{-- 정관 --}}

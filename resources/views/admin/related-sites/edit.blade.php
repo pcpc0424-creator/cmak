@@ -44,10 +44,10 @@
                 <label for="site_type" class="block text-sm font-medium text-gray-700 mb-1">유형</label>
                 <select name="site_type" id="site_type"
                         class="w-full sm:w-1/2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
-                    <option value="domestic" {{ old('site_type', $site->site_type) === 'domestic' ? 'selected' : '' }}>국내</option>
-                    <option value="overseas" {{ old('site_type', $site->site_type) === 'overseas' ? 'selected' : '' }}>해외</option>
-                    <option value="media" {{ old('site_type', $site->site_type) === 'media' ? 'selected' : '' }}>언론</option>
-                    <option value="bidding" {{ old('site_type', $site->site_type) === 'bidding' ? 'selected' : '' }}>입찰정보</option>
+                    <option value="domestic" {{ old('site_type', $site->site_type) === 'domestic' ? 'selected' : '' }}>국내관련기관</option>
+                    <option value="international" {{ old('site_type', $site->site_type) === 'international' ? 'selected' : '' }}>해외관련기관</option>
+                    <option value="media" {{ old('site_type', $site->site_type) === 'media' ? 'selected' : '' }}>언론관련기관</option>
+                    <option value="government" {{ old('site_type', $site->site_type) === 'government' ? 'selected' : '' }}>입찰관련기관</option>
                 </select>
                 @error('site_type')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

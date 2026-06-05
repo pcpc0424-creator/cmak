@@ -14,14 +14,14 @@
     <h2 class="sub-content-title">사업계획</h2>
 
     <div class="sub-section" style="text-align:center;">
-        <img src="/cmak/images/intro/plan/intro2_6img1.gif" alt="CM으로 하나되는 건설산업" style="max-width:257px; width:100%;">
+        <img src="/cmak/images/intro/plan/intro2_6img1.gif" alt="CM으로 하나되는 건설산업" style="max-width:257px; width:100%; margin:0 auto;">
 
         <div style="margin-top:10px;">
-            <img src="/cmak/images/intro/plan/intro2_6img2.gif" alt="8대사업" style="max-width:630px; width:100%;">
+            <img src="/cmak/images/intro/plan/intro2_6img2.gif" alt="8대사업" style="max-width:630px; width:100%; margin:0 auto;">
         </div>
 
         <div style="margin-top:0;">
-            <img src="/cmak/images/intro/plan/intro2_6img3.gif" alt="CM의 수요 극대화와 양질의 CM서비스 공급" style="max-width:391px; width:100%;">
+            <img src="/cmak/images/intro/plan/intro2_6img3.gif" alt="CM의 수요 극대화와 양질의 CM서비스 공급" style="max-width:391px; width:100%; margin:0 auto;">
         </div>
     </div>
 

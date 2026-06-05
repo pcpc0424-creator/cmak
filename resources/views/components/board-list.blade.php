@@ -147,13 +147,19 @@
         <thead>
             <tr>
                 <th style="width:50px;">No.</th>
-                <th>제목</th>
-                <th style="width:110px; white-space:nowrap;">등록일</th>
+                @if(!empty($columns))
+                    @foreach($columns as $col)
+                        <th style="{{ $col['style'] ?? '' }}">{{ $col['label'] }}</th>
+                    @endforeach
+                @else
+                    <th>제목</th>
+                    <th style="width:110px; white-space:nowrap;">등록일</th>
+                @endif
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td colspan="3" style="text-align:center; padding:40px; color:#999;">
+                <td colspan="{{ !empty($columns) ? count($columns) + 1 : 3 }}" style="text-align:center; padding:40px; color:#999;">
                     @if(request('search'))
                         '{{ request('search') }}'에 대한 검색 결과가 없습니다.
                     @else

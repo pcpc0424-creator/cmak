@@ -34,10 +34,9 @@
                 </svg>
             </button>
             <div x-show="openMenu === 'association'" x-collapse x-cloak class="bg-slate-900/50">
-                <a href="{{ url('/admin/posts/herald') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/herald*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">회보</a>
-                <a href="{{ url('/admin/posts/certification_exam') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/certification_exam*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">자격검정시험</a>
-                <a href="{{ url('/admin/posts/cm_forms') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_forms*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM관련서식</a>
-                <a href="{{ url('/admin/posts/cm_performance') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_performance*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM능력평가/공시</a>
+                <a href="{{ url('/admin/posts/cm_performance') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_performance*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM능력평가공시</a>
+                <a href="{{ url('/admin/posts/certification_exam') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/certification_exam*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">건설사업관리사자격검정</a>
+                <a href="{{ url('/admin/posts/herald') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/herald*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM Herald</a>
             </div>
         </div>
 
@@ -56,16 +55,14 @@
                 </svg>
             </button>
             <div x-show="openMenu === 'resources'" x-collapse x-cloak class="bg-slate-900/50">
-                <a href="{{ url('/admin/posts/research') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/research*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">연구자료</a>
-                <a href="{{ url('/admin/posts/cm_law') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_law*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM관련법령</a>
-                <a href="{{ url('/admin/posts/education_seminar') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/education_seminar*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">교육세미나</a>
-                <a href="{{ url('/admin/posts/ve') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/ve*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">VE자료</a>
+                <a href="{{ url('/admin/posts/cm_law') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_law*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">법령정보조회</a>
+                <a href="{{ url('/admin/posts/research') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/research*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">논문 및 연구보고서</a>
+                <a href="{{ url('/admin/posts/cm_overseas') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_overseas*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM해외공급사업</a>
+                <a href="{{ url('/admin/posts/cm_case') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_case*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">수행사례</a>
+                <a href="{{ url('/admin/posts/education_seminar') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/education_seminar*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">교육 및 세미나사례</a>
                 <a href="{{ url('/admin/posts/expert_column') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/expert_column*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">전문가칼럼</a>
-                <a href="{{ url('/admin/posts/special_feature') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/special_feature*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">특집</a>
+                <a href="{{ url('/admin/posts/special_feature') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/special_feature*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">기획/특집</a>
                 <a href="{{ url('/admin/posts/etc_data') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/etc_data*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">기타자료</a>
-                <a href="{{ url('/admin/posts/press') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/press*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">언론보도</a>
-                <a href="{{ url('/admin/posts/cm_case') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_case*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM사례</a>
-                <a href="{{ url('/admin/posts/education') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/education*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">교육자료</a>
             </div>
         </div>
 
@@ -89,9 +86,11 @@
                 <a href="{{ url('/admin/posts/news_law') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_law*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">법령소식</a>
                 <a href="{{ url('/admin/posts/news_association') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_association*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">협회소식</a>
                 <a href="{{ url('/admin/posts/news_press') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_press*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">보도자료</a>
+                <a href="{{ url('/admin/posts/news_personnel') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_personnel*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">인사경조사</a>
                 <a href="{{ url('/admin/posts/member_trend') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/member_trend*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">회원동향</a>
-                <a href="{{ url('/admin/posts/online_news') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/online_news*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">온라인뉴스</a>
-                <a href="{{ url('/admin/posts/schedule') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/schedule*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">주요행사일정</a>
+                <a href="{{ url('/admin/posts/news_org') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_org*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">유관기관소식</a>
+                <a href="{{ url('/admin/posts/wordbook') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/wordbook*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">Word Book</a>
+                <a href="{{ url('/admin/posts/book_review') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/book_review*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">Book Review</a>
             </div>
         </div>
 
@@ -112,10 +111,6 @@
             <div x-show="openMenu === 'community'" x-collapse x-cloak class="bg-slate-900/50">
                 <a href="{{ url('/admin/posts/faq') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/faq*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">FAQ</a>
                 <a href="{{ url('/admin/posts/free_board') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/free_board*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">자유게시판</a>
-                <a href="{{ url('/admin/posts/survey') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/survey*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">설문조사</a>
-                <a href="{{ url('/admin/posts/book_review') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/book_review*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">BookReview</a>
-                <a href="{{ url('/admin/posts/wordbook') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/wordbook*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM용어사전</a>
-                <a href="{{ url('/admin/posts/gallery') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/gallery*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">사진갤러리</a>
                 <a href="{{ url('/admin/posts/job_offer') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/job_offer*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">구인</a>
                 <a href="{{ url('/admin/posts/job_seek') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/job_seek*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">구직</a>
             </div>

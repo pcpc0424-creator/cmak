@@ -12,19 +12,17 @@ class MemberCompany extends Model
 
     protected $fillable = [
         'company_name',
+        'region',
+        'company_type',
         'representative',
-        'business_number',
         'address',
         'phone',
         'fax',
-        'email',
         'website',
         'logo_path',
-        'description',
-        'membership_type',
-        'joined_at',
         'is_active',
         'is_verified',
+        'is_integrated',
         'sort_order',
     ];
 
@@ -33,7 +31,7 @@ class MemberCompany extends Model
         return [
             'is_active' => 'boolean',
             'is_verified' => 'boolean',
-            'joined_at' => 'datetime',
+            'is_integrated' => 'boolean',
         ];
     }
 

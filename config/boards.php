@@ -62,7 +62,11 @@ return [
         'has_attachments' => true,
         'has_summary' => false,
         'has_issue_number' => false,
-        'fields' => [],
+        'author_label' => '강사',
+        'fields' => [
+            // 강사는 작성자(author) 칸 사용. 소속만 metadata로 관리.
+            'affiliation' => ['label' => '소속', 'type' => 'text'],
+        ],
     ],
     've' => [
         'name' => 'VE자료',
@@ -125,7 +129,11 @@ return [
         'has_attachments' => true,
         'has_summary' => true,
         'has_issue_number' => false,
-        'fields' => [],
+        'show_metadata' => true,
+        'fields' => [
+            'orderer' => ['label' => '발주자', 'type' => 'text'],
+            'cm_manager' => ['label' => '건설사업관리자', 'type' => 'text'],
+        ],
     ],
     'education' => [
         'name' => '교육자료',
@@ -314,8 +322,9 @@ return [
             'career' => ['label' => '경력구분', 'type' => 'text'],
             'education' => ['label' => '최종학력', 'type' => 'text'],
             'salary' => ['label' => '급여조건', 'type' => 'text'],
-            'deadline' => ['label' => '마감일', 'type' => 'date'],
-            'recruit_content' => ['label' => '모집내용', 'type' => 'textarea'],
+            // 원본 데이터에 '충원시까지' 등 텍스트 값이 있어 date 대신 text 사용
+            'deadline' => ['label' => '마감일', 'type' => 'text', 'placeholder' => '예: 26.03.31 또는 충원시까지'],
+            // 모집내용은 게시글 본문(content)으로 관리
         ],
         'show_metadata' => true,
     ],

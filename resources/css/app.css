@@ -465,39 +465,71 @@ html.fp-enabled,
 
 .icak-mainmenu-inner > ul > li .icak-allsub ul li a {
     display: block;
-    margin: 0.25rem 0;
+    margin: 0.1rem 0;
     font-size: 0.9rem;
     color: #fff;
-    padding: 4px 0;
+    padding: 2px 0;
     transition: color 0.3s;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    line-height: 1.3;
 }
 
 /* 모바일 메뉴 버튼 */
 .icak-mobile-btn {
-    position: absolute;
-    right: 10px;
-    top: 30px;
     padding: 8px;
     color: #fff;
 }
 .icak-header:hover .icak-mobile-btn,
 .icak-header.scrolled .icak-mobile-btn { color: #333; }
 
-/* IPMA KOREA 주황 버튼 — 로그인/검색 아래 배치 */
+/* 모바일 헤더 우측 유틸 영역 (ENG, 로그인, 햄버거) */
+.icak-mobile-util {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1001;
+}
+.icak-m-lang-btn,
+.icak-m-login-btn {
+    display: inline-block;
+    line-height: 1;
+    padding: 7px 12px;
+    border-radius: 18px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff !important;
+    white-space: nowrap;
+}
+.icak-m-login-btn { background: #265de8; border: 1px solid #265de8; }
+.icak-m-lang-btn { background: #515151; border: 1px solid #515151; }
+.icak-header:not(:hover):not(.scrolled) .icak-m-login-btn {
+    background: transparent; border-color: rgba(255,255,255,0.7);
+}
+.icak-header:not(:hover):not(.scrolled) .icak-m-lang-btn {
+    background: transparent; border-color: rgba(255,255,255,0.7);
+}
+
+/* IPMA KOREA 주황 버튼 — 전체메뉴(햄버거+텍스트) 박스의 수직 정중앙에 정렬 */
 .icak-special-btn {
     position: absolute;
-    right: 75px;
-    bottom: 8px;
-    display: inline-block;
+    right: 80px;
+    bottom: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: #e67e22;
     color: #fff !important;
     font-size: 13px;
     font-weight: 700;
-    padding: 6px 18px;
+    height: 30px;
+    padding: 0 18px;
     border-radius: 20px;
     letter-spacing: 0.5px;
     transition: background 0.2s;
     white-space: nowrap;
+    line-height: 1;
 }
 .icak-special-btn:hover {
     background: #d35400;
@@ -717,20 +749,25 @@ html.fp-enabled,
 
 .icak-sub-list a {
     width: 25%;
-    padding: 10px;
+    padding: 14px 10px;
     box-sizing: border-box;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
     border: 1px solid #cdd3dd;
     font-size: 0.889rem;
     font-weight: 500;
     color: #333;
-    line-height: 2.5rem;
+    line-height: 1.35;
     text-align: center;
     transition: 0.3s;
     background-color: #f6f8fa;
     border-radius: 5px;
     margin: 5px;
     width: calc(25% - 10px);
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 .icak-sub-list a:hover {
@@ -797,6 +834,47 @@ html.fp-enabled,
     inset: 0;
     background-size: cover;
     background-position: center;
+}
+
+/* 배경 슬라이드 Ken Burns 줌 효과 — 활성화된 슬라이드만 천천히 줌인 */
+.hero-bg-zoom {
+    transform: scale(1.05);
+    transition: transform 7000ms ease-out;
+    will-change: transform;
+}
+.hero-bg-zoom.is-active {
+    transform: scale(1.12);
+}
+
+/* 텍스트 슬라이드가 절대배치되어도 컨테이너에 적절한 높이 확보 */
+.icak-hero-text > div {
+    transition-property: opacity, transform;
+}
+
+/* 히어로 텍스트 전환 - 부드러운 페이드 + 슬라이드 */
+.hero-text-enter {
+    transition: opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1) 250ms,
+                transform 1100ms cubic-bezier(0.22, 1, 0.36, 1) 250ms;
+}
+.hero-text-enter-start {
+    opacity: 0;
+    transform: translateY(24px);
+}
+.hero-text-enter-end {
+    opacity: 1;
+    transform: translateY(0);
+}
+.hero-text-leave {
+    transition: opacity 700ms cubic-bezier(0.4, 0, 1, 1),
+                transform 700ms cubic-bezier(0.4, 0, 1, 1);
+}
+.hero-text-leave-start {
+    opacity: 1;
+    transform: translateY(0);
+}
+.hero-text-leave-end {
+    opacity: 0;
+    transform: translateY(-18px);
 }
 
 /* 텍스트를 좌측으로 이동 (팝업존이 우측에 있으므로) */
@@ -2320,6 +2398,11 @@ html.fp-enabled,
     font-size: 14px;
     min-width: 180px;
     outline: none;
+    cursor: pointer;
+}
+.icak-footer-family select option {
+    background: #fff;
+    color: #333;
 }
 
 .icak-footer-bottom {
@@ -2479,8 +2562,6 @@ img[loading="lazy"].loaded { opacity: 1; }
    12. Mobile Responsive
    ========================================================================== */
 @media screen and (max-width: 1360px) {
-    .topPop { display: none !important; }
-    .topPopHeader { top: 0 !important; }
     .popupzone-wrapper {
         width: 400px;
         right: 6%;
@@ -2488,8 +2569,9 @@ img[loading="lazy"].loaded { opacity: 1; }
     }
     .icak-hero-text {
         text-align: center;
-        transform: translate(-50%, -60%);
-        top: 40%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 0;
     }
 }
 
@@ -2497,6 +2579,20 @@ img[loading="lazy"].loaded { opacity: 1; }
     .icak-gnb { display: none; }
     .icak-header .icak-logo { width: auto; }
     .icak-header-util { display: none; }
+
+    /* 모바일 상단 팝업 — 컴팩트 레이아웃 */
+    .topPop { height: 70px; }
+    .topPopupInner { height: 60px; }
+    .topPopupInner .pc_pop { gap: 5px; padding: 0 8px; }
+    .pc_pop_item { height: 56px; }
+    .pc_pop_label {
+        font-size: 11px;
+        line-height: 1.2;
+        letter-spacing: 0;
+        padding: 0 4px;
+        word-break: keep-all;
+    }
+    .topPopBtn { width: 120px; bottom: -22px; font-size: 0.8rem; }
     .icak-row {
         flex-direction: column;
     }
@@ -2508,7 +2604,13 @@ img[loading="lazy"].loaded { opacity: 1; }
         width: 50%;
         border-bottom: 1px solid #e1e1e1;
     }
-    .icak-hero-text h2 { font-size: 32px; }
+    .icak-hero-text { max-width: 94vw !important; padding: 0 12px; }
+    .icak-hero-text h2 {
+        font-size: 28px;
+        word-break: keep-all;
+        overflow-wrap: break-word;
+        line-height: 1.3;
+    }
     .icak-shortcut { display: none; }
     .icak-sidebar-ads { display: none; }
     .icak-content-with-sidebar { flex-direction: column; }
@@ -2535,6 +2637,8 @@ img[loading="lazy"].loaded { opacity: 1; }
 }
 
 @media screen and (max-width: 768px) {
+    html, body { overflow-x: hidden; }
+
     .icak-right-box .icak-banner-card {
         width: 100%;
     }
@@ -2552,4 +2656,33 @@ img[loading="lazy"].loaded { opacity: 1; }
     .icak-footer-bottom-inner {
         flex-direction: column;
     }
+
+    /* 히어로 — 모바일 텍스트 가시성 개선 (높이는 그대로 100vh 유지) */
+    .icak-hero-text {
+        max-width: 94vw !important;
+        padding: 0 10px;
+        top: 55% !important;
+        transform: translate(-50%, -50%) !important;
+        margin-top: 0 !important;
+    }
+    .icak-hero-text h2 {
+        font-size: 26px !important;
+        line-height: 1.35 !important;
+        letter-spacing: -0.02em !important;
+        word-break: keep-all !important;
+        overflow-wrap: break-word !important;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.7) !important;
+    }
+    .icak-hero-eyebrow {
+        font-size: 11px !important;
+        padding: 6px 14px !important;
+        letter-spacing: 1px !important;
+        margin-bottom: 14px !important;
+    }
+    /* 배경 오버레이 더 어둡게 */
+    .icak-hero .absolute.inset-0.bg-black\/40 { background-color: rgba(0,0,0,0.5) !important; }
+}
+
+@media screen and (max-width: 480px) {
+    .icak-hero-text h2 { font-size: 22px !important; }
 }

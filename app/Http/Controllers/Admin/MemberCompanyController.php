@@ -38,13 +38,16 @@ class MemberCompanyController extends Controller
         $validated = $request->validate([
             'company_name' => ['required', 'string', 'max:255'],
             'region' => ['nullable', 'string', 'max:100'],
+            'company_type' => ['nullable', 'string', 'max:100'],
             'representative' => ['nullable', 'string', 'max:100'],
             'phone' => ['nullable', 'string', 'max:50'],
-            'email' => ['nullable', 'email', 'max:255'],
+            'fax' => ['nullable', 'string', 'max:50'],
             'address' => ['nullable', 'string', 'max:500'],
             'website' => ['nullable', 'url', 'max:255'],
             'is_verified' => ['boolean'],
             'is_active' => ['boolean'],
+            'is_integrated' => ['boolean'],
+            'sort_order' => ['nullable', 'integer', 'min:0'],
         ]);
 
         MemberCompany::create($validated);
@@ -68,14 +71,21 @@ class MemberCompanyController extends Controller
         $validated = $request->validate([
             'company_name' => ['required', 'string', 'max:255'],
             'region' => ['nullable', 'string', 'max:100'],
+            'company_type' => ['nullable', 'string', 'max:100'],
             'representative' => ['nullable', 'string', 'max:100'],
             'phone' => ['nullable', 'string', 'max:50'],
-            'email' => ['nullable', 'email', 'max:255'],
+            'fax' => ['nullable', 'string', 'max:50'],
             'address' => ['nullable', 'string', 'max:500'],
             'website' => ['nullable', 'url', 'max:255'],
-            'is_verified' => ['boolean'],
-            'is_active' => ['boolean'],
+            'is_verified' => ['nullable', 'boolean'],
+            'is_active' => ['nullable', 'boolean'],
+            'is_integrated' => ['nullable', 'boolean'],
+            'sort_order' => ['nullable', 'integer', 'min:0'],
         ]);
+
+        $validated['is_verified'] = $request->boolean('is_verified');
+        $validated['is_active'] = $request->boolean('is_active');
+        $validated['is_integrated'] = $request->boolean('is_integrated');
 
         $memberCompany->update($validated);
 

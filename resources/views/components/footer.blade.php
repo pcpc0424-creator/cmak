@@ -9,15 +9,6 @@
                 <a href="{{ $bp }}/intro/location">찾아오시는 길</a>
                 <a href="{{ $bp }}/intro/departments">부서별 연락처 안내</a>
             </div>
-            <div class="icak-footer-family">
-                <select onchange="if(this.value) window.open(this.value)">
-                    <option value="">FAMILY SITE</option>
-                    <option value="https://www.molit.go.kr">국토교통부</option>
-                    <option value="https://www.g2b.go.kr">나라장터</option>
-                    <option value="https://www.pps.go.kr">조달청</option>
-                    <option value="https://www.kict.re.kr">한국건설기술연구원</option>
-                </select>
-            </div>
         </div>
     </div>
 
@@ -25,12 +16,7 @@
     <div class="icak-footer-bottom">
         <div class="icak-footer-bottom-inner">
             <div class="icak-footer-logo">
-                <div class="flex items-center gap-2">
-                    <div class="w-10 h-10 bg-white/20 rounded flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">CM</span>
-                    </div>
-                    <span class="text-white font-bold">한국CM협회</span>
-                </div>
+                <img src="/cmak/images/logo.png" alt="한국CM협회 CMAK" style="height:45px; width:auto; filter:brightness(0) invert(1);">
             </div>
             <div class="icak-footer-info">
                 <p><strong>(06673) 서울특별시 서초구 서초대로88 (방배동 938-7, 유니온빌딩 4층) &nbsp; TEL : 02-585-4712~4 &nbsp; FAX : 02-585-2689</strong></p>

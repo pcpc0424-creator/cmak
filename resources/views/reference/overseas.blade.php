@@ -14,10 +14,6 @@
     <h2 class="sub-content-title">해외관련기관</h2>
     <p class="sub-content-desc">건설사업관리 관련 해외 기관 링크입니다.</p>
 
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
-        <div class="sub-info-box" style="text-align:center; padding:30px;">
-            <p style="color:#999; font-size:14px;">관련 기관 링크가 준비중입니다.</p>
-        </div>
-    </div>
+    @include('reference._site-list')
 </div>
 @endsection

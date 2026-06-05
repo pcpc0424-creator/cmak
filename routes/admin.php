@@ -32,6 +32,7 @@ Route::post('posts/{boardType}', [PostController::class, 'store'])->name('admin.
 Route::get('posts/{boardType}/{post}/edit', [PostController::class, 'edit'])->name('admin.posts.edit');
 Route::put('posts/{boardType}/{post}', [PostController::class, 'update'])->name('admin.posts.update');
 Route::delete('posts/{boardType}/{post}', [PostController::class, 'destroy'])->name('admin.posts.destroy');
+Route::delete('posts/{boardType}/{post}/attachments/{attachment}', [PostController::class, 'destroyAttachment'])->name('admin.posts.destroy-attachment');
 
 // File Upload (AJAX)
 Route::post('files/upload', [FileUploadController::class, 'upload'])->name('admin.files.upload');

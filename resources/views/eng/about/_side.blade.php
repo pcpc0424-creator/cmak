@@ -4,3 +4,4 @@
 <a href="/cmak/eng/about/organization" class="{{ request()->is('eng/about/organization') ? 'active' : '' }}">Organization</a>
 <a href="/cmak/eng/about/scheme" class="{{ request()->is('eng/about/scheme') ? 'active' : '' }}">Scheme of Work</a>
 <a href="/cmak/eng/about/contact" class="{{ request()->is('eng/about/contact') ? 'active' : '' }}">Contact Us</a>
+<a href="/cmak/eng/about/qna" class="{{ request()->is('eng/about/qna') ? 'active' : '' }}">Q&A</a>

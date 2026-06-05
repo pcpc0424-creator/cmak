@@ -10,11 +10,30 @@
         <p class="mt-1 text-sm text-gray-500">총 {{ $posts->total() }}건의 게시물</p>
     </div>
 
+    {{-- 발행 상태 필터 --}}
+    @php $currentStatus = request('status', ''); @endphp
+    <div class="bg-white rounded-lg shadow px-4 py-2 mb-4 flex items-center gap-1">
+        <a href="{{ url('/admin/posts/' . $boardType . '?' . http_build_query(array_merge(request()->except('status', 'page'), []))) }}"
+           class="px-3 py-1.5 text-sm font-medium rounded {{ !$currentStatus ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100' }}">
+            전체 <span class="text-xs opacity-75">({{ number_format($statusCounts['all'] ?? 0) }})</span>
+        </a>
+        <a href="{{ url('/admin/posts/' . $boardType . '?' . http_build_query(array_merge(request()->except('status', 'page'), ['status' => 'published']))) }}"
+           class="px-3 py-1.5 text-sm font-medium rounded {{ $currentStatus === 'published' ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-100' }}">
+            발행 <span class="text-xs opacity-75">({{ number_format($statusCounts['published'] ?? 0) }})</span>
+        </a>
+        <a href="{{ url('/admin/posts/' . $boardType . '?' . http_build_query(array_merge(request()->except('status', 'page'), ['status' => 'draft']))) }}"
+           class="px-3 py-1.5 text-sm font-medium rounded {{ $currentStatus === 'draft' ? 'bg-gray-700 text-white' : 'text-gray-600 hover:bg-gray-100' }}">
+            미발행 <span class="text-xs opacity-75">({{ number_format($statusCounts['draft'] ?? 0) }})</span>
+        </a>
+    </div>
+
     {{-- 검색 & 버튼 --}}
     <div class="bg-white rounded-lg shadow p-4 mb-6">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
             <form action="{{ url('/admin/posts/' . $boardType) }}" method="GET" class="flex items-center gap-2 flex-1">
-                <input type="hidden" name="board_type" value="{{ $boardType }}">
+                @if($currentStatus)
+                    <input type="hidden" name="status" value="{{ $currentStatus }}">
+                @endif
                 <input type="text" name="search" value="{{ request('search') }}"
                        placeholder="제목, 내용, 작성자 검색..."
                        class="flex-1 min-w-0 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
@@ -45,7 +64,7 @@
                         <tr>
                             <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">No</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">제목</th>
-                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-24">작성자</th>
+                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-24">{{ $boardConfig['author_label'] ?? '작성자' }}</th>
                             <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-20">조회수</th>
                             <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-20">발행여부</th>
                             <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-28">작성일</th>
@@ -91,7 +110,7 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3 text-center text-sm text-gray-500">
+                                <td class="px-4 py-3 text-center text-sm text-gray-500 whitespace-nowrap">
                                     {{ $post->created_at->format('Y-m-d') }}
                                 </td>
                                 <td class="px-4 py-3 text-center">

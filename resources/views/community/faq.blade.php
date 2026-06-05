@@ -26,9 +26,30 @@
                         <span style="color:#999; font-size:18px; transition:transform 0.2s;" :style="open === {{ $i }} ? 'transform:rotate(180deg)' : ''">&#9660;</span>
                     </button>
                     <div x-show="open === {{ $i }}" x-transition style="padding:16px 20px 20px; background:#f8f9fb; border-top:1px solid #e8ecf1;">
-                        <p style="font-size:14px; line-height:1.8; color:#444; margin:0;">
-                            <span style="color:#0061c2; font-weight:600; margin-right:4px;">A.</span>{!! nl2br(e($post->content)) !!}
-                        </p>
+                        @php
+                            $faqContent = $post->content;
+                            // <BODY> 태그 안쪽 내용만 추출
+                            if (preg_match('/<body[^>]*>(.*)<\/body>/is', $faqContent, $m)) {
+                                $faqContent = $m[1];
+                            }
+                            // 문서 레벨 태그 제거
+                            $faqContent = preg_replace('/<\/?(html|head|meta|!doctype)[^>]*>/i', '', $faqContent);
+                            // 이미지 경로 보정
+                            $faqContent = preg_replace('/src=["\']\/upload\//i', 'src="/cmak/legacy/upload/', $faqContent);
+                            $faqContent = preg_replace('/src=["\']\.\.\/\.\.\/upload\//i', 'src="/cmak/legacy/upload/', $faqContent);
+                            $faqContent = preg_replace('/src=["\']upload\//i', 'src="/cmak/legacy/upload/', $faqContent);
+                            $faqContent = preg_replace('/<img\b/i', '<img style="max-width:100%; height:auto;"', $faqContent);
+                            // 이중 인코딩된 HTML 엔티티 복원
+                            $faqContent = html_entity_decode($faqContent, ENT_QUOTES, 'UTF-8');
+                            $faqContent = trim($faqContent);
+                            // HTML 태그가 전혀 없는 순수 텍스트면 줄바꿈을 <br>로 변환
+                            if (!preg_match('/<\/?[a-z][a-z0-9]*[\s\/>]/i', $faqContent)) {
+                                $faqContent = nl2br(e($faqContent));
+                            }
+                        @endphp
+                        <div style="font-size:14px; line-height:1.8; color:#444; margin:0;">
+                            <span style="color:#0061c2; font-weight:600; margin-right:4px;">A.</span>{!! $faqContent !!}
+                        </div>
                     </div>
                 </div>
             @endforeach

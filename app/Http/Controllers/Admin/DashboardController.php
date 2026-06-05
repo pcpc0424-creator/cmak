@@ -11,14 +11,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $stats = [
-            'total_posts' => Post::count(),
-            'total_members' => MemberCompany::count(),
-            'total_banners' => Banner::count(),
-        ];
+        $totalPosts = Post::count();
+        $totalMembers = MemberCompany::count();
+        $totalBanners = Banner::count();
+        $todayVisits = 0;
 
-        $recentPosts = Post::latest()->take(5)->get();
+        $recentPosts = Post::latest()->take(10)->get();
 
-        return view('admin.dashboard.index', compact('stats', 'recentPosts'));
+        return view('admin.dashboard.index', compact('totalPosts', 'totalMembers', 'totalBanners', 'todayVisits', 'recentPosts'));
     }
 }

@@ -35,13 +35,9 @@
                     <select name="region" id="region"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         <option value="">선택하세요</option>
-                        <option value="서울" {{ old('region') == '서울' ? 'selected' : '' }}>서울</option>
-                        <option value="경기" {{ old('region') == '경기' ? 'selected' : '' }}>경기</option>
-                        <option value="부산" {{ old('region') == '부산' ? 'selected' : '' }}>부산</option>
-                        <option value="대전" {{ old('region') == '대전' ? 'selected' : '' }}>대전</option>
-                        <option value="대구" {{ old('region') == '대구' ? 'selected' : '' }}>대구</option>
-                        <option value="광주" {{ old('region') == '광주' ? 'selected' : '' }}>광주</option>
-                        <option value="기타" {{ old('region') == '기타' ? 'selected' : '' }}>기타</option>
+                        @foreach(['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주','기타'] as $region)
+                            <option value="{{ $region }}" {{ old('region') == $region ? 'selected' : '' }}>{{ $region }}</option>
+                        @endforeach
                     </select>
                     @error('region')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -50,11 +46,15 @@
 
                 {{-- 업종 --}}
                 <div>
-                    <label for="business_type" class="block text-sm font-medium text-gray-700 mb-1">업종</label>
-                    <input type="text" name="business_type" id="business_type" value="{{ old('business_type') }}"
-                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
-                           placeholder="업종을 입력하세요">
-                    @error('business_type')
+                    <label for="company_type" class="block text-sm font-medium text-gray-700 mb-1">업종</label>
+                    <select name="company_type" id="company_type"
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                        <option value="">선택하세요</option>
+                        @foreach(['용역','시공','설계','감리','엔지니어링','CM','기타'] as $type)
+                            <option value="{{ $type }}" {{ old('company_type') == $type ? 'selected' : '' }}>{{ $type }}</option>
+                        @endforeach
+                    </select>
+                    @error('company_type')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

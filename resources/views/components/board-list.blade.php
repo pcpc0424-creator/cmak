@@ -84,9 +84,15 @@
                             </td>
                         @endforeach
                     @else
-                        <td>
+                        @php
+                            // 답변 여부/깊이는 원본 DB에서 복원한 metadata 기준 (원본 re1.gif 들여쓰기 재현)
+                            $postMeta = $post->metadata ?? [];
+                            $isReply = !empty($replyPrefix) && !empty($postMeta['is_reply']);
+                            $replyLevel = $isReply ? max(1, (int) ($postMeta['reply_level'] ?? 1)) : 0;
+                        @endphp
+                        <td style="{{ $isReply ? 'padding-left:' . (12 + 12 * $replyLevel) . 'px;' : '' }}">
                             <a href="{{ $basePath }}/board/{{ $boardType }}/{{ $post->id }}" style="color:#333; text-decoration:none;">
-                                @if(!empty($replyPrefix) && str_starts_with($post->title, '답변입니다'))
+                                @if($isReply)
                                     <span style="color:#0061c2; font-weight:600;">→ Re</span>
                                 @endif
                                 {{ $post->title }}

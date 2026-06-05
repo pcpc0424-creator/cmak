@@ -46,10 +46,24 @@ class BoardController extends Controller
             }
         }
 
-        $posts = $query->with('attachments')
-            ->orderByDesc('published_at')
-            ->paginate($perPage)
-            ->withQueryString();
+        if (!empty($boardConfig['thread_order'])) {
+            // 원본 사이트(freeboard.asp)의 스레드 정렬(order by fb_refnum desc, fb_step asc)을
+            // 복원한 sort_order(오름차순 = 원본 노출 순서)로 정렬한다.
+            // 질문-답변 연결은 원본 DB 백업(original_site/cmak.mdf)의 fb_refnum/fb_step 기준이며
+            // scripts/apply_free_board_order.php 로 적용됨.
+            // 관리자 신규 글(sort_order = 0)은 최신 글이므로 목록 맨 위에 최신순으로 노출.
+            $posts = $query->with('attachments')
+                ->orderByRaw('(sort_order = 0) DESC')
+                ->orderBy('sort_order')
+                ->orderByDesc('published_at')
+                ->paginate($perPage)
+                ->withQueryString();
+        } else {
+            $posts = $query->with('attachments')
+                ->orderByDesc('published_at')
+                ->paginate($perPage)
+                ->withQueryString();
+        }
 
         return view($viewPath, compact('posts', 'boardType', 'boardConfig') + $meta);
     }

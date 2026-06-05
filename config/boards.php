@@ -254,6 +254,7 @@ return [
         'has_summary' => false,
         'has_issue_number' => false,
         'fields' => [],
+        'thread_order' => true, // 원본 스레드 순서(sort_order)로 정렬 (scripts/apply_free_board_order.php 참조)
     ],
     'survey' => [
         'name' => '설문조사',

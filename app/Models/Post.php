@@ -14,11 +14,17 @@ class Post extends Model
         'board_type',
         'title',
         'content',
+        'summary',
         'excerpt',
         'category',
+        'author',
+        'issue_number',
+        'metadata',
         'is_notice',
+        'is_featured',
         'is_published',
         'view_count',
+        'sort_order',
         'created_by',
         'published_at',
     ];
@@ -29,6 +35,7 @@ class Post extends Model
             'is_notice' => 'boolean',
             'is_published' => 'boolean',
             'published_at' => 'datetime',
+            'metadata' => 'array',
         ];
     }
 

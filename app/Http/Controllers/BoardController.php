@@ -59,8 +59,11 @@ class BoardController extends Controller
                 ->paginate($perPage)
                 ->withQueryString();
         } else {
+            // 동일 날짜 내 순서: 크롤링이 원본 목록 순서(최신글부터)대로 삽입했으므로
+            // id 오름차순이 원본 노출 순서와 일치
             $posts = $query->with('attachments')
                 ->orderByDesc('published_at')
+                ->orderBy('id')
                 ->paginate($perPage)
                 ->withQueryString();
         }

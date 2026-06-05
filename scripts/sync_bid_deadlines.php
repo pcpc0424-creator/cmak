@@ -177,21 +177,25 @@ for ($page = 1; $page <= $totalPages; $page++) {
             }
             continue;
         }
-        if (count($candidates) > 1) { $stats['ambiguous']++; continue; }
+        // 동일 제목+공고일 중복(같은 공고의 중복 게시)은 모든 후보에 동일 마감일 부여
+        if (count($candidates) > 1) $stats['ambiguous']++;
 
-        $post = $candidates[0];
-        $meta = is_array($post->metadata) ? $post->metadata : [];
-        if (($meta['deadline_date'] ?? '') === $row['deadline']) { $stats['already']++; continue; }
+        $changed = false;
+        foreach ($candidates as $post) {
+            $meta = is_array($post->metadata) ? $post->metadata : [];
+            if (($meta['deadline_date'] ?? '') === $row['deadline']) continue;
 
-        $meta['deadline_date'] = $row['deadline'];
-        if (empty($meta['ordering_office']) && $row['office']) $meta['ordering_office'] = $row['office'];
-        if (empty($meta['announcement_date']) && $row['announce']) $meta['announcement_date'] = $row['announce'];
+            $meta['deadline_date'] = $row['deadline'];
+            if (empty($meta['ordering_office']) && $row['office']) $meta['ordering_office'] = $row['office'];
+            if (empty($meta['announcement_date']) && $row['announce']) $meta['announcement_date'] = $row['announce'];
 
-        if (!$dryRun) {
-            $post->metadata = $meta;
-            $post->saveQuietly();
+            if (!$dryRun) {
+                $post->metadata = $meta;
+                $post->saveQuietly();
+            }
+            $changed = true;
         }
-        $stats['updated']++;
+        $changed ? $stats['updated']++ : $stats['already']++;
     }
 
     if ($page % 10 === 0 || $page === $totalPages) {

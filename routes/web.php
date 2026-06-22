@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BoardController;
+use App\Http\Controllers\BusinessPageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -91,18 +92,19 @@ Route::get('/intro/plan', fn() => view('intro.plan'));
 Route::get('/intro', fn() => redirect('intro/greeting'));
 
 // ============================================
-// 협회업무 (정적 페이지)
+// 협회업무 (DB 편집형 페이지 - page_contents / 관리자에서 수정)
+//   내용이 없으면 기존 정적 블레이드로 자동 폴백 (BusinessPageController)
 // ============================================
-Route::get('/business/membership', fn() => view('business.membership'));
-Route::get('/business/certification', fn() => view('business.certification'));
-Route::get('/business/confirm', fn() => view('business.confirm'));
+Route::get('/business/membership', [BusinessPageController::class, 'show'])->defaults('slug', 'membership');
+Route::get('/business/certification', [BusinessPageController::class, 'show'])->defaults('slug', 'certification');
+Route::get('/business/confirm', [BusinessPageController::class, 'show'])->defaults('slug', 'confirm');
 // CM 실적 관리 페이지 통합: 기존 confirm-online → confirm 으로 리다이렉트
 Route::get('/business/confirm-online', fn() => redirect('/cmak/business/confirm'));
-Route::get('/business/inspection', fn() => view('business.inspection'));
-Route::get('/business/education', fn() => view('business.education'));
-Route::get('/business/herald', fn() => view('business.herald'));
-Route::get('/business/consma', fn() => view('business.consma'));
-Route::get('/business/slogan', fn() => view('business.slogan'));
+Route::get('/business/inspection', [BusinessPageController::class, 'show'])->defaults('slug', 'inspection');
+Route::get('/business/education', [BusinessPageController::class, 'show'])->defaults('slug', 'education');
+Route::get('/business/herald', [BusinessPageController::class, 'show'])->defaults('slug', 'herald');
+Route::get('/business/consma', [BusinessPageController::class, 'show'])->defaults('slug', 'consma');
+Route::get('/business/slogan', [BusinessPageController::class, 'show'])->defaults('slug', 'slogan');
 Route::get('/business/cm-forms', fn(\Illuminate\Http\Request $r) => app(BoardController::class)->index($r, 'cm_forms', 'business.cm-forms'));
 Route::get('/business', fn() => redirect('business/membership'));
 

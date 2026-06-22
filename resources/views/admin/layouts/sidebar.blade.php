@@ -34,9 +34,10 @@
                 </svg>
             </button>
             <div x-show="openMenu === 'association'" x-collapse x-cloak class="bg-slate-900/50">
-                <a href="{{ url('/admin/posts/cm_performance') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_performance*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM능력평가공시</a>
-                <a href="{{ url('/admin/posts/certification_exam') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/certification_exam*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">건설사업관리사자격검정</a>
-                <a href="{{ url('/admin/posts/herald') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/herald*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM Herald</a>
+                @foreach(\App\Models\PageContent::ofMenu('협회업무')->orderBy('sort_order')->orderBy('id')->get() as $bizPage)
+                    <a href="{{ url('/admin/page-contents/' . $bizPage->id . '/edit') }}"
+                       class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/page-contents/' . $bizPage->id . '*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">{{ $bizPage->page_title }}</a>
+                @endforeach
             </div>
         </div>
 

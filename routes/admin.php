@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\OnlineApplicationController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\EnglishContentController;
 use App\Http\Controllers\Admin\EnglishItemController;
+use App\Http\Controllers\Admin\PageContentController;
 
 // Auth (no admin middleware)
 Route::withoutMiddleware('admin')->group(function () {
@@ -62,6 +63,11 @@ Route::post('online-applications/{online_application}/entries', [OnlineApplicati
 
 // Accounts (admin only)
 Route::resource('accounts', AccountController::class)->names('admin.accounts');
+
+// Page Contents (협회업무 등 정적 페이지 편집 - 편집만, 추가/삭제는 코드 작업)
+Route::get('page-contents', [PageContentController::class, 'index'])->name('admin.page-contents.index');
+Route::get('page-contents/{pageContent}/edit', [PageContentController::class, 'edit'])->name('admin.page-contents.edit');
+Route::put('page-contents/{pageContent}', [PageContentController::class, 'update'])->name('admin.page-contents.update');
 
 // English Contents (편집/삭제만 - 페이지 추가는 코드 작업 필요)
 Route::resource('english-contents', EnglishContentController::class)

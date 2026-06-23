@@ -43,4 +43,21 @@ class PageContent extends Model
     {
         return $query->where('menu', $menu);
     }
+
+    /**
+     * 이 페이지의 공개(프론트) URL. 메뉴별로 라우트가 다르다.
+     */
+    public function publicUrl(): string
+    {
+        return match ($this->menu) {
+            '약관/정책' => url('/register'),
+            '협회소개' => url('/intro/organization' . match ($this->slug) {
+                'org-executives' => '/executives',
+                'org-branches'   => '/branches',
+                'org-committees' => '/committees',
+                default          => '',
+            }),
+            default => url('/business/' . $this->slug),
+        };
+    }
 }

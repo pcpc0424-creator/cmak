@@ -4,11 +4,11 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    @php $previewUrl = $page->menu === '약관/정책' ? url('/register') : url('/business/' . $page->slug); @endphp
+    @php $previewUrl = $page->publicUrl(); @endphp
     <div class="mb-6 flex items-start justify-between">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">{{ $page->page_title }} 수정</h1>
-            <p class="mt-1 text-sm text-gray-500 font-mono">{{ $page->menu === '약관/정책' ? '/register (회원가입 약관)' : '/business/' . $page->slug }}</p>
+            <p class="mt-1 text-sm text-gray-500 font-mono">{{ \Illuminate\Support\Str::after($previewUrl, url('/')) ?: '/' }}</p>
         </div>
         <a href="{{ $previewUrl }}" target="_blank"
            class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded hover:bg-gray-200">

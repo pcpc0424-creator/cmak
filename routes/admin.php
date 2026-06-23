@@ -31,84 +31,97 @@ Route::post('logout', [AuthController::class, 'logout'])->name('admin.logout');
 Route::get('/', fn() => redirect()->route('admin.dashboard'));
 Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-// Posts (board_type parameter)
-Route::get('posts/{boardType}', [PostController::class, 'index'])->name('admin.posts.index');
-Route::get('posts/{boardType}/create', [PostController::class, 'create'])->name('admin.posts.create');
-Route::post('posts/{boardType}', [PostController::class, 'store'])->name('admin.posts.store');
-Route::get('posts/{boardType}/{post}/edit', [PostController::class, 'edit'])->name('admin.posts.edit');
-Route::put('posts/{boardType}/{post}', [PostController::class, 'update'])->name('admin.posts.update');
-Route::delete('posts/{boardType}/{post}', [PostController::class, 'destroy'])->name('admin.posts.destroy');
-Route::delete('posts/{boardType}/{post}/attachments/{attachment}', [PostController::class, 'destroyAttachment'])->name('admin.posts.destroy-attachment');
+// Posts (board_type parameter) — 게시판 관리 권한
+Route::middleware('permission:posts')->group(function () {
+    Route::get('posts/{boardType}', [PostController::class, 'index'])->name('admin.posts.index');
+    Route::get('posts/{boardType}/create', [PostController::class, 'create'])->name('admin.posts.create');
+    Route::post('posts/{boardType}', [PostController::class, 'store'])->name('admin.posts.store');
+    Route::get('posts/{boardType}/{post}/edit', [PostController::class, 'edit'])->name('admin.posts.edit');
+    Route::put('posts/{boardType}/{post}', [PostController::class, 'update'])->name('admin.posts.update');
+    Route::delete('posts/{boardType}/{post}', [PostController::class, 'destroy'])->name('admin.posts.destroy');
+    Route::delete('posts/{boardType}/{post}/attachments/{attachment}', [PostController::class, 'destroyAttachment'])->name('admin.posts.destroy-attachment');
+    // File Upload (AJAX) — 게시판 작성 중 사용
+    Route::post('files/upload', [FileUploadController::class, 'upload'])->name('admin.files.upload');
+    Route::delete('files/{attachment}', [FileUploadController::class, 'delete'])->name('admin.files.delete');
+});
 
-// File Upload (AJAX)
-Route::post('files/upload', [FileUploadController::class, 'upload'])->name('admin.files.upload');
-Route::delete('files/{attachment}', [FileUploadController::class, 'delete'])->name('admin.files.delete');
+// Member Companies — 회원사 관리 권한
+Route::middleware('permission:member_companies')->group(function () {
+    Route::get('member-companies/export', [MemberCompanyController::class, 'export'])->name('admin.member-companies.export');
+    Route::resource('member-companies', MemberCompanyController::class)->names('admin.member-companies');
+    Route::patch('member-companies/{member_company}/toggle-verify', [MemberCompanyController::class, 'toggleVerify'])->name('admin.member-companies.toggle-verify');
+    Route::patch('member-companies/{member_company}/toggle-active', [MemberCompanyController::class, 'toggleActive'])->name('admin.member-companies.toggle-active');
+});
 
-// Member Companies
-Route::get('member-companies/export', [MemberCompanyController::class, 'export'])->name('admin.member-companies.export');
-Route::resource('member-companies', MemberCompanyController::class)->names('admin.member-companies');
-Route::patch('member-companies/{member_company}/toggle-verify', [MemberCompanyController::class, 'toggleVerify'])->name('admin.member-companies.toggle-verify');
-Route::patch('member-companies/{member_company}/toggle-active', [MemberCompanyController::class, 'toggleActive'])->name('admin.member-companies.toggle-active');
+// Banners — 배너 관리 권한
+Route::middleware('permission:banners')->group(function () {
+    Route::resource('banners', BannerController::class)->names('admin.banners');
+    Route::post('banners/update-order', [BannerController::class, 'updateOrder'])->name('admin.banners.update-order');
+});
 
-// Banners
-Route::resource('banners', BannerController::class)->names('admin.banners');
-Route::post('banners/update-order', [BannerController::class, 'updateOrder'])->name('admin.banners.update-order');
+// 홈 화면 관리 권한 (히어로 슬라이드 / 상단 POPUP / CM Herald / 바로가기 카드)
+Route::middleware('permission:home')->group(function () {
+    Route::post('hero-slides/update-order', [HeroSlideController::class, 'updateOrder'])->name('admin.hero-slides.update-order');
+    Route::resource('hero-slides', HeroSlideController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
+        ->names('admin.hero-slides');
+    Route::resource('top-popup-items', TopPopupItemController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
+        ->names('admin.top-popup-items');
+    Route::resource('herald-issues', HeraldIssueController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
+        ->names('admin.herald-issues');
+    Route::resource('home-cards', HomeCardController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
+        ->names('admin.home-cards');
+});
 
-// Hero Slides (메인 히어로 슬라이드)
-Route::post('hero-slides/update-order', [HeroSlideController::class, 'updateOrder'])->name('admin.hero-slides.update-order');
-Route::resource('hero-slides', HeroSlideController::class)
-    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
-    ->names('admin.hero-slides');
+// Popups — 팝업 관리 권한
+Route::middleware('permission:popups')->group(function () {
+    Route::resource('popups', PopupController::class)->names('admin.popups');
+    Route::patch('popups/{popup}/toggle-active', [PopupController::class, 'toggleActive'])->name('admin.popups.toggle-active');
+    Route::get('popups/{popup}/preview', [PopupController::class, 'preview'])->name('admin.popups.preview');
+});
 
-// Top Popup Items (상단 POPUP 버튼)
-Route::resource('top-popup-items', TopPopupItemController::class)
-    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
-    ->names('admin.top-popup-items');
+// Related Sites — 관련사이트 관리 권한
+Route::middleware('permission:related_sites')->group(function () {
+    Route::resource('related-sites', RelatedSiteController::class)->names('admin.related-sites');
+});
 
-// CM Herald 소식지 (호수 관리)
-Route::resource('herald-issues', HeraldIssueController::class)
-    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
-    ->names('admin.herald-issues');
+// Online Applications — 온라인 접수 권한
+Route::middleware('permission:online')->group(function () {
+    Route::resource('online-applications', OnlineApplicationController::class)->names('admin.online-applications');
+    Route::get('online-applications/{online_application}/entries', [OnlineApplicationController::class, 'entries'])->name('admin.online-applications.entries');
+    Route::post('online-applications/{online_application}/entries', [OnlineApplicationController::class, 'storeEntry'])->name('admin.online-applications.store-entry');
+});
 
-// 메인 바로가기 카드 (우측 6개 카드)
-Route::resource('home-cards', HomeCardController::class)
-    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
-    ->names('admin.home-cards');
+// Accounts — 계정 관리 권한
+Route::middleware('permission:accounts')->group(function () {
+    Route::resource('accounts', AccountController::class)->names('admin.accounts');
+});
 
-// Popups
-Route::resource('popups', PopupController::class)->names('admin.popups');
-Route::patch('popups/{popup}/toggle-active', [PopupController::class, 'toggleActive'])->name('admin.popups.toggle-active');
-Route::get('popups/{popup}/preview', [PopupController::class, 'preview'])->name('admin.popups.preview');
+// Members (회원관리 - 가입 회원 조회 + 등급 조정 + 가입승인 + CSV) — 개인회원 관리 권한
+Route::middleware('permission:members')->group(function () {
+    Route::get('members', [MemberController::class, 'index'])->name('admin.members.index');
+    Route::get('members/export', [MemberController::class, 'export'])->name('admin.members.export');
+    Route::get('members/{member}/edit', [MemberController::class, 'edit'])->name('admin.members.edit');
+    Route::put('members/{member}', [MemberController::class, 'update'])->name('admin.members.update');
+    Route::patch('members/{member}/approve', [MemberController::class, 'approve'])->name('admin.members.approve');
+    Route::patch('members/{member}/reject', [MemberController::class, 'reject'])->name('admin.members.reject');
+});
 
-// Related Sites
-Route::resource('related-sites', RelatedSiteController::class)->names('admin.related-sites');
+// Page Contents (협회업무 등 정적 페이지 편집) — 페이지 내용 편집 권한
+Route::middleware('permission:page_contents')->group(function () {
+    Route::get('page-contents', [PageContentController::class, 'index'])->name('admin.page-contents.index');
+    Route::get('page-contents/{pageContent}/edit', [PageContentController::class, 'edit'])->name('admin.page-contents.edit');
+    Route::put('page-contents/{pageContent}', [PageContentController::class, 'update'])->name('admin.page-contents.update');
+});
 
-// Online Applications
-Route::resource('online-applications', OnlineApplicationController::class)->names('admin.online-applications');
-Route::get('online-applications/{online_application}/entries', [OnlineApplicationController::class, 'entries'])->name('admin.online-applications.entries');
-Route::post('online-applications/{online_application}/entries', [OnlineApplicationController::class, 'storeEntry'])->name('admin.online-applications.store-entry');
-
-// Accounts (admin only)
-Route::resource('accounts', AccountController::class)->names('admin.accounts');
-
-// Members (회원관리 - 가입 회원 조회 + 등급 조정 + 가입승인 + CSV)
-Route::get('members', [MemberController::class, 'index'])->name('admin.members.index');
-Route::get('members/export', [MemberController::class, 'export'])->name('admin.members.export');
-Route::get('members/{member}/edit', [MemberController::class, 'edit'])->name('admin.members.edit');
-Route::put('members/{member}', [MemberController::class, 'update'])->name('admin.members.update');
-Route::patch('members/{member}/approve', [MemberController::class, 'approve'])->name('admin.members.approve');
-Route::patch('members/{member}/reject', [MemberController::class, 'reject'])->name('admin.members.reject');
-
-// Page Contents (협회업무 등 정적 페이지 편집 - 편집만, 추가/삭제는 코드 작업)
-Route::get('page-contents', [PageContentController::class, 'index'])->name('admin.page-contents.index');
-Route::get('page-contents/{pageContent}/edit', [PageContentController::class, 'edit'])->name('admin.page-contents.edit');
-Route::put('page-contents/{pageContent}', [PageContentController::class, 'update'])->name('admin.page-contents.update');
-
-// English Contents (편집/삭제만 - 페이지 추가는 코드 작업 필요)
-Route::resource('english-contents', EnglishContentController::class)
-    ->only(['index', 'edit', 'update', 'destroy'])
-    ->names('admin.english-contents');
-
-// English Items (수정/삭제만 - 추가는 코드 작업 필요)
-Route::put('english-contents/{englishContent}/items/{item}', [EnglishItemController::class, 'update'])->name('admin.english-items.update');
-Route::delete('english-contents/{englishContent}/items/{item}', [EnglishItemController::class, 'destroy'])->name('admin.english-items.destroy');
+// English Contents / Items — 영문사이트 관리 권한
+Route::middleware('permission:english')->group(function () {
+    Route::resource('english-contents', EnglishContentController::class)
+        ->only(['index', 'edit', 'update', 'destroy'])
+        ->names('admin.english-contents');
+    Route::put('english-contents/{englishContent}/items/{item}', [EnglishItemController::class, 'update'])->name('admin.english-items.update');
+    Route::delete('english-contents/{englishContent}/items/{item}', [EnglishItemController::class, 'destroy'])->name('admin.english-items.destroy');
+});

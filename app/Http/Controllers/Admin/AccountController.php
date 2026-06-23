@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class AccountController extends Controller
@@ -45,12 +46,18 @@ class AccountController extends Controller
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::defaults()],
             'role' => ['required', 'string', 'in:admin,editor,user'],
+            'permissions' => ['nullable', 'array'],
+            'permissions.*' => ['string', Rule::in(array_keys(User::PERMISSIONS))],
             'department' => ['nullable', 'string', 'max:100'],
             'position' => ['nullable', 'string', 'max:100'],
             'is_active' => ['boolean'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
+        // 권한은 editor에게만 의미 있음 (admin=전체 허용, user=관리자 접근 불가)
+        $validated['permissions'] = $validated['role'] === 'editor'
+            ? ($request->input('permissions', []))
+            : null;
 
         User::create($validated);
 
@@ -58,23 +65,25 @@ class AccountController extends Controller
             ->with('success', '계정이 생성되었습니다.');
     }
 
-    public function show(User $user)
+    public function show(User $account)
     {
-        return view('admin.accounts.show', compact('user'));
+        return view('admin.accounts.show', compact('account'));
     }
 
-    public function edit(User $user)
+    public function edit(User $account)
     {
-        return view('admin.accounts.edit', compact('user'));
+        return view('admin.accounts.edit', compact('account'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $account)
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $account->id],
             'password' => ['nullable', 'confirmed', Password::defaults()],
             'role' => ['required', 'string', 'in:admin,editor,user'],
+            'permissions' => ['nullable', 'array'],
+            'permissions.*' => ['string', Rule::in(array_keys(User::PERMISSIONS))],
             'department' => ['nullable', 'string', 'max:100'],
             'position' => ['nullable', 'string', 'max:100'],
             'is_active' => ['boolean'],
@@ -86,19 +95,24 @@ class AccountController extends Controller
             unset($validated['password']);
         }
 
-        $user->update($validated);
+        // 권한은 editor에게만 의미 있음
+        $validated['permissions'] = $validated['role'] === 'editor'
+            ? ($request->input('permissions', []))
+            : null;
+
+        $account->update($validated);
 
         return redirect($this->basePath . '/admin/accounts')
             ->with('success', '계정이 수정되었습니다.');
     }
 
-    public function destroy(User $user)
+    public function destroy(User $account)
     {
-        if ($user->id === auth()->id()) {
+        if ($account->id === auth()->id()) {
             return back()->with('error', '자신의 계정은 삭제할 수 없습니다.');
         }
 
-        $user->delete();
+        $account->delete();
 
         return redirect($this->basePath . '/admin/accounts')
             ->with('success', '계정이 삭제되었습니다.');

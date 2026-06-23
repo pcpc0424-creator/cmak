@@ -131,7 +131,9 @@ Route::get('/intro/departments', fn() => view('intro.departments'));
 Route::get('/intro/articles', fn() => view('intro.articles'));
 Route::get('/intro/location', fn() => view('intro.location'));
 Route::get('/intro/history', fn() => view('intro.history'));
-Route::get('/intro/organization', fn() => view('intro.organization'));
+Route::get('/intro/organization', [\App\Http\Controllers\OrganizationPageController::class, 'show']);
+Route::get('/intro/organization/{tab}', [\App\Http\Controllers\OrganizationPageController::class, 'show'])
+    ->whereIn('tab', ['chart', 'executives', 'branches', 'committees']);
 Route::get('/intro/presidents', fn() => view('intro.presidents'));
 Route::get('/intro/plan', fn() => view('intro.plan'));
 Route::get('/intro', fn() => redirect('intro/greeting'));

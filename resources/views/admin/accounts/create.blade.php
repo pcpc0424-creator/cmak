@@ -57,18 +57,34 @@
                 </div>
             </div>
 
-            {{-- 역할 --}}
-            <div>
+            {{-- 역할 & 권한 --}}
+            @php $curPerms = old('permissions', []); @endphp
+            <div x-data="{ role: '{{ old('role', 'editor') }}' }">
                 <label for="role" class="block text-sm font-medium text-gray-700 mb-1">역할</label>
-                <select name="role" id="role"
+                <select name="role" id="role" x-model="role"
                         class="w-full sm:w-1/2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
-                    <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>관리자</option>
-                    <option value="editor" {{ old('role') === 'editor' ? 'selected' : '' }}>편집자</option>
-                    <option value="viewer" {{ old('role', 'viewer') === 'viewer' ? 'selected' : '' }}>뷰어</option>
+                    <option value="admin">관리자 (전체 권한)</option>
+                    <option value="editor">편집자 (선택 권한)</option>
+                    <option value="user">뷰어 (관리자 접근 불가)</option>
                 </select>
                 @error('role')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
+
+                {{-- 권한 (편집자일 때만) --}}
+                <div x-show="role === 'editor'" x-cloak class="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-md">
+                    <p class="text-sm font-medium text-gray-700 mb-3">접근 허용 메뉴 <span class="text-gray-400 font-normal">(편집자에게만 적용 · 관리자는 전체 허용)</span></p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        @foreach(\App\Models\User::PERMISSIONS as $key => $label)
+                            <label class="flex items-start gap-2 text-sm text-gray-700">
+                                <input type="checkbox" name="permissions[]" value="{{ $key }}"
+                                       {{ in_array($key, $curPerms, true) ? 'checked' : '' }}
+                                       class="mt-0.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                <span>{{ $label }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
             </div>
 
             {{-- 부서 & 직위 --}}

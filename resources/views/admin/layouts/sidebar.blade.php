@@ -10,6 +10,7 @@
 
     {{-- Navigation --}}
     <nav class="flex-1 overflow-y-auto sidebar-scroll py-3" x-data="{ openMenu: '' }">
+        @php $can = fn($k) => auth()->check() && auth()->user()->hasPermission($k); @endphp
         {{-- 대시보드 --}}
         <a href="{{ url('/admin/dashboard') }}"
            class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/dashboard') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
@@ -19,6 +20,7 @@
             <span>대시보드</span>
         </a>
 
+        @if($can('page_contents'))
         {{-- 협회업무 --}}
         <div>
             <button @click="openMenu = openMenu === 'association' ? '' : 'association'"
@@ -37,6 +39,28 @@
                 @foreach(\App\Models\PageContent::ofMenu('협회업무')->orderBy('sort_order')->orderBy('id')->get() as $bizPage)
                     <a href="{{ url('/admin/page-contents/' . $bizPage->id . '/edit') }}"
                        class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/page-contents/' . $bizPage->id . '*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">{{ $bizPage->page_title }}</a>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- 협회소개(조직 및 구성) --}}
+        <div>
+            <button @click="openMenu = openMenu === 'intro' ? '' : 'intro'"
+                    class="w-full flex items-center justify-between px-5 py-2.5 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 100-8 4 4 0 000 8zm6 0a4 4 0 00-3-3.87M9 7a4 4 0 00-3 3.87"/>
+                    </svg>
+                    <span>조직 및 구성</span>
+                </div>
+                <svg class="w-4 h-4 transition-transform" :class="openMenu === 'intro' ? 'rotate-90' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+            <div x-show="openMenu === 'intro'" x-collapse x-cloak class="bg-slate-900/50">
+                @foreach(\App\Models\PageContent::ofMenu('협회소개')->orderBy('sort_order')->orderBy('id')->get() as $introPage)
+                    <a href="{{ url('/admin/page-contents/' . $introPage->id . '/edit') }}"
+                       class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/page-contents/' . $introPage->id . '*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">{{ $introPage->page_title }}</a>
                 @endforeach
             </div>
         </div>
@@ -63,6 +87,9 @@
             </div>
         </div>
 
+        @endif
+
+        @if($can('posts'))
         {{-- CM자료방 --}}
         <div>
             <button @click="openMenu = openMenu === 'resources' ? '' : 'resources'"
@@ -148,9 +175,12 @@
             <span>CM30년 게시판</span>
         </a>
 
+        @endif
+
         {{-- Divider --}}
         <div class="my-2 mx-5 border-t border-slate-700"></div>
 
+        @if($can('member_companies'))
         {{-- 회원사관리 --}}
         <a href="{{ url('/admin/member-companies') }}"
            class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/member-companies*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
@@ -160,6 +190,9 @@
             <span>회원사관리</span>
         </a>
 
+        @endif
+
+        @if($can('home'))
         {{-- 히어로 슬라이드 --}}
         <a href="{{ url('/admin/hero-slides') }}"
            class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/hero-slides*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
@@ -196,6 +229,9 @@
             <span>상단 POPUP 관리</span>
         </a>
 
+        @endif
+
+        @if($can('banners'))
         {{-- 배너관리 --}}
         <a href="{{ url('/admin/banners') }}"
            class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/banners*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
@@ -205,6 +241,9 @@
             <span>배너관리</span>
         </a>
 
+        @endif
+
+        @if($can('popups'))
         {{-- 팝업관리 --}}
         <a href="{{ url('/admin/popups') }}"
            class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/popups*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
@@ -214,6 +253,9 @@
             <span>팝업관리</span>
         </a>
 
+        @endif
+
+        @if($can('related_sites'))
         {{-- 관련사이트 --}}
         <a href="{{ url('/admin/related-sites') }}"
            class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/related-sites*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
@@ -223,6 +265,9 @@
             <span>관련사이트</span>
         </a>
 
+        @endif
+
+        @if($can('online'))
         {{-- 온라인접수 --}}
         <a href="{{ url('/admin/online-applications') }}"
            class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/online-applications*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
@@ -232,6 +277,9 @@
             <span>온라인접수</span>
         </a>
 
+        @endif
+
+        @if($can('members'))
         {{-- 회원관리 --}}
         <a href="{{ url('/admin/members') }}"
            class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/members*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
@@ -241,6 +289,9 @@
             <span>회원관리</span>
         </a>
 
+        @endif
+
+        @if($can('accounts'))
         {{-- 계정관리 --}}
         <a href="{{ url('/admin/accounts') }}"
            class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/accounts*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
@@ -250,6 +301,9 @@
             <span>계정관리</span>
         </a>
 
+        @endif
+
+        @if($can('english'))
         {{-- 영문사이트 --}}
         <a href="{{ url('/admin/english-contents') }}"
            class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/english-contents*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
@@ -258,6 +312,7 @@
             </svg>
             <span>영문사이트 페이지 관리</span>
         </a>
+        @endif
     </nav>
 
     {{-- Sidebar Footer --}}

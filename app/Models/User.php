@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'permissions',
         'grade',
         'department',
         'position',
@@ -103,6 +104,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'approved_at' => 'datetime',
+            'permissions' => 'array',
             'password' => 'hashed',
             'is_active' => 'boolean',
             'sms_agree' => 'boolean',
@@ -118,5 +120,32 @@ class User extends Authenticatable
     public function isEditor(): bool
     {
         return $this->role === 'editor';
+    }
+
+    /** 관리자 권한 영역 정의 (계정관리 체크박스 + 라우트 보호 키) */
+    public const PERMISSIONS = [
+        'posts' => '게시판 관리(협회업무·CM자료방·알림마당·참여마당)',
+        'member_companies' => '회원사 관리',
+        'members' => '개인회원 관리',
+        'home' => '홈 화면 관리(히어로·카드·헤럴드·상단팝업)',
+        'banners' => '배너 관리',
+        'popups' => '팝업 관리',
+        'related_sites' => '관련사이트 관리',
+        'online' => '온라인 접수',
+        'page_contents' => '페이지 내용 편집',
+        'english' => '영문사이트 관리',
+        'accounts' => '계정 관리',
+    ];
+
+    /**
+     * 특정 관리 영역 접근 권한 보유 여부.
+     * admin 역할은 항상 전체 허용, editor는 permissions에 포함된 영역만.
+     */
+    public function hasPermission(string $key): bool
+    {
+        if ($this->isAdmin()) {
+            return true;
+        }
+        return in_array($key, $this->permissions ?? [], true);
     }
 }

@@ -108,11 +108,11 @@
                                     <td class="px-4 py-3 text-center text-sm text-gray-500">{{ $banner->sort_order ?? 0 }}</td>
                                     <td class="px-4 py-3 text-center">
                                         <div class="flex items-center justify-center gap-2">
-                                            <a href="{{ url('/admin/banners/' . $banner->id . '/edit') }}" class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-blue-700 bg-blue-50 rounded hover:bg-blue-100">수정</a>
+                                            <a href="{{ url('/admin/banners/' . $banner->id . '/edit') }}" class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-blue-700 bg-blue-50 rounded hover:bg-blue-100 transition">수정</a>
                                             <form action="{{ url('/admin/banners/' . $banner->id) }}" method="POST" onsubmit="return confirm('정말 삭제하시겠습니까?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-red-700 bg-red-50 rounded hover:bg-red-100">삭제</button>
+                                                <button type="submit" class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-red-700 bg-red-50 rounded hover:bg-red-100 transition">삭제</button>
                                             </form>
                                         </div>
                                     </td>

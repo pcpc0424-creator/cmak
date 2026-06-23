@@ -33,7 +33,7 @@
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">이미지</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">문구</th>
                     <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">노출</th>
-                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">관리</th>
+                    <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase w-28">관리</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
@@ -60,15 +60,15 @@
                                 <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500">숨김</span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 text-right">
-                            <div class="inline-flex items-center gap-2">
+                        <td class="px-4 py-3 text-center">
+                            <div class="flex items-center justify-center gap-2">
                                 <a href="{{ url('/admin/hero-slides/' . $slide->id . '/edit') }}"
-                                   class="text-sm text-blue-600 hover:text-blue-800">수정</a>
+                                   class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-blue-700 bg-blue-50 rounded hover:bg-blue-100 transition">수정</a>
                                 <form action="{{ url('/admin/hero-slides/' . $slide->id) }}" method="POST"
                                       onsubmit="return confirm('이 슬라이드를 삭제하시겠습니까?');" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-sm text-red-600 hover:text-red-800">삭제</button>
+                                    <button type="submit" class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-red-700 bg-red-50 rounded hover:bg-red-100 transition">삭제</button>
                                 </form>
                             </div>
                         </td>

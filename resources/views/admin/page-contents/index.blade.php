@@ -48,11 +48,13 @@
                                 @endif
                             </td>
                             <td class="px-4 py-3 text-center text-xs text-gray-400">{{ $page->updated_at?->format('Y-m-d') }}</td>
-                            <td class="px-4 py-3 text-center text-sm">
-                                <a href="{{ url('/admin/page-contents/' . $page->id . '/edit') }}"
-                                   class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700">수정</a>
-                                <a href="{{ url('/business/' . $page->slug) }}" target="_blank"
-                                   class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded hover:bg-gray-200 ml-1">보기 →</a>
+                            <td class="px-4 py-3 text-center">
+                                <div class="flex items-center justify-center gap-2">
+                                    <a href="{{ url('/admin/page-contents/' . $page->id . '/edit') }}"
+                                       class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-blue-700 bg-blue-50 rounded hover:bg-blue-100 transition">수정</a>
+                                    <a href="{{ $page->publicUrl() }}" target="_blank"
+                                       class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded hover:bg-gray-200 transition">보기 →</a>
+                                </div>
                             </td>
                         </tr>
                     @empty

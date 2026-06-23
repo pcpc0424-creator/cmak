@@ -9,6 +9,9 @@
         language: 'ko_KR',
         language_url: 'https://cdn.jsdelivr.net/npm/tinymce-i18n@latest/langs7/ko_KR.js',
         height: 500,
+        // 절대경로(/cmak/...)를 상대경로로 자동변환하지 않음 — 변환되면 페이지 URL 깊이가 달라 이미지/링크가 깨짐
+        convert_urls: false,
+        relative_urls: false,
         menubar: 'edit view insert format table',
         plugins: [
             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',

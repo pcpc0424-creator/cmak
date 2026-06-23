@@ -87,6 +87,7 @@
                     ['title' => '교육 및 세미나 자료', 'link' => "$bp/cmdata/seminar"],
                     ['title' => '전문가 칼럼', 'link' => "$bp/cmdata/expert"],
                     ['title' => '기획/특집', 'link' => "$bp/cmdata/special"],
+                    ['title' => 'CM30년', 'link' => "$bp/cm30"],
                     ['title' => '기타자료', 'link' => "$bp/cmdata/etc"],
                 ]],
                 ['title' => '알림마당', 'link' => "$bp/notice", 'sub' => [

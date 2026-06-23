@@ -2,13 +2,58 @@
 
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\BusinessPageController;
+use App\Http\Controllers\Auth\AccountRecoveryController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\HeraldController;
+use App\Http\Controllers\MemberPostController;
+use App\Http\Controllers\MypageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/login', fn() => view('login'));
+// 회원 로그인 / 회원가입 (공개)
+Route::get('/login', [LoginController::class, 'show'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/register', [RegisterController::class, 'show'])->name('register');
+Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/register/check-username', [RegisterController::class, 'checkUsername']);
+
+// 아이디 찾기 / 비밀번호 재설정 (공개)
+Route::get('/find-username', [AccountRecoveryController::class, 'showFindUsername'])->name('find-username');
+Route::post('/find-username', [AccountRecoveryController::class, 'findUsername']);
+Route::get('/reset-password', [AccountRecoveryController::class, 'showResetPassword'])->name('reset-password');
+Route::post('/reset-password', [AccountRecoveryController::class, 'resetPassword']);
+
+// 마이페이지 & 회원 글쓰기 (로그인 필요)
+Route::middleware('auth')->group(function () {
+    // 마이페이지
+    Route::get('/mypage', [MypageController::class, 'index'])->name('mypage');
+    Route::get('/mypage/profile', [MypageController::class, 'editProfile'])->name('mypage.profile');
+    Route::put('/mypage/profile', [MypageController::class, 'updateProfile']);
+    Route::get('/mypage/password', [MypageController::class, 'editPassword'])->name('mypage.password');
+    Route::put('/mypage/password', [MypageController::class, 'updatePassword']);
+    Route::get('/mypage/posts', [MypageController::class, 'myPosts'])->name('mypage.posts');
+    Route::get('/mypage/withdraw', [MypageController::class, 'editWithdraw'])->name('mypage.withdraw');
+    Route::delete('/mypage/withdraw', [MypageController::class, 'withdraw']);
+
+    // 회원 글쓰기 (구인/구직)
+    Route::get('/community/{slug}/write', [MemberPostController::class, 'create'])
+        ->whereIn('slug', ['job-offer', 'job-seek'])->name('member.post.create');
+    Route::post('/community/{slug}/write', [MemberPostController::class, 'store'])
+        ->whereIn('slug', ['job-offer', 'job-seek']);
+    Route::get('/board/{boardType}/{post}/edit', [MemberPostController::class, 'edit'])
+        ->whereIn('boardType', ['job_offer', 'job_seek'])->name('member.post.edit');
+    Route::put('/board/{boardType}/{post}', [MemberPostController::class, 'update'])
+        ->whereIn('boardType', ['job_offer', 'job_seek']);
+    Route::delete('/board/{boardType}/{post}', [MemberPostController::class, 'destroy'])
+        ->whereIn('boardType', ['job_offer', 'job_seek']);
+    Route::delete('/board/{boardType}/{post}/attachments/{attachment}', [MemberPostController::class, 'destroyAttachment'])
+        ->whereIn('boardType', ['job_offer', 'job_seek']);
+});
 
 // ============================================
 // 통합 검색 - 게시글 title/content 검색
@@ -102,11 +147,17 @@ Route::get('/business/confirm', [BusinessPageController::class, 'show'])->defaul
 Route::get('/business/confirm-online', fn() => redirect('/cmak/business/confirm'));
 Route::get('/business/inspection', [BusinessPageController::class, 'show'])->defaults('slug', 'inspection');
 Route::get('/business/education', [BusinessPageController::class, 'show'])->defaults('slug', 'education');
-Route::get('/business/herald', [BusinessPageController::class, 'show'])->defaults('slug', 'herald');
+// CM Herald — 로그인 회원만 열람 (책장형 표지 + 웹진보기)
+Route::get('/business/herald', [HeraldController::class, 'index'])->middleware('auth');
 Route::get('/business/consma', [BusinessPageController::class, 'show'])->defaults('slug', 'consma');
 Route::get('/business/slogan', [BusinessPageController::class, 'show'])->defaults('slug', 'slogan');
 Route::get('/business/cm-forms', fn(\Illuminate\Http\Request $r) => app(BoardController::class)->index($r, 'cm_forms', 'business.cm-forms'));
 Route::get('/business', fn() => redirect('business/membership'));
+
+// ============================================
+// CM30년 (완전 별도 독립 게시판) — 상단 POPUP 'CM30년' 전용, 타 메뉴 미연결
+// ============================================
+Route::get('/cm30', fn(\Illuminate\Http\Request $r) => app(BoardController::class)->index($r, 'cm30', 'cm30.index'));
 
 // ============================================
 // CM자료방 (DB 연동 게시판)

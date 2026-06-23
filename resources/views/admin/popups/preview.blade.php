@@ -50,13 +50,23 @@
 
             {{-- 팝업 본문 --}}
             <div class="relative" style="min-height: {{ ($popup->height ?? 400) - 40 }}px;">
+                @if($popup->image_path && file_exists(public_path($popup->image_path)))
+                    @if($popup->link_url)
+                        <a href="{{ $popup->link_url }}" target="_blank" rel="noopener noreferrer">
+                            <img src="/cmak/{{ $popup->image_path }}" alt="{{ $popup->title }}" style="display:block;width:100%;height:auto;">
+                        </a>
+                    @else
+                        <img src="/cmak/{{ $popup->image_path }}" alt="{{ $popup->title }}" style="display:block;width:100%;height:auto;">
+                    @endif
+                @endif
+
                 @if($popup->content)
                     <div class="p-4 text-sm text-gray-700 leading-relaxed">
                         {!! $popup->content !!}
                     </div>
                 @endif
 
-                @if(!$popup->content)
+                @if(!$popup->content && !$popup->image_path)
                     <div class="flex items-center justify-center h-full p-8 text-gray-400">
                         <div class="text-center">
                             <svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">

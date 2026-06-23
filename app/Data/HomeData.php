@@ -28,7 +28,7 @@ class HomeData
             'content' => $r->content,
             'author' => $r->author,
             'date' => $r->published_at ? date('Y-m-d', strtotime($r->published_at)) : '',
-            'link' => '/cmak/notice',
+            'link' => '/cmak/board/' . $boardType . '/' . $r->id,
         ])->toArray();
     }
 
@@ -76,7 +76,7 @@ class HomeData
     public static function getNotices(): array
     {
         $posts = self::getPostsByBoard('news_association', 5);
-        return array_map(fn($p) => array_merge($p, ['category' => '공지', 'isNew' => false, 'link' => '/cmak/notice/news']), $posts);
+        return array_map(fn($p) => array_merge($p, ['category' => '공지', 'isNew' => false]), $posts);
     }
 
     /**
@@ -106,7 +106,7 @@ class HomeData
     public static function getBids(): array
     {
         $posts = self::getPostsByBoard('news_bid', 5);
-        return array_map(fn($p) => array_merge($p, ['type' => '입찰', 'link' => '/cmak/notice/bids']), $posts);
+        return array_map(fn($p) => array_merge($p, ['type' => '입찰']), $posts);
     }
 
     /**
@@ -115,7 +115,7 @@ class HomeData
     public static function getDomesticNews(): array
     {
         $posts = self::getPostsByBoard('news_domestic', 5);
-        return array_map(fn($p) => array_merge($p, ['link' => '/cmak/notice/news']), $posts);
+        return $posts;
     }
 
     /**
@@ -124,7 +124,7 @@ class HomeData
     public static function getLegalNews(): array
     {
         $posts = self::getPostsByBoard('news_law', 5);
-        return array_map(fn($p) => array_merge($p, ['link' => '/cmak/notice/law']), $posts);
+        return $posts;
     }
 
     /**
@@ -133,7 +133,7 @@ class HomeData
     public static function getRelatedOrgNews(): array
     {
         $posts = self::getPostsByBoard('news_org', 5);
-        return array_map(fn($p) => array_merge($p, ['link' => '/cmak/notice/org']), $posts);
+        return $posts;
     }
 
     /**
@@ -142,7 +142,7 @@ class HomeData
     public static function getPressReleases(): array
     {
         $posts = self::getPostsByBoard('news_press', 5);
-        return array_map(fn($p) => array_merge($p, ['link' => '/cmak/notice/press']), $posts);
+        return $posts;
     }
 
     /**
@@ -151,7 +151,7 @@ class HomeData
     public static function getExpertColumns(): array
     {
         $posts = self::getPostsByBoard('expert_column', 5);
-        return array_map(fn($p) => array_merge($p, ['summary' => '', 'isFeatured' => false, 'link' => '/cmak/cmdata/expert']), $posts);
+        return array_map(fn($p) => array_merge($p, ['summary' => '', 'isFeatured' => false]), $posts);
     }
 
     /**
@@ -160,7 +160,7 @@ class HomeData
     public static function getMemberTrends(): array
     {
         $posts = self::getPostsByBoard('member_trend', 5);
-        return array_map(fn($p) => array_merge($p, ['company' => '', 'link' => '/cmak/notice/member']), $posts);
+        return array_map(fn($p) => array_merge($p, ['company' => '']), $posts);
     }
 
     /**
@@ -178,7 +178,7 @@ class HomeData
     public static function getPersonnelEvents(): array
     {
         $posts = self::getPostsByBoard('news_personnel', 5);
-        return array_map(fn($p) => array_merge($p, ['link' => '/cmak/notice/personnel']), $posts);
+        return $posts;
     }
 
     /**

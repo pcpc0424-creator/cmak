@@ -22,11 +22,6 @@
         @yield('content')
     </main>
 
-    {{-- 우측 점 네비게이션 --}}
-    <nav id="fp-nav">
-        <ul></ul>
-    </nav>
-
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -57,8 +52,8 @@
         }
 
         // === 상태 ===
-        var popupOpen = true;
-        var userClosedPopup = false;
+        var popupOpen = false;        // 상단 POPUP 기본 접힘
+        var userClosedPopup = true;   // 사용자가 직접 열기 전까지 자동으로 펼치지 않음
         var currentSection = 0;
         var isAnimating = false;
         var totalSections = sections.length;
@@ -135,6 +130,13 @@
                     mainMenu.classList.remove('active');
                 }
             });
+            // 닫기(X) 버튼
+            var mainMenuClose = document.getElementById('mainMenuClose');
+            if (mainMenuClose) {
+                mainMenuClose.addEventListener('click', function() {
+                    mainMenu.classList.remove('active');
+                });
+            }
             // ESC로 닫기
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && mainMenu.classList.contains('active')) {
@@ -171,10 +173,12 @@
 
             wrapper.style.transform = 'translate3d(0, -' + (index * 100) + 'vh, 0)';
 
-            // 점 네비게이션 업데이트
-            var navLinks = fpNav.querySelectorAll('a');
-            navLinks.forEach(function(link) { link.classList.remove('active'); });
-            if (navLinks[index]) navLinks[index].classList.add('active');
+            // 점 네비게이션 업데이트 (fp-nav 제거됨 — 존재 시에만)
+            if (fpNav) {
+                var navLinks = fpNav.querySelectorAll('a');
+                navLinks.forEach(function(link) { link.classList.remove('active'); });
+                if (navLinks[index]) navLinks[index].classList.add('active');
+            }
 
             // 섹션2로 갈 때: 팝업 자동 닫기
             if (index > 0) {
@@ -241,5 +245,8 @@
         updatePositions();
     });
     </script>
+
+    {{-- 사이트 레이어 팝업 (관리자 팝업관리 연동) --}}
+    @include('components.popups')
 </body>
 </html>

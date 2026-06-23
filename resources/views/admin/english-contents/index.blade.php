@@ -70,7 +70,7 @@
                                 <td class="px-4 py-3 text-center text-xs text-gray-500">{{ $page->updated_at->format('Y-m-d') }}</td>
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex items-center justify-center gap-1.5">
-                                        <a href="{{ url('/cmak/eng/' . ($page->slug === 'home' ? '' : $page->slug)) }}" target="_blank"
+                                        <a href="{{ url('/eng/' . ($page->slug === 'home' ? '' : $page->slug)) }}" target="_blank"
                                            class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded hover:bg-gray-200">
                                             보기
                                         </a>

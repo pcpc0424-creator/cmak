@@ -1,28 +1,56 @@
 {{-- ICAK 스타일 헤더 --}}
 @php
     $basePath = '/cmak';
+
+    // 상단 POPUP 버튼 — 관리자(top_popup_items)에서 읽고, 없으면 기본값 폴백
+    $fallbackTopPop = [
+        ['label' => 'CM능력평가공시', 'link' => $basePath . '/business/certification', 'target' => '_self', 'image' => null],
+        ['label' => 'CM30년', 'link' => $basePath . '/intro/history', 'target' => '_self', 'image' => null],
+        ['label' => '건설사업관리사자격검정', 'link' => $basePath . '/business/inspection', 'target' => '_self', 'image' => null],
+    ];
+    try {
+        $topPopItems = \App\Models\TopPopupItem::active()->orderBy('sort_order')->orderBy('id')->get()
+            ->map(function ($it) use ($basePath) {
+                $link = $it->link_url ?: '#';
+                // 상대경로(/...)면 basePath 접두, 절대 URL이면 그대로
+                if (\Illuminate\Support\Str::startsWith($link, '/') && !\Illuminate\Support\Str::startsWith($link, $basePath)) {
+                    $link = $basePath . $link;
+                }
+                return [
+                    'label' => $it->label,
+                    'link' => $link,
+                    'target' => $it->link_target ?: '_self',
+                    'image' => $it->image_path ? $basePath . '/' . ltrim($it->image_path, '/') : null,
+                ];
+            })->all();
+        if (empty($topPopItems)) {
+            $topPopItems = $fallbackTopPop;
+        }
+    } catch (\Throwable $e) {
+        $topPopItems = $fallbackTopPop;
+    }
 @endphp
 
-{{-- 상단 팝업 배너 --}}
-<div class="topPop" id="topPop">
+{{-- 상단 팝업 배너 (기본 접힘) --}}
+<div class="topPop active" id="topPop">
     <div class="popDiv">
         <div class="topPopupInner" id="topPopInner">
             <div class="pc_pop">
-                <a href="{{ $basePath }}/business/certification" target="_self" class="pc_pop_item">
-                    <span class="pc_pop_label">CM능력평가공시</span>
-                </a>
-                <a href="{{ $basePath }}/intro/history" target="_self" class="pc_pop_item">
-                    <span class="pc_pop_label">CM30년</span>
-                </a>
-                <a href="{{ $basePath }}/business/inspection" target="_self" class="pc_pop_item">
-                    <span class="pc_pop_label">건설사업관리사자격검정</span>
-                </a>
+                @foreach($topPopItems as $tp)
+                    <a href="{{ $tp['link'] }}" target="{{ $tp['target'] }}" class="pc_pop_item">
+                        @if($tp['image'])
+                            <img src="{{ $tp['image'] }}" alt="{{ $tp['label'] }}">
+                        @else
+                            <span class="pc_pop_label">{{ $tp['label'] }}</span>
+                        @endif
+                    </a>
+                @endforeach
             </div>
         </div>
     </div>
     <button type="button" class="topPopBtn" id="topPopBtn">
         <span>POPUP</span>
-        <span class="topPopBtnSpan" id="topPopBtnSpan">닫기</span>
+        <span class="topPopBtnSpan active" id="topPopBtnSpan">닫기</span>
     </button>
 </div>
 
@@ -32,11 +60,7 @@
         {{-- 로고 (25%) --}}
         <h1 class="icak-logo">
             <a href="{{ $basePath }}">
-                <img src="{{ $basePath }}/images/logo.png" alt="CMAK" style="height:48px; width:auto;">
-                <span class="icak-logo-text">
-                    <span class="logo-main">한국건설관리협회</span>
-                    <span class="logo-sub">The Construction Management Association of Korea</span>
-                </span>
+                <img src="{{ $basePath }}/images/logo_header.png" alt="CMAK" style="height:50px; width:auto;">
             </a>
         </h1>
 
@@ -125,33 +149,30 @@
             @endforeach
         </ul>
 
-        {{-- headerUtil (25%) --}}
+        {{-- headerUtil (25%) — 검색창 우측에 로그인/IPMA/ENG/전체메뉴를 한 줄로 정렬 --}}
         <div class="icak-header-util">
-            {{-- mUtil: 로그인 + 검색 + ENG — absolute top:15px right:20px --}}
             <div class="icak-mutil">
-                <a href="{{ $basePath }}/login" class="icak-login-btn">로그인</a>
                 <form class="icak-search-box" action="{{ $basePath }}/search" method="GET">
                     <input type="text" name="q" placeholder="검색어를 입력해주세요." value="{{ request('q') }}">
                     <button type="submit"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></button>
                 </form>
+                @auth
+                    <a href="{{ $basePath }}/mypage" class="icak-login-btn">마이페이지</a>
+                @else
+                    <a href="{{ $basePath }}/login" class="icak-login-btn">로그인/회원가입</a>
+                @endauth
+                <a href="https://www.ipma.world/" target="_blank" rel="noopener noreferrer" class="icak-special-btn">IPMA KOREA</a>
                 <a href="{{ $basePath }}/eng" class="icak-lang-btn">ENG</a>
-            </div>
-
-            {{-- IPMA KOREA 버튼 --}}
-            <a href="https://www.ipma.world/" target="_blank" rel="noopener noreferrer" class="icak-special-btn">IPMA KOREA</a>
-
-            {{-- 전체메뉴: absolute right:15px bottom:0 --}}
-            <div class="icak-btn-mainmenu">
-                <a href="#" class="icak-hbutton">
-                    <span></span><span></span><span></span><span>전체메뉴</span>
-                </a>
+                <div class="icak-btn-mainmenu">
+                    <a href="#" class="icak-hbutton">
+                        <span></span><span></span><span></span><span>전체메뉴</span>
+                    </a>
+                </div>
             </div>
         </div>
 
-        {{-- 모바일 전용 우측 버튼 그룹 (ENG, 로그인, 햄버거) - IPMA KOREA는 햄버거 메뉴 내부에 있음 --}}
+        {{-- 모바일 전용 우측 버튼 (햄버거만) - 로고/햄버거 외 나머지는 햄버거 펼침 패널 내부에 있음 --}}
         <div class="icak-mobile-util hidden max-lg:flex items-center gap-2">
-            <a href="{{ $basePath }}/eng" class="icak-m-lang-btn">ENG</a>
-            <a href="{{ $basePath }}/login" class="icak-m-login-btn">로그인</a>
             <button @click="mobileOpen = !mobileOpen" class="icak-mobile-btn">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -163,6 +184,9 @@
     {{-- 전체메뉴 패널 (ICAK mainMenu 동일) --}}
     <div class="icak-mainmenu" id="mainMenu">
         <div class="icak-mainmenu-inner">
+            <button type="button" class="icak-mainmenu-close" id="mainMenuClose" aria-label="메뉴 닫기">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
             <ul>
                 @foreach($menus as $menu)
                     <li>
@@ -193,7 +217,11 @@
                 </button>
             </form>
             <div class="flex gap-2 mb-3">
-                <a href="{{ $basePath }}/login" class="flex-1 text-center py-2 rounded-full bg-[#265de8] text-white text-sm font-medium">로그인</a>
+                @auth
+                    <a href="{{ $basePath }}/mypage" class="flex-1 text-center py-2 rounded-full bg-[#265de8] text-white text-sm font-medium">마이페이지</a>
+                @else
+                    <a href="{{ $basePath }}/login" class="flex-1 text-center py-2 rounded-full bg-[#265de8] text-white text-sm font-medium">로그인/회원가입</a>
+                @endauth
                 <a href="{{ $basePath }}/eng" class="flex-1 text-center py-2 rounded-full bg-[#515151] text-white text-sm font-medium">ENG</a>
                 <a href="https://www.ipma.world/" target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-2 rounded-full bg-[#f56800] text-white text-sm font-medium">IPMA KOREA</a>
             </div>

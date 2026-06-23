@@ -15,17 +15,17 @@
     <p class="sub-content-desc">한국CM협회의 정관 및 제규정을 열람할 수 있습니다.</p>
 
     {{-- 탭 메뉴 --}}
-    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; padding-bottom:14px; border-bottom:2px solid #064277;">
+    <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:28px; padding-bottom:22px; border-bottom:2px solid #064277;">
         <button @click="tab='articles'" :style="tab==='articles' ? 'background:#064277; color:#fff; font-weight:700; border:2px solid #064277;' : 'background:#fff; color:#064277; font-weight:600; border:2px solid #064277;'"
-            style="padding:10px 24px; border-radius:6px; font-size:14px; cursor:pointer;">정관</button>
+            style="padding:13px 32px; border-radius:6px; font-size:14px; letter-spacing:0.5px; cursor:pointer;">정관</button>
         <button @click="tab='fee'" :style="tab==='fee' ? 'background:#064277; color:#fff; font-weight:700; border:2px solid #064277;' : 'background:#fff; color:#064277; font-weight:600; border:2px solid #064277;'"
-            style="padding:10px 24px; border-radius:6px; font-size:14px; cursor:pointer;">회비규정</button>
+            style="padding:13px 32px; border-radius:6px; font-size:14px; letter-spacing:0.5px; cursor:pointer;">회비규정</button>
         <button @click="tab='evaluation'" :style="tab==='evaluation' ? 'background:#064277; color:#fff; font-weight:700; border:2px solid #064277;' : 'background:#fff; color:#064277; font-weight:600; border:2px solid #064277;'"
-            style="padding:10px 24px; border-radius:6px; font-size:14px; cursor:pointer;">CM능력평가공시업무처리규정</button>
+            style="padding:13px 32px; border-radius:6px; font-size:14px; letter-spacing:0.5px; cursor:pointer;">CM능력평가공시업무처리규정</button>
     </div>
 
     {{-- 정관 --}}
-    <div x-show="tab==='articles'" style="margin-top:20px;">
+    <div x-show="tab==='articles'" style="margin-top:32px;">
         <div style="background:#f0f4fa; border:1px solid #dde3ed; border-radius:8px; padding:16px 20px; margin-bottom:24px;">
             <p style="font-size:13px; color:#555; margin:0;">
                 <strong style="color:#064277;">한국건설관리협회 정관</strong> &nbsp;|&nbsp;
@@ -52,7 +52,7 @@
     </div>
 
     {{-- 회비규정 --}}
-    <div x-show="tab==='fee'" style="margin-top:20px;">
+    <div x-show="tab==='fee'" style="margin-top:32px;">
         <div style="background:#f0f4fa; border:1px solid #dde3ed; border-radius:8px; padding:16px 20px; margin-bottom:24px;">
             <p style="font-size:13px; color:#555; margin:0;">
                 <strong style="color:#064277;">회비 규정</strong> &nbsp;|&nbsp;
@@ -106,7 +106,7 @@
     </div>
 
     {{-- CM능력평가공시업무처리규정 --}}
-    <div x-show="tab==='evaluation'" style="margin-top:20px;">
+    <div x-show="tab==='evaluation'" style="margin-top:32px;">
         <div style="background:#f0f4fa; border:1px solid #dde3ed; border-radius:8px; padding:16px 20px; margin-bottom:24px;">
             <p style="font-size:13px; color:#555; margin:0;">
                 <strong style="color:#064277;">CM능력평가공시업무처리규정</strong> &nbsp;|&nbsp;

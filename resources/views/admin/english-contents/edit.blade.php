@@ -9,7 +9,7 @@
             <h1 class="text-2xl font-bold text-gray-900">영문 페이지 수정</h1>
             <p class="mt-1 text-sm text-gray-500">/cmak/eng/{{ $content->slug }}</p>
         </div>
-        <a href="{{ url('/cmak/eng/' . ($content->slug === 'home' ? '' : $content->slug)) }}" target="_blank"
+        <a href="{{ url('/eng/' . ($content->slug === 'home' ? '' : $content->slug)) }}" target="_blank"
            class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded hover:bg-gray-200">
             새 창에서 보기 →
         </a>

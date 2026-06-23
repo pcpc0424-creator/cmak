@@ -51,6 +51,25 @@
                 @enderror
             </div>
 
+            {{-- 이미지 --}}
+            <div>
+                <label for="image" class="block text-sm font-medium text-gray-700 mb-1">이미지 (선택)</label>
+                <input type="file" name="image" id="image" accept="image/*"
+                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+                <p class="mt-1 text-xs text-gray-400">이미지형 팝업이면 이미지를 올리세요. 내용(HTML)과 함께 사용 가능. JPG, PNG, GIF</p>
+                @error('image')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+            </div>
+
+            {{-- 링크 URL --}}
+            <div>
+                <label for="link_url" class="block text-sm font-medium text-gray-700 mb-1">링크 URL (선택)</label>
+                <input type="text" name="link_url" id="link_url" value="{{ old('link_url') }}"
+                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+                       placeholder="https://example.com 또는 /business/certification">
+                <p class="mt-1 text-xs text-gray-400">입력 시 팝업(이미지) 클릭하면 이 주소로 이동합니다.</p>
+                @error('link_url')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+            </div>
+
             {{-- 크기 & 위치 (4열 그리드) --}}
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div>

@@ -52,6 +52,37 @@
                 @enderror
             </div>
 
+            {{-- 현재 이미지 --}}
+            @if($popup->image_path)
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">현재 이미지</label>
+                @if(file_exists(public_path($popup->image_path)))
+                    <img src="/cmak/{{ $popup->image_path }}" alt="{{ $popup->title }}" class="rounded-md border border-gray-200 max-h-44">
+                @else
+                    <p class="text-xs text-red-500">이미지 파일 없음: {{ $popup->image_path }}</p>
+                @endif
+            </div>
+            @endif
+
+            {{-- 이미지 교체/등록 --}}
+            <div>
+                <label for="image" class="block text-sm font-medium text-gray-700 mb-1">이미지 {{ $popup->image_path ? '교체' : '등록' }} (선택)</label>
+                <input type="file" name="image" id="image" accept="image/*"
+                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+                <p class="mt-1 text-xs text-gray-400">새 이미지를 선택하면 교체됩니다. 비워두면 유지됩니다.</p>
+                @error('image')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+            </div>
+
+            {{-- 링크 URL --}}
+            <div>
+                <label for="link_url" class="block text-sm font-medium text-gray-700 mb-1">링크 URL (선택)</label>
+                <input type="text" name="link_url" id="link_url" value="{{ old('link_url', $popup->link_url) }}"
+                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+                       placeholder="https://example.com 또는 /business/certification">
+                <p class="mt-1 text-xs text-gray-400">입력 시 팝업(이미지) 클릭하면 이 주소로 이동합니다.</p>
+                @error('link_url')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+            </div>
+
             {{-- 크기 & 위치 (4열 그리드) --}}
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div>

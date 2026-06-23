@@ -51,7 +51,7 @@
                             <td class="px-4 py-3 text-center text-sm">
                                 <a href="{{ url('/admin/page-contents/' . $page->id . '/edit') }}"
                                    class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700">수정</a>
-                                <a href="{{ url('/cmak/business/' . $page->slug) }}" target="_blank"
+                                <a href="{{ url('/business/' . $page->slug) }}" target="_blank"
                                    class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded hover:bg-gray-200 ml-1">보기 →</a>
                             </td>
                         </tr>

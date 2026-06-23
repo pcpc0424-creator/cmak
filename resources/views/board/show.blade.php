@@ -40,7 +40,19 @@
             || preg_match('/\.(jpe?g|png|gif|webp|bmp)$/i', $a->file_name ?? '');
         $imageAttachments = $post->attachments->filter($isImageAttachment);
         $fileAttachments = $post->attachments->reject($isImageAttachment);
+        // CM해외공급사업·CM수행사례·보도자료·기타자료·유관기관소식: 이미지를 본문 위로 올려 이미지 밑에 게시글이 보이도록 함
+        $imagesOnTop = in_array($boardType, ['cm_overseas', 'cm_case', 'news_press', 'etc_data', 'news_org'], true);
     @endphp
+
+    {{-- 첨부 이미지를 본문 위에 표시 (CM해외공급사업) --}}
+    @if(!$isBookReview && $imagesOnTop && $imageAttachments->count() > 0)
+        <div style="padding:8px 0 16px;">
+            @foreach($imageAttachments as $img)
+                <img src="/cmak/{{ $img->file_path }}" alt="{{ $img->file_name }}"
+                     style="max-width:100%; height:auto; display:block; margin:0 auto 12px;">
+            @endforeach
+        </div>
+    @endif
 
     @if($isBookReview)
         {{-- Book Review: 책표지 + 책정보(책제목/저자/출판사) --}}
@@ -104,8 +116,8 @@
         {!! $content !!}
     </div>
 
-    {{-- 첨부 이미지 본문 인라인 표시 (Book Review는 표지를 상단 카드에 이미 표시) --}}
-    @if(!$isBookReview && $imageAttachments->count() > 0)
+    {{-- 첨부 이미지 본문 인라인 표시 (Book Review는 표지를 상단 카드에, CM해외공급사업은 본문 위에 이미 표시) --}}
+    @if(!$isBookReview && !$imagesOnTop && $imageAttachments->count() > 0)
         <div style="padding:8px 0 16px;">
             @foreach($imageAttachments as $img)
                 <img src="/cmak/{{ $img->file_path }}" alt="{{ $img->file_name }}"
@@ -136,8 +148,22 @@
         </div>
     @endif
 
-    <div style="margin-top:32px; padding-top:16px; border-top:1px solid #e8ecf1; text-align:center;">
+    @php
+        $memberBoards = ['job_offer', 'job_seek'];
+        $canManage = auth()->check()
+            && in_array($boardType, $memberBoards, true)
+            && ($post->created_by === auth()->id() || auth()->user()->isAdmin());
+    @endphp
+
+    <div style="margin-top:32px; padding-top:16px; border-top:1px solid #e8ecf1; display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
         <a href="javascript:history.back()" style="display:inline-block; padding:8px 24px; background:#555; color:#fff; border-radius:4px; font-size:13px; text-decoration:none;">목록으로</a>
+        @if($canManage)
+            <a href="/cmak/board/{{ $boardType }}/{{ $post->id }}/edit" style="display:inline-block; padding:8px 24px; background:#265de8; color:#fff; border-radius:4px; font-size:13px; text-decoration:none;">수정</a>
+            <form action="/cmak/board/{{ $boardType }}/{{ $post->id }}" method="POST" style="margin:0;" onsubmit="return confirm('이 글을 삭제하시겠습니까?');">
+                @csrf @method('DELETE')
+                <button type="submit" style="padding:8px 24px; background:#d04444; color:#fff; border:0; border-radius:4px; font-size:13px; cursor:pointer;">삭제</button>
+            </form>
+        @endif
     </div>
 </div>
 @endsection

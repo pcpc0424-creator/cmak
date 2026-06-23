@@ -38,6 +38,8 @@
                         <option value="main" {{ old('screen_type', $banner->screen_type) == 'main' ? 'selected' : '' }}>메인 (main)</option>
                         <option value="sub" {{ old('screen_type', $banner->screen_type) == 'sub' ? 'selected' : '' }}>서브 (sub)</option>
                         <option value="sidebar" {{ old('screen_type', $banner->screen_type) == 'sidebar' ? 'selected' : '' }}>사이드바 (sidebar)</option>
+                        <option value="cm_ad" {{ old('screen_type', $banner->screen_type) == 'cm_ad' ? 'selected' : '' }}>CM AD (히어로 하단 광고)</option>
+                        <option value="partner" {{ old('screen_type', $banner->screen_type) == 'partner' ? 'selected' : '' }}>관련기관 (메인 하단 롤링)</option>
                     </select>
                     @error('screen_type')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

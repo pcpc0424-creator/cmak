@@ -27,15 +27,24 @@ class PopupController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'content' => ['nullable', 'string'],
+            'image' => ['nullable', 'image', 'max:5120'],
+            'link_url' => ['nullable', 'string', 'max:500'],
             'popup_type' => ['nullable', 'string'],
             'position_x' => ['nullable', 'integer'],
             'position_y' => ['nullable', 'integer'],
             'width' => ['nullable', 'integer'],
             'height' => ['nullable', 'integer'],
+            'sort_order' => ['nullable', 'integer'],
             'started_at' => ['nullable', 'date'],
             'ended_at' => ['nullable', 'date', 'after_or_equal:started_at'],
             'is_active' => ['boolean'],
         ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image_path'] = $this->storeImage($request);
+        }
+        unset($validated['image']);
+        $validated['is_active'] = $request->boolean('is_active');
 
         Popup::create($validated);
 
@@ -58,20 +67,46 @@ class PopupController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'content' => ['nullable', 'string'],
+            'image' => ['nullable', 'image', 'max:5120'],
+            'link_url' => ['nullable', 'string', 'max:500'],
             'popup_type' => ['nullable', 'string'],
             'position_x' => ['nullable', 'integer'],
             'position_y' => ['nullable', 'integer'],
             'width' => ['nullable', 'integer'],
             'height' => ['nullable', 'integer'],
+            'sort_order' => ['nullable', 'integer'],
             'started_at' => ['nullable', 'date'],
             'ended_at' => ['nullable', 'date', 'after_or_equal:started_at'],
             'is_active' => ['boolean'],
         ]);
 
+        if ($request->hasFile('image')) {
+            $old = $popup->image_path;
+            $validated['image_path'] = $this->storeImage($request);
+            if ($old && file_exists(public_path($old))) {
+                @unlink(public_path($old));
+            }
+        }
+        unset($validated['image']);
+        $validated['is_active'] = $request->boolean('is_active');
+
         $popup->update($validated);
 
         return redirect($this->basePath . '/admin/popups')
             ->with('success', '팝업이 수정되었습니다.');
+    }
+
+    protected function storeImage(Request $request): string
+    {
+        $file = $request->file('image');
+        $filename = time() . '_' . preg_replace('/[^A-Za-z0-9._-]/', '', $file->getClientOriginalName());
+        $dir = public_path('images/popups');
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0755, true);
+        }
+        $file->move($dir, $filename);
+
+        return 'images/popups/' . $filename;
     }
 
     public function destroy(Popup $popup)

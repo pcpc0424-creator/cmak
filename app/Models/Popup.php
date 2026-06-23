@@ -13,12 +13,15 @@ class Popup extends Model
     protected $fillable = [
         'title',
         'content',
+        'image_path',
+        'link_url',
         'popup_type',
         'width',
         'height',
         'position_x',
         'position_y',
         'is_active',
+        'sort_order',
         'started_at',
         'ended_at',
     ];

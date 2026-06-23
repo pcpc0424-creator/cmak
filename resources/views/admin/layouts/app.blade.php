@@ -14,6 +14,27 @@
         .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
         .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
         .sidebar-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+
+        /* 콘텐츠 영역 반응형 유동폭 — 각 페이지의 고정 max-width를 해제해 화면 폭에 맞춰 확장.
+           (폼은 지나치게 넓어지지 않도록 큰 화면에서 상한만 적용) */
+        .admin-main .max-w-2xl,
+        .admin-main .max-w-3xl,
+        .admin-main .max-w-4xl,
+        .admin-main .max-w-5xl,
+        .admin-main .max-w-6xl,
+        .admin-main .max-w-7xl { max-width: 100% !important; }
+        /* 목록/표는 화면 폭을 채우되, 입력 폼(create/edit)은 읽기 좋은 너비로 제한
+           — 폼이 초광폭으로 늘어나 버튼 바가 과도하게 벌어지는 것 방지 */
+        .admin-main form { max-width: 960px; }
+        /* 단, 검색바처럼 카드 안에 들어간 가로 폼은 너비 제한 없이 그대로 */
+        .admin-main .bg-white form,
+        .admin-main form.flex,
+        .admin-main form.inline-flex { max-width: none; }
+
+        /* 버튼 줄바꿈(세로 텍스트) 방지 — 버튼/액션 링크는 한 줄 유지 */
+        .admin-main button,
+        .admin-main a.inline-flex,
+        .admin-main a[class*="rounded"] { white-space: nowrap; }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
@@ -28,8 +49,8 @@
         @include('admin.layouts.topbar', ['basePath' => $basePath])
 
         {{-- Page Content --}}
-        <main class="pt-16">
-            <div class="p-6">
+        <main class="admin-main pt-16">
+            <div class="px-4 sm:px-6 lg:px-8 py-6">
                 @yield('content')
             </div>
         </main>

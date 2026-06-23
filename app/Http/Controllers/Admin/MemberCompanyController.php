@@ -28,6 +28,48 @@ class MemberCompanyController extends Controller
         return view('admin.member-companies.index', compact('memberCompanies'));
     }
 
+    /** 회원사 현황 CSV 다운로드 (엑셀 호환, UTF-8 BOM) */
+    public function export(Request $request)
+    {
+        $query = MemberCompany::query();
+        if ($request->filled('search')) {
+            $query->where('company_name', 'like', '%' . $request->input('search') . '%');
+        }
+        if ($request->filled('region')) {
+            $query->where('region', $request->input('region'));
+        }
+        $companies = $query->orderBy('company_name')->get();
+
+        $filename = 'member_companies_' . date('Ymd_His') . '.csv';
+        $headers = [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+        $columns = ['No', '회사명', '구분', '지역', '대표자', '전화번호', '팩스', '주소', '홈페이지', '인증', 'CM사소개노출(회비납부)'];
+
+        return response()->stream(function () use ($companies, $columns) {
+            $out = fopen('php://output', 'w');
+            fwrite($out, "\xEF\xBB\xBF"); // 엑셀 한글 깨짐 방지 BOM
+            fputcsv($out, $columns);
+            foreach ($companies as $i => $c) {
+                fputcsv($out, [
+                    $i + 1,
+                    $c->company_name,
+                    $c->company_type,
+                    $c->region,
+                    $c->representative,
+                    $c->phone,
+                    $c->fax,
+                    $c->address,
+                    $c->website,
+                    $c->is_verified ? '인증' : '미인증',
+                    $c->is_active ? '노출' : '비노출',
+                ]);
+            }
+            fclose($out);
+        }, 200, $headers);
+    }
+
     public function create()
     {
         return view('admin.member-companies.create');

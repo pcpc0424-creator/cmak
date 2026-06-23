@@ -16,7 +16,22 @@
     $resources = HomeData::getCmResources();
     $personnelEvents = HomeData::getPersonnelEvents();
     $governmentLinks = HomeData::getGovernmentLinks();
-    $partnerBanners = HomeData::getPartnerBanners();
+
+    // 관련기관 롤링 배너 — 관리자 배너(screen_type=partner)에서 읽고, 없으면 기존값 폴백
+    try {
+        $partnerRows = \App\Models\Banner::active()->where('screen_type', 'partner')
+            ->orderBy('sort_order')->orderBy('id')->get();
+        $partnerBanners = $partnerRows->map(fn($b) => [
+            'name' => $b->title,
+            'image' => '/cmak/' . ltrim($b->image_path, '/'),
+            'link' => $b->link_url ?: '#',
+        ])->all();
+        if (empty($partnerBanners)) {
+            $partnerBanners = HomeData::getPartnerBanners();
+        }
+    } catch (\Throwable $e) {
+        $partnerBanners = HomeData::getPartnerBanners();
+    }
 @endphp
 
 @section('content')
@@ -213,63 +228,52 @@
 
                     </div>
 
-                    {{-- 우측: 이미지 카드 6개 (2x3 그리드) --}}
+                    {{-- 우측: 이미지 카드 6개 (2x3 그리드) — 관리자(home_cards) 연동 --}}
+                    @php
+                        $fallbackCards = [
+                            ['title' => 'CM관련서식', 'subtitle' => 'CM 업무 관련 서식', 'link_url' => '/business/cm-forms', 'icon' => 'doc', 'image_path' => null],
+                            ['title' => 'Book Review', 'subtitle' => '추천 도서', 'link_url' => '/notice/bookreview', 'icon' => 'book', 'image_path' => null],
+                            ['title' => 'Word Book', 'subtitle' => 'CM 용어집', 'link_url' => '/notice/wordbook', 'icon' => 'search', 'image_path' => null],
+                            ['title' => 'CM헤럴드', 'subtitle' => '월간 소식지', 'link_url' => '/business/herald', 'icon' => 'monitor', 'image_path' => null],
+                            ['title' => 'CM자료방', 'subtitle' => '논문·연구자료', 'link_url' => '/cmdata/report', 'icon' => 'folder', 'image_path' => null],
+                            ['title' => 'CM사 소개', 'subtitle' => '회원사 안내', 'link_url' => '/intro/members', 'icon' => 'building', 'image_path' => null],
+                        ];
+                        try {
+                            $homeCards = \App\Models\HomeCard::active()->orderBy('sort_order')->orderBy('id')->get()
+                                ->map(fn($c) => ['title' => $c->title, 'subtitle' => $c->subtitle, 'link_url' => $c->link_url, 'icon' => $c->icon, 'image_path' => $c->image_path])->all();
+                            if (empty($homeCards)) { $homeCards = $fallbackCards; }
+                        } catch (\Throwable $e) { $homeCards = $fallbackCards; }
+                    @endphp
                     <div class="icak-content-right">
                         <div class="icak-image-cards">
-                            <a href="/cmak/business/cm-forms" class="icak-image-card">
-                                <div class="icak-image-card-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                                </div>
-                                <div class="icak-image-card-text">
-                                    <strong>CM관련서식</strong>
-                                    <span>CM 업무 관련 서식</span>
-                                </div>
-                            </a>
-                            <a href="/cmak/notice/bookreview" class="icak-image-card">
-                                <div class="icak-image-card-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                                </div>
-                                <div class="icak-image-card-text">
-                                    <strong>Book Review</strong>
-                                    <span>추천 도서</span>
-                                </div>
-                            </a>
-                            <a href="/cmak/notice/wordbook" class="icak-image-card">
-                                <div class="icak-image-card-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                                </div>
-                                <div class="icak-image-card-text">
-                                    <strong>Word Book</strong>
-                                    <span>CM 용어집</span>
-                                </div>
-                            </a>
-                            <a href="/cmak/business/herald" class="icak-image-card">
-                                <div class="icak-image-card-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                                </div>
-                                <div class="icak-image-card-text">
-                                    <strong>CM헤럴드</strong>
-                                    <span>월간 소식지</span>
-                                </div>
-                            </a>
-                            <a href="/cmak/cmdata/report" class="icak-image-card">
-                                <div class="icak-image-card-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-                                </div>
-                                <div class="icak-image-card-text">
-                                    <strong>CM자료방</strong>
-                                    <span>논문·연구자료</span>
-                                </div>
-                            </a>
-                            <a href="/cmak/intro/members" class="icak-image-card">
-                                <div class="icak-image-card-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                                </div>
-                                <div class="icak-image-card-text">
-                                    <strong>CM사 소개</strong>
-                                    <span>회원사 안내</span>
-                                </div>
-                            </a>
+                            @foreach($homeCards as $card)
+                                @php
+                                    $link = $card['link_url'] ?: '#';
+                                    if (!\Illuminate\Support\Str::startsWith($link, ['http://', 'https://', '/cmak'])) {
+                                        $link = '/cmak' . (\Illuminate\Support\Str::startsWith($link, '/') ? '' : '/') . $link;
+                                    }
+                                    $img = $card['image_path'] ? '/cmak/' . ltrim($card['image_path'], '/') : null;
+                                @endphp
+                                @if($img)
+                                    <a href="{{ $link }}" class="icak-image-card has-image">
+                                        <img src="{{ $img }}" alt="{{ $card['title'] }}" class="icak-image-card-bg">
+                                        <div class="icak-image-card-overlay">
+                                            <strong>{{ $card['title'] }}</strong>
+                                            <span>{{ $card['subtitle'] }}</span>
+                                        </div>
+                                    </a>
+                                @else
+                                    <a href="{{ $link }}" class="icak-image-card">
+                                        <div class="icak-image-card-icon">
+                                            @include('components.home.card-icon', ['icon' => $card['icon']])
+                                        </div>
+                                        <div class="icak-image-card-text">
+                                            <strong>{{ $card['title'] }}</strong>
+                                            <span>{{ $card['subtitle'] }}</span>
+                                        </div>
+                                    </a>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>

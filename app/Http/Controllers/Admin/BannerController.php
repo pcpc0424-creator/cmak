@@ -18,7 +18,9 @@ class BannerController extends Controller
             $query->where('screen_type', $request->input('screen_type'));
         }
 
-        $banners = $query->orderBy('sort_order')->paginate(15)->withQueryString();
+        $banners = $query->orderByRaw("FIELD(screen_type,'main','sub','sidebar','cm_ad','partner')")
+            ->orderBy('sort_order')->orderBy('id')
+            ->paginate(100)->withQueryString();
 
         return view('admin.banners.index', compact('banners'));
     }

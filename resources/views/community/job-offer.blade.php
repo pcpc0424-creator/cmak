@@ -14,6 +14,14 @@
     <h2 class="sub-content-title">구인</h2>
     <p class="sub-content-desc">구인 정보입니다.</p>
 
+    @auth
+        <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
+            <a href="/cmak/community/job-offer/write" style="display:inline-flex; align-items:center; gap:6px; padding:9px 18px; background:#265de8; color:#fff; border-radius:8px; font-size:13px; font-weight:600; text-decoration:none;">
+                <span style="font-size:15px; line-height:1;">＋</span> 새 글 올리기
+            </a>
+        </div>
+    @endauth
+
     @include('components.board-list', [
         'columns' => [
             ['label' => '지역', 'field' => 'metadata.region', 'style' => 'width:70px;', 'tdStyle' => 'text-align:center; color:#888; font-size:12px;'],

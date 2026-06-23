@@ -1,6 +1,16 @@
 <?php
 
 return [
+    // CM30년 — 다른 메뉴와 연결되지 않는 완전 별도 독립 게시판
+    'cm30' => [
+        'name' => 'CM30년',
+        'menu' => null,
+        'category' => null,
+        'has_attachments' => true,
+        'has_summary' => false,
+        'has_issue_number' => false,
+        'fields' => [],
+    ],
     'herald' => [
         'name' => 'CM Herald',
         'menu' => '협회업무',

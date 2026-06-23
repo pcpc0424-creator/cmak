@@ -4,9 +4,6 @@
 
 @php
     $typeInfo = [
-        'main'    => ['label' => '메인 배너',    'desc' => '메인 페이지 상단 큰 배너 영역',           'badge' => 'bg-blue-100 text-blue-800'],
-        'sub'     => ['label' => '서브 배너',    'desc' => '서브(하위) 페이지 상단 배너',            'badge' => 'bg-purple-100 text-purple-800'],
-        'sidebar' => ['label' => '사이드바 배너', 'desc' => '본문 우측 세로 광고 영역',               'badge' => 'bg-gray-100 text-gray-800'],
         'cm_ad'   => ['label' => 'CM AD',       'desc' => '메인 히어로 섹션 바로 아래 가로 광고 띠', 'badge' => 'bg-orange-100 text-orange-800'],
         'partner' => ['label' => '관련기관 배너', 'desc' => '메인 하단 관련기관 롤링 배너',           'badge' => 'bg-teal-100 text-teal-800'],
     ];
@@ -166,9 +163,6 @@
                     <div>
                         <label for="m_screen_type" class="block text-sm font-medium text-gray-700 mb-1">화면유형(위치)</label>
                         <select name="screen_type" id="m_screen_type" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
-                            <option value="main" {{ old('screen_type') == 'main' ? 'selected' : '' }}>메인 (상단 큰 배너)</option>
-                            <option value="sub" {{ old('screen_type') == 'sub' ? 'selected' : '' }}>서브 (하위 페이지 상단)</option>
-                            <option value="sidebar" {{ old('screen_type') == 'sidebar' ? 'selected' : '' }}>사이드바 (우측 세로)</option>
                             <option value="cm_ad" {{ old('screen_type', $current) == 'cm_ad' ? 'selected' : '' }}>CM AD (히어로 하단 광고)</option>
                             <option value="partner" {{ old('screen_type', $current) == 'partner' ? 'selected' : '' }}>관련기관 (메인 하단 롤링)</option>
                         </select>

@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 
-@section('title', '회원 관리')
+@section('title', '개인(온라인)회원관리')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     {{-- 헤더 --}}
     <div class="mb-6 flex items-start justify-between gap-3 flex-wrap">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">회원 관리 (개인회원)</h1>
+            <h1 class="text-2xl font-bold text-gray-900">개인(온라인)회원관리</h1>
             <p class="mt-1 text-sm text-gray-500">총 {{ $members->total() }}명 · 가입승인/등급 변경은 관리자 전용</p>
         </div>
         <a href="{{ url('/admin/members/export') }}?{{ http_build_query(request()->only(['q','grade','status'])) }}"

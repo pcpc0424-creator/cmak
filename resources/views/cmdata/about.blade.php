@@ -1,9 +1,9 @@
 @extends('layouts.sub')
 
-@section('title', 'CM이란 - 한국CM협회')
-@section('category', 'CM자료방')
+@section('title', 'CM이란? - 한국CM협회')
+@section('category', 'CM 소개')
 @section('category-link', '/cmak/cmdata/about')
-@section('page-title', 'CM이란')
+@section('page-title', 'CM이란?')
 
 @section('side-menu')
     @include('cmdata._side-menu')

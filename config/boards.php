@@ -30,8 +30,8 @@ return [
         'fields' => [],
     ],
     'cm_forms' => [
-        'name' => 'CM관련서식',
-        'menu' => '협회업무',
+        'name' => 'CM 가이드',
+        'menu' => 'CM자료방',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => false,
@@ -298,7 +298,7 @@ return [
         'show_metadata' => true,
     ],
     'wordbook' => [
-        'name' => 'Word Book',
+        'name' => 'CM을 부탁해',
         'menu' => '알림마당',
         'category' => null,
         'has_attachments' => true,

@@ -92,7 +92,8 @@
                 </div>
                 <div>
                     <label for="position_x" class="block text-sm font-medium text-gray-700 mb-1">X 위치 (px)</label>
-                    <input type="number" name="position_x" id="position_x" value="{{ old('position_x', 100) }}"
+                    <input type="number" name="position_x" id="position_x" value="{{ old('position_x') }}"
+                           placeholder="비우면 자동"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                            min="0">
                     @error('position_x')
@@ -101,7 +102,8 @@
                 </div>
                 <div>
                     <label for="position_y" class="block text-sm font-medium text-gray-700 mb-1">Y 위치 (px)</label>
-                    <input type="number" name="position_y" id="position_y" value="{{ old('position_y', 100) }}"
+                    <input type="number" name="position_y" id="position_y" value="{{ old('position_y') }}"
+                           placeholder="비우면 자동"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                            min="0">
                     @error('position_y')
@@ -109,6 +111,10 @@
                     @enderror
                 </div>
             </div>
+            <p class="mt-2 text-xs text-gray-500">
+                위치는 작성자가 직접 지정합니다. <b>X</b>는 화면 왼쪽 끝, <b>Y</b>는 화면 위쪽 끝 기준 픽셀 값입니다.
+                비워두면 히어로 타이틀을 가리지 않도록 <b>오른쪽에 자동 배치</b>되고, 여러 개면 계단식으로 겹치지 않게 표시됩니다.
+            </p>
 
             {{-- 기간 (2열) --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">

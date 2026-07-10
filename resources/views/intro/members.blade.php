@@ -60,7 +60,7 @@
             <thead>
                 <tr style="background:#EDEFDE;">
                     <th style="width:50px;">번호</th>
-                    <th style="width:70px;">지역</th>
+                    <th style="width:70px;">구분</th>
                     <th>회사명</th>
                     <th style="width:110px;">대표자</th>
                     <th style="width:130px;">연락처</th>
@@ -72,7 +72,7 @@
                 @forelse($members as $i => $m)
                     <tr>
                         <td style="text-align:center;">{{ ($members->currentPage() - 1) * $members->perPage() + $i + 1 }}</td>
-                        <td style="text-align:center; font-size:13px;">{{ $m->region ?: '-' }}</td>
+                        <td style="text-align:center; font-size:13px;">{{ $m->company_type ?: '-' }}</td>
                         <td style="font-weight:500;">
                             @if($m->website)
                                 <a href="{{ str_starts_with($m->website, 'http') ? $m->website : 'http://'.$m->website }}" target="_blank" style="color:#0061c2;">{{ $m->company_name }}</a>

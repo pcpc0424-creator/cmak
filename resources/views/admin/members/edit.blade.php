@@ -31,6 +31,30 @@
 
             <hr>
 
+            {{-- 소속 정보 (읽기 전용) --}}
+            <div class="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                    <span class="text-gray-500">소속 (업체/기관)</span>
+                    <div class="font-medium text-gray-900">
+                        {{ $member->company_name ?: '-' }}
+                        @if($member->is_member_company)
+                            <span class="ml-1 inline-block px-1.5 py-0.5 text-xs bg-blue-50 text-blue-700 rounded">회원사 소속</span>
+                        @endif
+                    </div>
+                </div>
+                <div><span class="text-gray-500">부서 / 직위</span><div class="font-medium text-gray-900">{{ $member->department ?: '-' }} / {{ $member->position ?: '-' }}</div></div>
+                <div class="col-span-2">
+                    <span class="text-gray-500">수신 동의</span>
+                    <div class="font-medium text-gray-900 flex flex-wrap gap-x-4 gap-y-1 mt-0.5">
+                        <span>이메일: <b class="{{ $member->email_agree ? 'text-green-600' : 'text-gray-400' }}">{{ $member->email_agree ? '동의' : '미동의' }}</b></span>
+                        <span>SMS: <b class="{{ $member->sms_agree ? 'text-green-600' : 'text-gray-400' }}">{{ $member->sms_agree ? '동의' : '미동의' }}</b></span>
+                        <span>광고성정보: <b class="{{ $member->ad_agree ? 'text-green-600' : 'text-gray-400' }}">{{ $member->ad_agree ? '동의' : '미동의' }}</b></span>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
             {{-- 등급 --}}
             <div>
                 <label for="grade" class="block text-sm font-medium text-gray-700 mb-1">회원 등급</label>

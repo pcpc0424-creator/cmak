@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\EnglishContentController;
 use App\Http\Controllers\Admin\EnglishItemController;
 use App\Http\Controllers\Admin\PageContentController;
+use App\Http\Controllers\Admin\ConsmaEditionController;
+use App\Http\Controllers\Admin\ReceptionEventController;
 use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\TopPopupItemController;
 use App\Http\Controllers\Admin\MemberController;
@@ -88,8 +90,16 @@ Route::middleware('permission:related_sites')->group(function () {
     Route::resource('related-sites', RelatedSiteController::class)->names('admin.related-sites');
 });
 
-// Online Applications — 온라인 접수 권한
+// Online Reception (행사/설문 접수 - 동적 문항 빌더) — 온라인 접수 권한
 Route::middleware('permission:online')->group(function () {
+    Route::get('reception/{reception}/submissions', [ReceptionEventController::class, 'submissions'])->name('admin.reception.submissions');
+    Route::get('reception/{reception}/export', [ReceptionEventController::class, 'export'])->name('admin.reception.export');
+    Route::resource('reception', ReceptionEventController::class)
+        ->parameters(['reception' => 'reception'])
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
+        ->names('admin.reception');
+
+    // (구) 교육신청형 온라인 접수 — 하위호환 유지
     Route::resource('online-applications', OnlineApplicationController::class)->names('admin.online-applications');
     Route::get('online-applications/{online_application}/entries', [OnlineApplicationController::class, 'entries'])->name('admin.online-applications.entries');
     Route::post('online-applications/{online_application}/entries', [OnlineApplicationController::class, 'storeEntry'])->name('admin.online-applications.store-entry');
@@ -112,9 +122,16 @@ Route::middleware('permission:members')->group(function () {
 
 // Page Contents (협회업무 등 정적 페이지 편집) — 페이지 내용 편집 권한
 Route::middleware('permission:page_contents')->group(function () {
+    // 고정 페이지 관련자료(첨부파일) 업로드 → 반환 URL을 본문 다운로드 링크로 삽입
+    Route::post('page-contents/upload-file', [FileUploadController::class, 'upload'])->name('admin.page-contents.upload-file');
     Route::get('page-contents', [PageContentController::class, 'index'])->name('admin.page-contents.index');
     Route::get('page-contents/{pageContent}/edit', [PageContentController::class, 'edit'])->name('admin.page-contents.edit');
     Route::put('page-contents/{pageContent}', [PageContentController::class, 'update'])->name('admin.page-contents.update');
+
+    // ConsMa 연도별 포스터 관리
+    Route::resource('consma-editions', ConsmaEditionController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
+        ->names('admin.consma-editions');
 });
 
 // English Contents / Items — 영문사이트 관리 권한

@@ -1,9 +1,9 @@
 @extends('layouts.sub')
 
-@section('title', '회원가입 - 한국CM협회')
+@section('title', '일반·특별회원 가입 - 한국CM협회')
 @section('category', '협회업무')
 @section('category-link', '/cmak/business/membership')
-@section('page-title', '회원가입')
+@section('page-title', '일반·특별회원 가입')
 
 @section('side-menu')
     @include('business._side-menu')
@@ -11,7 +11,7 @@
 
 @section('content')
 <div class="sub-content-card">
-    <h2 class="sub-content-title">회원가입 안내</h2>
+    <h2 class="sub-content-title">일반·특별회원 가입 안내</h2>
 
     <div class="sub-section" style="text-align:center;">
         <img src="/cmak/images/business/membership/member_type.png" alt="회원구분" style="max-width:100%; margin-bottom:20px;">

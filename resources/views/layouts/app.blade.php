@@ -52,8 +52,8 @@
         }
 
         // === 상태 ===
-        var popupOpen = false;        // 상단 POPUP 기본 접힘
-        var userClosedPopup = true;   // 사용자가 직접 열기 전까지 자동으로 펼치지 않음
+        var popupOpen = false;        // openPopup() 호출로 펼침 처리
+        var userClosedPopup = false;  // 인덱스 기본 펼침 — 섹션1 복귀 시 다시 펼치도록
         var currentSection = 0;
         var isAnimating = false;
         var totalSections = sections.length;
@@ -195,9 +195,22 @@
             setTimeout(function() { isAnimating = false; }, 700);
         }
 
+        // 히어로 스크롤다운 인디케이터 등에서 호출 (휠/키보드 외 이동 수단)
+        window.cmakGoToSection = goToSection;
+
+        // 메뉴(전체메뉴/모바일 햄버거)가 열려 있으면 풀페이지 스크롤 가로채기 중단
+        //  → 메뉴 내부에서 정상 스크롤 가능
+        function menuOpen() {
+            var mm = document.getElementById('mainMenu');
+            if (mm && mm.classList.contains('active')) return true;
+            var mob = document.getElementById('mobileMenuPanel');
+            if (mob && mob.offsetParent !== null) return true;
+            return false;
+        }
+
         // === 마우스 휠 ===
         document.addEventListener('wheel', function(e) {
-            if (isAnimating) return;
+            if (isAnimating || menuOpen()) return;
 
             // 섹션2: 내부 스크롤
             if (currentSection === 1) {
@@ -225,7 +238,23 @@
             touchStartY = e.touches[0].clientY;
         }, { passive: true });
         document.addEventListener('touchend', function(e) {
+            if (menuOpen()) return;
             var diff = touchStartY - e.changedTouches[0].clientY;
+
+            // 섹션2(정보 섹션): 내부 스크롤 우선 — 경계에서만 섹션 전환
+            if (currentSection === 1) {
+                var inner = sections[1] && sections[1].querySelector('.fp-section-inner');
+                if (inner) {
+                    var atTop = inner.scrollTop <= 0;
+                    var atBottom = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 2;
+                    if (diff < -50 && atTop) {          // 맨 위에서 아래로 스와이프 → 히어로로
+                        goToSection(0);
+                    }
+                    // 그 외에는 내부 스크롤에 맡김 (맨 아래에서 위로 스와이프해도 섹션 이동 안 함)
+                    return;
+                }
+            }
+
             if (Math.abs(diff) > 50) {
                 if (diff > 0) goToSection(currentSection + 1);
                 else goToSection(currentSection - 1);
@@ -241,8 +270,9 @@
             }
         });
 
-        // === 초기화 ===
+        // === 초기화 === (인덱스페이지: 상단 팝업 펼침을 기본상태로)
         updatePositions();
+        openPopup();
     });
     </script>
 

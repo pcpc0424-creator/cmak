@@ -42,6 +42,10 @@
                 @else
                     <p class="text-xs text-red-500">이미지 파일 없음: {{ $topPopupItem->image_path }}</p>
                 @endif
+                <label class="mt-2 flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" name="remove_image" value="1" class="rounded border-gray-300 text-red-600 shadow-sm focus:ring-red-500">
+                    <span class="text-sm text-red-600">기존 이미지 삭제 (라벨 텍스트로 표시)</span>
+                </label>
             </div>
             @endif
 

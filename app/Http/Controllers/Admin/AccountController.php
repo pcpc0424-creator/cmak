@@ -15,7 +15,8 @@ class AccountController extends Controller
 
     public function index(Request $request)
     {
-        $query = User::query();
+        // 관리자(직원)계정 전용 — 온라인 개인회원(role=member)은 '회원관리'에서 별도 관리
+        $query = User::where('role', '!=', 'member');
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -72,11 +73,13 @@ class AccountController extends Controller
 
     public function edit(User $account)
     {
+        abort_if($account->role === 'member', 404); // 온라인회원은 회원관리에서 처리
         return view('admin.accounts.edit', compact('account'));
     }
 
     public function update(Request $request, User $account)
     {
+        abort_if($account->role === 'member', 404);
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $account->id],
@@ -108,6 +111,7 @@ class AccountController extends Controller
 
     public function destroy(User $account)
     {
+        abort_if($account->role === 'member', 404);
         if ($account->id === auth()->id()) {
             return back()->with('error', '자신의 계정은 삭제할 수 없습니다.');
         }

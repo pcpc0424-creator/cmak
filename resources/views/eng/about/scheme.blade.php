@@ -12,54 +12,49 @@
 
 @push('styles')
 <style>
-.eng-scheme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 18px; }
-.eng-scheme-card { background: #f8f9fb; border: 1px solid #e8ecf1; border-radius: 14px; padding: 28px 30px; transition: all 0.25s; }
-.eng-scheme-card:hover { background: #fff; border-color: #0061c2; box-shadow: 0 14px 28px rgba(10,61,124,0.10); transform: translateY(-3px); }
-.eng-scheme-num { display:inline-block; padding: 5px 12px; background: #0061c2; color:#fff; font-size:11px; font-weight:700; letter-spacing:1px; border-radius:999px; margin-bottom:14px; }
-.eng-scheme-card h4 { font-size: 18px; font-weight: 800; color: #1a1a1a; margin: 0 0 10px; }
-.eng-scheme-card p { font-size: 14.5px; color: #555; line-height: 1.75; margin: 0; }
-@media (max-width: 700px) { .eng-scheme-grid { grid-template-columns: 1fr; } }
+.eng-scheme-list { columns: 2; column-gap: 40px; margin-top: 18px; }
+.eng-scheme-list li { break-inside: avoid; margin-bottom: 11px; font-size: 14.5px; color: #444; line-height: 1.7; padding-left: 4px; }
+@media (max-width: 700px) { .eng-scheme-list { columns: 1; } }
 </style>
 @endpush
 
 @section('content')
 <div class="eng-card">
     <h2>{{ $page->title ?? 'Scheme of Work' }}</h2>
-    <p class="desc">{{ $page->description ?? 'CMAK\'s core programs and how we serve the construction management profession.' }}</p>
+    <p class="desc">{{ $page->description ?? 'The scope of work carried out by the Construction Management Association of Korea.' }}</p>
 
-    <p>CMAK's scheme of work covers six major program areas, each designed to advance construction management practice in Korea and to serve our members, the industry and the public.</p>
-
-    <div class="eng-scheme-grid">
-        <div class="eng-scheme-card">
-            <span class="eng-scheme-num">01 POLICY</span>
-            <h4>Policy &amp; Advocacy</h4>
-            <p>Policy research and government engagement to promote sound CM-friendly policies, public procurement reform and industry best practices.</p>
-        </div>
-        <div class="eng-scheme-card">
-            <span class="eng-scheme-num">02 EVALUATION</span>
-            <h4>CM Capability Evaluation</h4>
-            <p>Annual evaluation and public disclosure of construction management firms' capabilities, conducted in cooperation with the Korean government.</p>
-        </div>
-        <div class="eng-scheme-card">
-            <span class="eng-scheme-num">03 CERTIFICATION</span>
-            <h4>Qualification &amp; Certification</h4>
-            <p>Construction Manager (CM) qualification examination and IPMA international project management certification through IPMA Korea.</p>
-        </div>
-        <div class="eng-scheme-card">
-            <span class="eng-scheme-num">04 EDUCATION</span>
-            <h4>Professional Education</h4>
-            <p>Continuing education courses, technical seminars and workshops covering CM, BIM, smart construction and emerging topics for CM professionals.</p>
-        </div>
-        <div class="eng-scheme-card">
-            <span class="eng-scheme-num">05 PUBLICATION</span>
-            <h4>Publications &amp; Knowledge</h4>
-            <p>CM Herald magazine, research reports, technical guidelines, member directory and best-practice case studies for the CM community.</p>
-        </div>
-        <div class="eng-scheme-card">
-            <span class="eng-scheme-num">06 INTERNATIONAL</span>
-            <h4>International Cooperation</h4>
-            <p>International CM Day, IPMA Korea activities and partnerships with global CM associations to bring world-class knowledge into Korea and showcase Korean CM abroad.</p>
-        </div>
-    </div>
+    <ul class="eng-scheme-list">
+        <li>Devise the middle·long-term schemes in order to develop CM</li>
+        <li>Put the related laws and regulations in order as well as improving them</li>
+        <li>Devise the improvement in CM delivery system</li>
+        <li>Devise the fruitful education·training and evaluation system</li>
+        <li>Help analyze and utilize the case studies of CM projects</li>
+        <li>Develop the managing system of professionals</li>
+        <li>Promote the related events in order to initiate techniques</li>
+        <li>Operate the promoting group of CM</li>
+        <li>Conduct the research and development work</li>
+        <li>Develop the related laws and regulations in order to increase the CM work scope, etc.</li>
+        <li>Research and study the foreign laws, regulations and policies</li>
+        <li>Help export CM to LDDC (least developed among developing countries)</li>
+        <li>Hold the seminars and educations for the purpose of promoting CM all over the country</li>
+        <li>Hold the meeting of practitioners in order to monitor CM projects</li>
+        <li>Train the professionals up</li>
+        <li>Have the strategy meeting in order to promote CM</li>
+        <li>Help increase the use of CM</li>
+        <li>Build the database consisting of a variety of information</li>
+        <li>Build the system in order to provide information and data</li>
+        <li>Co-host the international conferences</li>
+        <li>Reinforce PR activities in order for more use of CM</li>
+        <li>Operate a CM-related consulting center at all times</li>
+        <li>Publish the CM brochure</li>
+        <li>Publish the CM handbook</li>
+        <li>Supply the related information and data</li>
+        <li>Appraise and make public the capacity of CM firms</li>
+        <li>Maintain and manage the results of CM practices in public projects</li>
+        <li>Confirm and publish the official documents of the CM services execution</li>
+        <li>Help reinforce the activities of the five regional chapters</li>
+        <li>Plan and arrange a variety of conferences and events</li>
+        <li>Put in order the related regulations to promote the activities of CMAK</li>
+    </ul>
 </div>
 @endsection

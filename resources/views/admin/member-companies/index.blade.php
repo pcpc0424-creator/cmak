@@ -7,26 +7,31 @@
     {{-- 헤더 --}}
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-gray-900">회원사 관리</h1>
-        <p class="mt-1 text-sm text-gray-500">총 {{ $memberCompanies->total() }}개의 회원사</p>
+        <p class="mt-1 text-sm text-gray-500">
+            현재 조건 {{ $memberCompanies->total() }}개 ·
+            <span class="text-blue-600">노출(회비납부) {{ $counts['active'] }}</span> /
+            비노출 {{ $counts['inactive'] }} / 전체 {{ $counts['all'] }}
+        </p>
     </div>
 
     {{-- 검색 & 버튼 --}}
     <div class="bg-white rounded-lg shadow p-4 mb-6">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <form action="{{ url('/admin/member-companies') }}" method="GET" class="flex items-center gap-2 flex-1">
-                <input type="text" name="company_name" value="{{ request('company_name') }}"
+            <form action="{{ url('/admin/member-companies') }}" method="GET" class="flex items-center gap-2 flex-1 flex-wrap">
+                <input type="text" name="search" value="{{ request('search') }}"
                        placeholder="회사명 검색..."
                        class="flex-1 min-w-0 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
-                <select name="region"
+                <select name="company_type"
                         class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
-                    <option value="">전체 지역</option>
-                    <option value="서울" {{ request('region') == '서울' ? 'selected' : '' }}>서울</option>
-                    <option value="경기" {{ request('region') == '경기' ? 'selected' : '' }}>경기</option>
-                    <option value="부산" {{ request('region') == '부산' ? 'selected' : '' }}>부산</option>
-                    <option value="대전" {{ request('region') == '대전' ? 'selected' : '' }}>대전</option>
-                    <option value="대구" {{ request('region') == '대구' ? 'selected' : '' }}>대구</option>
-                    <option value="광주" {{ request('region') == '광주' ? 'selected' : '' }}>광주</option>
-                    <option value="기타" {{ request('region') == '기타' ? 'selected' : '' }}>기타</option>
+                    <option value="">구분 전체</option>
+                    <option value="용역" {{ request('company_type') == '용역' ? 'selected' : '' }}>용역</option>
+                    <option value="시공" {{ request('company_type') == '시공' ? 'selected' : '' }}>시공</option>
+                </select>
+                <select name="status"
+                        class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                    <option value="active" {{ $status == 'active' ? 'selected' : '' }}>노출(회비납부)</option>
+                    <option value="inactive" {{ $status == 'inactive' ? 'selected' : '' }}>비노출</option>
+                    <option value="all" {{ $status == 'all' ? 'selected' : '' }}>전체</option>
                 </select>
                 <button type="submit"
                         class="inline-flex items-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-md hover:bg-gray-700 transition">
@@ -37,7 +42,7 @@
                 </button>
             </form>
             <div class="flex items-center gap-2 whitespace-nowrap">
-                <a href="{{ url('/admin/member-companies/export') }}?{{ http_build_query(request()->only(['search','region'])) }}"
+                <a href="{{ url('/admin/member-companies/export') }}?{{ http_build_query(request()->only(['search','company_type','region','status'])) }}"
                    class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition">
                     <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>

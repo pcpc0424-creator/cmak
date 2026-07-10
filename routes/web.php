@@ -87,10 +87,13 @@ Route::get('/intro/members', function(\Illuminate\Http\Request $r) {
     $searchType = $r->get('search_type', '');
     $initial = $r->get('initial', '');
 
-    if ($searchType === '용역' && $search !== '') {
-        $q->where('company_type', '용역')->where('company_name', 'like', "%{$search}%");
-    } elseif ($searchType === '시공' && $search !== '') {
-        $q->where('company_type', '시공')->where('company_name', 'like', "%{$search}%");
+    if ($searchType === '용역') {
+        // 구분(용역)만으로도 필터 — 검색어는 있으면 회사명 추가 조건
+        $q->where('company_type', '용역');
+        if ($search !== '') $q->where('company_name', 'like', "%{$search}%");
+    } elseif ($searchType === '시공') {
+        $q->where('company_type', '시공');
+        if ($search !== '') $q->where('company_name', 'like', "%{$search}%");
     } elseif ($searchType === '회사명' && $search !== '') {
         $q->where('company_name', 'like', "%{$search}%");
     } elseif ($searchType === '주소' && $search !== '') {
@@ -151,10 +154,24 @@ Route::get('/business/inspection', [BusinessPageController::class, 'show'])->def
 Route::get('/business/education', [BusinessPageController::class, 'show'])->defaults('slug', 'education');
 // CM Herald — 로그인 회원만 열람 (책장형 표지 + 웹진보기)
 Route::get('/business/herald', [HeraldController::class, 'index'])->middleware('auth');
-Route::get('/business/consma', [BusinessPageController::class, 'show'])->defaults('slug', 'consma');
+Route::get('/business/consma', [\App\Http\Controllers\ConsmaController::class, 'index']);
+Route::get('/business/consma/{year}', [\App\Http\Controllers\ConsmaController::class, 'show'])->where('year', '[0-9]{4}');
 Route::get('/business/slogan', [BusinessPageController::class, 'show'])->defaults('slug', 'slogan');
 Route::get('/business/cm-forms', fn(\Illuminate\Http\Request $r) => app(BoardController::class)->index($r, 'cm_forms', 'business.cm-forms'));
 Route::get('/business', fn() => redirect('business/membership'));
+
+// 윈도우형 팝업 전용 창(window.open 대상)
+Route::get('/popup/{popup}/window', function (\App\Models\Popup $popup) {
+    abort_unless($popup->is_active, 404);
+    return view('popup-window', compact('popup'));
+})->whereNumber('popup');
+
+// ============================================
+// 온라인 접수 (행사 신청) — 전용 상단 메뉴
+// ============================================
+Route::get('/reception', [\App\Http\Controllers\ReceptionController::class, 'index']);
+Route::get('/reception/{slug}', [\App\Http\Controllers\ReceptionController::class, 'show']);
+Route::post('/reception/{slug}', [\App\Http\Controllers\ReceptionController::class, 'store']);
 
 // ============================================
 // CM30년 (완전 별도 독립 게시판) — 상단 POPUP 'CM30년' 전용, 타 메뉴 미연결

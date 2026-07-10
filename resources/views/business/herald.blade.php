@@ -5,6 +5,10 @@
 @section('category-link', '/cmak/business/herald')
 @section('page-title', 'CM Herald')
 
+@section('side-menu')
+    @include('business._side-menu')
+@endsection
+
 @section('content')
 <div class="sub-content-card">
     <h2 class="sub-content-title">CM Herald</h2>

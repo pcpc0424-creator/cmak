@@ -27,10 +27,14 @@ class User extends Authenticatable
         'grade',
         'department',
         'position',
+        'company_name',
+        'is_member_company',
+        'member_company_id',
         'phone_company',
         'phone_mobile',
         'sms_agree',
         'email_agree',
+        'ad_agree',
         'zipcode',
         'address',
         'address_detail',
@@ -107,8 +111,10 @@ class User extends Authenticatable
             'permissions' => 'array',
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'is_member_company' => 'boolean',
             'sms_agree' => 'boolean',
             'email_agree' => 'boolean',
+            'ad_agree' => 'boolean',
         ];
     }
 

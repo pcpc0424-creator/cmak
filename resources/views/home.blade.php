@@ -199,7 +199,7 @@
                                     <div x-show="activeTab === 'member'" x-transition>
                                         <ul class="icak-cell-list">
                                             @foreach(array_slice($memberTrends, 0, 4) as $item)
-                                                <li><a href="{{ $item['link'] }}">{{ $item['company'] }} - {{ $item['title'] }}</a></li>
+                                                <li><a href="{{ $item['link'] }}">@if(!empty($item['company'])){{ $item['company'] }} - @endif{{ $item['title'] }}</a></li>
                                             @endforeach
                                         </ul>
                                         <a href="/cmak/notice/member" class="icak-cell-more">더보기 +</a>
@@ -231,9 +231,9 @@
                     {{-- 우측: 이미지 카드 6개 (2x3 그리드) — 관리자(home_cards) 연동 --}}
                     @php
                         $fallbackCards = [
-                            ['title' => 'CM관련서식', 'subtitle' => 'CM 업무 관련 서식', 'link_url' => '/business/cm-forms', 'icon' => 'doc', 'image_path' => null],
+                            ['title' => 'CM 가이드', 'subtitle' => 'CM 업무 관련 서식·안내', 'link_url' => '/business/cm-forms', 'icon' => 'doc', 'image_path' => null],
                             ['title' => 'Book Review', 'subtitle' => '추천 도서', 'link_url' => '/notice/bookreview', 'icon' => 'book', 'image_path' => null],
-                            ['title' => 'Word Book', 'subtitle' => 'CM 용어집', 'link_url' => '/notice/wordbook', 'icon' => 'search', 'image_path' => null],
+                            ['title' => 'CM을 부탁해', 'subtitle' => 'CM 용어집', 'link_url' => '/notice/wordbook', 'icon' => 'search', 'image_path' => null],
                             ['title' => 'CM헤럴드', 'subtitle' => '월간 소식지', 'link_url' => '/business/herald', 'icon' => 'monitor', 'image_path' => null],
                             ['title' => 'CM자료방', 'subtitle' => '논문·연구자료', 'link_url' => '/cmdata/report', 'icon' => 'folder', 'image_path' => null],
                             ['title' => 'CM사 소개', 'subtitle' => '회원사 안내', 'link_url' => '/intro/members', 'icon' => 'building', 'image_path' => null],
@@ -243,6 +243,17 @@
                                 ->map(fn($c) => ['title' => $c->title, 'subtitle' => $c->subtitle, 'link_url' => $c->link_url, 'icon' => $c->icon, 'image_path' => $c->image_path])->all();
                             if (empty($homeCards)) { $homeCards = $fallbackCards; }
                         } catch (\Throwable $e) { $homeCards = $fallbackCards; }
+
+                        // CM사 소개 카드: 납부(active) 회원사 기본정보를 매일 순환 노출 → 해당 업체 홈페이지로 연결
+                        $featuredCompany = null;
+                        try {
+                            $cos = \App\Models\MemberCompany::active()
+                                ->whereNotNull('website')->where('website', '!=', '')
+                                ->orderBy('id')->get(['company_name', 'representative', 'website']);
+                            if ($cos->isNotEmpty()) {
+                                $featuredCompany = $cos[(int) floor(time() / 86400) % $cos->count()];
+                            }
+                        } catch (\Throwable $e) { $featuredCompany = null; }
                     @endphp
                     <div class="icak-content-right">
                         <div class="icak-image-cards">
@@ -253,8 +264,27 @@
                                         $link = '/cmak' . (\Illuminate\Support\Str::startsWith($link, '/') ? '' : '/') . $link;
                                     }
                                     $img = $card['image_path'] ? '/cmak/' . ltrim($card['image_path'], '/') : null;
+                                    // CM사 소개 카드 판별(제목 또는 회원현황 링크)
+                                    $isCmCompanyCard = ($card['title'] === 'CM사 소개')
+                                        || \Illuminate\Support\Str::contains($card['link_url'] ?? '', 'intro/members');
                                 @endphp
-                                @if($img)
+                                @if($isCmCompanyCard && $featuredCompany)
+                                    @php
+                                        $coLink = $featuredCompany->website;
+                                        if ($coLink && !\Illuminate\Support\Str::startsWith($coLink, ['http://', 'https://'])) {
+                                            $coLink = 'https://' . $coLink;
+                                        }
+                                    @endphp
+                                    <a href="{{ $coLink ?: $link }}" @if($coLink) target="_blank" rel="noopener noreferrer" @endif class="icak-image-card" title="CM사 소개 - {{ $featuredCompany->company_name }}">
+                                        <div class="icak-image-card-icon">
+                                            @include('components.home.card-icon', ['icon' => $card['icon']])
+                                        </div>
+                                        <div class="icak-image-card-text">
+                                            <strong>{{ $featuredCompany->company_name }}</strong>
+                                            <span>CM사 소개@if($featuredCompany->representative) · 대표 {{ $featuredCompany->representative }}@endif</span>
+                                        </div>
+                                    </a>
+                                @elseif($img)
                                     <a href="{{ $link }}" class="icak-image-card has-image">
                                         <img src="{{ $img }}" alt="{{ $card['title'] }}" class="icak-image-card-bg">
                                         <div class="icak-image-card-overlay">

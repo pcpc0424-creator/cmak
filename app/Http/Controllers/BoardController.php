@@ -29,7 +29,8 @@ class BoardController extends Controller
         $user = auth()->user();
 
         if (!$user) {
-            return redirect()->guest('/cmak/login')
+            // APP_URL에 이미 /cmak 베이스가 포함되어 있으므로 '/login'만 전달(이중 prefix 방지)
+            return redirect()->guest('/login')
                 ->with('error', '해당 게시판은 로그인 후 열람할 수 있습니다.');
         }
 

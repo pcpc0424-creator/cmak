@@ -1,5 +1,6 @@
 @php $base = '/cmak'; @endphp
-<a href="{{ $base }}/cmdata/about" class="{{ request()->is('cmdata/about') ? 'active' : '' }}">CM이란</a>
+<a href="{{ $base }}/cmdata/about" class="{{ request()->is('cmdata/about') ? 'active' : '' }}">CM이란?</a>
+<a href="{{ $base }}/business/cm-forms" class="{{ request()->is('business/cm-forms') ? 'active' : '' }}">CM 가이드</a>
 <a href="{{ $base }}/cmdata/procedure" class="{{ request()->is('cmdata/procedure') ? 'active' : '' }}">CM업무절차서</a>
 <a href="{{ $base }}/cmdata/task-spec" class="{{ request()->is('cmdata/task-spec') ? 'active' : '' }}">CM표준과업내용서</a>
 <a href="{{ $base }}/cmdata/contract" class="{{ request()->is('cmdata/contract') ? 'active' : '' }}">CM표준계약서</a>

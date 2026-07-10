@@ -29,45 +29,51 @@
 @section('content')
 <div class="eng-card">
     <h2>{{ $page->title ?? 'Organization' }}</h2>
-    <p class="desc">{{ $page->description ?? 'CMAK\'s leadership and organizational structure.' }}</p>
+    <p class="desc">{{ $page->description ?? 'The organizational structure of the Construction Management Association of Korea.' }}</p>
 
     <div class="eng-org-chart">
         <div class="eng-org-box">General Assembly</div>
         <div class="eng-org-line"></div>
-        <div class="eng-org-box">Board of Directors</div>
+        <div class="eng-org-row" style="align-items:center;">
+            <div class="eng-org-box sub">Board of Directors</div>
+            <div class="eng-org-box">Chairman</div>
+            <div class="eng-org-box sub">Auditor</div>
+            <div class="eng-org-box sub">Advisory Committee</div>
+        </div>
         <div class="eng-org-line"></div>
-        <div class="eng-org-box">Chairman</div>
-        <div class="eng-org-line"></div>
-        <div class="eng-org-box">Secretary General</div>
+        <div class="eng-org-box">Standing Director</div>
         <div class="eng-org-line"></div>
         <div class="eng-org-bracket"></div>
         <div style="height:18px;"></div>
         <div class="eng-org-row">
-            <div class="eng-org-box sub">Planning &amp; Management</div>
-            <div class="eng-org-box sub">Policy &amp; Research</div>
-            <div class="eng-org-box sub">Education &amp; Certification</div>
-            <div class="eng-org-box sub">International Affairs</div>
+            <div class="eng-org-box sub">Operation Support Division</div>
+            <div class="eng-org-box sub">Policy &amp; Projects Division</div>
+            <div class="eng-org-box sub">Education &amp; Training Division</div>
+            <div class="eng-org-box sub">Business Support Division</div>
+            <div class="eng-org-box sub">Construction Industry Research Center</div>
         </div>
     </div>
 
-    <h3>Departments</h3>
+    <h3>Committees</h3>
     <div class="eng-dept-grid">
-        <div class="eng-dept">
-            <h4>Planning &amp; Management</h4>
-            <p>General administration, finance, human resources, member services and operation of the secretariat.</p>
-        </div>
-        <div class="eng-dept">
-            <h4>Policy &amp; Research</h4>
-            <p>CM policy advocacy, research projects, technical standards, publications and the CM Herald magazine.</p>
-        </div>
-        <div class="eng-dept">
-            <h4>Education &amp; Certification</h4>
-            <p>Construction Manager qualification examinations, professional development programs and IPMA certifications.</p>
-        </div>
-        <div class="eng-dept">
-            <h4>International Affairs</h4>
-            <p>International CM Day, IPMA Korea, partnerships with global CM associations and overseas exchange programs.</p>
-        </div>
+        <div class="eng-dept"><h4>Operation &amp; PR Committee</h4></div>
+        <div class="eng-dept"><h4>Education &amp; Training Committee</h4></div>
+        <div class="eng-dept"><h4>Survey &amp; Research Committee</h4></div>
+        <div class="eng-dept"><h4>Contract, Claim &amp; Risk Management Committee</h4></div>
+        <div class="eng-dept"><h4>Construction VE &amp; LCC Committee</h4></div>
+        <div class="eng-dept"><h4>Construction Informatization Committee</h4></div>
+        <div class="eng-dept"><h4>Overseas Expansion Committee</h4></div>
+        <div class="eng-dept"><h4>CM Future Strategy Special Committee</h4></div>
+    </div>
+
+    <h3>National Chapters</h3>
+    <div class="eng-org-row" style="justify-content:flex-start;">
+        <div class="eng-org-box sub">Seoul</div>
+        <div class="eng-org-box sub">Jungbu (Central)</div>
+        <div class="eng-org-box sub">Chungcheong</div>
+        <div class="eng-org-box sub">Honam</div>
+        <div class="eng-org-box sub">Yeongnam 1</div>
+        <div class="eng-org-box sub">Yeongnam 2</div>
     </div>
 </div>
 @endsection

@@ -68,6 +68,12 @@ class TopPopupItemController extends Controller
             if ($old && file_exists(public_path($old))) {
                 @unlink(public_path($old));
             }
+        } elseif ($request->boolean('remove_image')) {
+            // 새 이미지 업로드 없이 기존 이미지만 삭제
+            if ($topPopupItem->image_path && file_exists(public_path($topPopupItem->image_path))) {
+                @unlink(public_path($topPopupItem->image_path));
+            }
+            $validated['image_path'] = null;
         }
         unset($validated['image']);
         $validated['is_active'] = $request->boolean('is_active');

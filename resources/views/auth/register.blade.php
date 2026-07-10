@@ -1,14 +1,14 @@
 @extends('layouts.sub')
 
-@section('title', '회원가입 - 한국CM협회')
+@section('title', '온라인 회원가입 - 한국CM협회')
 @section('category', '회원')
 @section('category-link', '/cmak/login')
-@section('page-title', '회원가입')
+@section('page-title', '온라인 회원가입')
 
 @section('content')
 <div class="sub-content-card">
-    <h2 class="sub-content-title">회원가입</h2>
-    <p class="sub-content-desc">한국CM협회 회원으로 가입합니다. <span style="color:#d00;">*</span> 표시는 필수 입력 항목입니다.</p>
+    <h2 class="sub-content-title">온라인 회원가입</h2>
+    <p class="sub-content-desc">한국CM협회 온라인 회원으로 가입합니다. <span style="color:#d00;">*</span> 표시는 필수 입력 항목입니다.</p>
 
     @if ($errors->any())
         <div style="margin:16px 0; padding:12px 14px; background:#fef2f2; border:1px solid #fecaca; border-radius:8px; color:#b91c1c; font-size:13px;">
@@ -69,9 +69,12 @@
         @php
             $lblStyle = 'display:block; font-size:13px; color:#555; margin-bottom:6px;';
             $inStyle = 'width:100%; height:44px; padding:0 12px; border:1px solid #d4dae5; border-radius:8px; font-size:14px;';
+            $memberCompanies = \App\Models\MemberCompany::where('is_active', true)
+                ->whereNotNull('company_name')->orderBy('company_name')
+                ->pluck('company_name')->unique()->values();
         @endphp
 
-        <div style="display:grid; grid-template-columns:1fr; gap:16px;">
+        <div style="display:grid; grid-template-columns:1fr; gap:16px;" x-data="{ isMember: {{ old('is_member_company') ? 'true' : 'false' }} }">
             {{-- 이름 --}}
             <div>
                 <label style="{{ $lblStyle }}"><span style="color:#d00;">*</span> 이름</label>
@@ -111,6 +114,44 @@
                 </div>
             </div>
 
+            {{-- 소속 정보 --}}
+            <div>
+                <label style="{{ $lblStyle }}">소속 (업체/기관명)</label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#444; margin-bottom:10px; cursor:pointer;">
+                    <input type="checkbox" name="is_member_company" value="1" x-model="isMember">
+                    협회 회원사 소속 임직원입니다.
+                </label>
+
+                {{-- 회원사 소속: 회원사 검색·선택 --}}
+                <template x-if="isMember">
+                    <div>
+                        <input type="text" name="company_name" list="memberCompanyList"
+                               value="{{ old('is_member_company') ? old('company_name') : '' }}"
+                               placeholder="회원사명을 검색·선택하세요" style="{{ $inStyle }}">
+                        <p style="font-size:12px; color:#888; margin-top:6px;">협회 회원사로 등록된 업체 중에서 선택하세요.</p>
+                    </div>
+                </template>
+
+                {{-- 비회원사: 자유 입력 --}}
+                <template x-if="!isMember">
+                    <input type="text" name="company_name"
+                           value="{{ !old('is_member_company') ? old('company_name') : '' }}"
+                           placeholder="업체/기관명 (자유 입력)" style="{{ $inStyle }}">
+                </template>
+            </div>
+
+            {{-- 부서 / 직위 --}}
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                <div>
+                    <label style="{{ $lblStyle }}">부서</label>
+                    <input type="text" name="department" value="{{ old('department') }}" placeholder="예: 사업관리팀" style="{{ $inStyle }}">
+                </div>
+                <div>
+                    <label style="{{ $lblStyle }}">직위</label>
+                    <input type="text" name="position" value="{{ old('position') }}" placeholder="예: 과장" style="{{ $inStyle }}">
+                </div>
+            </div>
+
             {{-- 이메일 --}}
             <div>
                 <label style="{{ $lblStyle }}"><span style="color:#d00;">*</span> 이메일</label>
@@ -127,28 +168,35 @@
                     <input type="text" name="phone_company" value="{{ old('phone_company') }}" placeholder="02-000-0000" style="{{ $inStyle }}">
                 </div>
                 <div>
-                    <label style="{{ $lblStyle }}">휴대폰번호</label>
-                    <input type="text" name="phone_mobile" value="{{ old('phone_mobile') }}" placeholder="010-0000-0000" style="{{ $inStyle }}">
+                    <label style="{{ $lblStyle }}"><span style="color:#d00;">*</span> 휴대폰번호</label>
+                    <input type="text" name="phone_mobile" value="{{ old('phone_mobile') }}" placeholder="010-0000-0000" required style="{{ $inStyle }}">
                     <label style="display:inline-flex; align-items:center; gap:6px; font-size:13px; color:#666; margin-top:8px; cursor:pointer;">
                         <input type="checkbox" name="sms_agree" value="1" {{ old('sms_agree') ? 'checked' : '' }}> SMS 수신 동의
                     </label>
                 </div>
             </div>
 
-            {{-- 주소 --}}
+            {{-- 주소 (도로명주소 검색) --}}
             <div>
                 <label style="{{ $lblStyle }}">주소</label>
-                <input type="text" name="zipcode" value="{{ old('zipcode') }}" placeholder="우편번호" style="{{ $inStyle }} margin-bottom:8px;">
-                <input type="text" name="address" value="{{ old('address') }}" placeholder="기본주소" style="{{ $inStyle }} margin-bottom:8px;">
-                <input type="text" name="address_detail" value="{{ old('address_detail') }}" placeholder="상세주소" style="{{ $inStyle }}">
-            </div>
-
-            {{-- 가입기간 --}}
-            <div>
-                <label style="{{ $lblStyle }}">가입기간</label>
-                <input type="text" name="join_period" value="{{ old('join_period') }}" placeholder="(선택)" style="{{ $inStyle }}">
+                <div style="display:flex; gap:8px; margin-bottom:8px;">
+                    <input type="text" name="zipcode" id="zipcode" value="{{ old('zipcode') }}" placeholder="우편번호" readonly
+                           style="{{ $inStyle }} flex:1; background:#f7f8fa;">
+                    <button type="button" id="addrSearchBtn"
+                            style="flex-shrink:0; padding:0 16px; background:#515151; color:#fff; border:0; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;">주소 검색</button>
+                </div>
+                <input type="text" name="address" id="address" value="{{ old('address') }}" placeholder="기본주소 (도로명/지번)" readonly
+                       style="{{ $inStyle }} margin-bottom:8px; background:#f7f8fa;">
+                <input type="text" name="address_detail" id="address_detail" value="{{ old('address_detail') }}" placeholder="상세주소" style="{{ $inStyle }}">
             </div>
         </div>
+
+        {{-- 회원사 검색용 목록 --}}
+        <datalist id="memberCompanyList">
+            @foreach($memberCompanies as $cn)
+                <option value="{{ $cn }}"></option>
+            @endforeach
+        </datalist>
 
         <div style="margin-top:26px; display:flex; gap:10px; justify-content:center;">
             <a href="{{ url('/login') }}" style="padding:12px 28px; background:#fff; border:1px solid #d4dae5; border-radius:8px; color:#555; font-weight:600; text-decoration:none;">취소</a>
@@ -157,8 +205,29 @@
     </form>
 </div>
 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 (function () {
+    // 도로명주소 검색 (Daum 우편번호 서비스)
+    var addrBtn = document.getElementById('addrSearchBtn');
+    if (addrBtn) {
+        addrBtn.addEventListener('click', function () {
+            if (typeof daum === 'undefined' || !daum.Postcode) {
+                alert('주소 검색 서비스를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.');
+                return;
+            }
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var addr = data.roadAddress || data.jibunAddress;
+                    document.getElementById('zipcode').value = data.zonecode || '';
+                    document.getElementById('address').value = addr || '';
+                    var detail = document.getElementById('address_detail');
+                    if (detail) detail.focus();
+                }
+            }).open();
+        });
+    }
+
     var btn = document.getElementById('checkUserBtn');
     var input = document.getElementById('username');
     var msg = document.getElementById('usernameMsg');

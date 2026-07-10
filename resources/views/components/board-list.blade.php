@@ -3,6 +3,10 @@
     $basePath = '/cmak';
     $columns = $columns ?? [];
     $searchFields = $searchFields ?? [];
+    // 새글(N) 표시 기준: 협회소식은 7일, 그 외 게시판은 1일 유지
+    $newDays = (($boardType ?? '') === 'news_association') ? 7 : 1;
+    $newThreshold = now()->subDays($newDays);
+    $newBadge = '<span style="display:inline-block; margin-left:6px; padding:0 5px; background:#e5352b; color:#fff; font-size:10px; font-weight:700; line-height:16px; border-radius:8px; vertical-align:middle;">N</span>';
 @endphp
 
 <div style="display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap;">
@@ -21,6 +25,7 @@
 </div>
 
 @if(isset($posts) && $posts->count() > 0)
+    <div class="sub-table-wrap">
     <table class="sub-table">
         <thead>
             <tr>
@@ -72,6 +77,8 @@
                             <td style="{{ $col['tdStyle'] ?? '' }}">
                                 @if($field === 'title')
                                     <a href="{{ $basePath }}/board/{{ $boardType }}/{{ $post->id }}" style="color:#333; text-decoration:none;">{{ $val }}</a>
+                                    @php $pdate = $post->published_at ?? $post->created_at; @endphp
+                                    @if($pdate && $pdate->gt($newThreshold)){!! $newBadge !!}@endif
                                 @elseif($field === 'attachment')
                                     @if($post->attachments && $post->attachments->count() > 0)
                                         <span style="color:#0061c2;">📎</span>
@@ -97,6 +104,8 @@
                                 @endif
                                 {{ $post->title }}
                             </a>
+                            @php $pdate = $post->published_at ?? $post->created_at; @endphp
+                            @if($pdate && $pdate->gt($newThreshold)){!! $newBadge !!}@endif
                         </td>
                         @if(!($hideAuthor ?? false))
                             <td style="text-align:center; color:#888; font-size:12px;">{{ $post->author ?? '-' }}</td>
@@ -110,6 +119,7 @@
             @endforeach
         </tbody>
     </table>
+    </div>
 
     {{-- 페이지네이션 --}}
     @if($posts->hasPages())

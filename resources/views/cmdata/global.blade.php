@@ -1,7 +1,7 @@
 @extends('layouts.sub')
 
 @section('title', '해외CM - 한국CM협회')
-@section('category', 'CM자료방')
+@section('category', 'CM 소개')
 @section('category-link', '/cmak/cmdata/about')
 @section('page-title', '해외CM')
 

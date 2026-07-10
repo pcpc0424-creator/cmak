@@ -13,6 +13,9 @@ class MemberCompany extends Model
     protected $fillable = [
         'company_name',
         'region',
+        'branch',
+        'member_code',
+        'joined_at',
         'company_type',
         'representative',
         'address',

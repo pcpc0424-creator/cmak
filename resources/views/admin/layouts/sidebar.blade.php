@@ -40,6 +40,8 @@
                     <a href="{{ url('/admin/page-contents/' . $bizPage->id . '/edit') }}"
                        class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/page-contents/' . $bizPage->id . '*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">{{ $bizPage->page_title }}</a>
                 @endforeach
+                <a href="{{ url('/admin/consma-editions') }}"
+                   class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/consma-editions*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">ConsMa 포스터 관리</a>
             </div>
         </div>
 
@@ -139,7 +141,7 @@
                 <a href="{{ url('/admin/posts/news_personnel') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_personnel*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">인사경조사</a>
                 <a href="{{ url('/admin/posts/member_trend') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/member_trend*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">회원동향</a>
                 <a href="{{ url('/admin/posts/news_org') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_org*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">유관기관소식</a>
-                <a href="{{ url('/admin/posts/wordbook') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/wordbook*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">Word Book</a>
+                <a href="{{ url('/admin/posts/wordbook') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/wordbook*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM을 부탁해</a>
                 <a href="{{ url('/admin/posts/book_review') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/book_review*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">Book Review</a>
             </div>
         </div>
@@ -188,6 +190,18 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
             </svg>
             <span>회원사관리</span>
+        </a>
+
+        @endif
+
+        @if($can('members'))
+        {{-- 개인(온라인)회원관리 --}}
+        <a href="{{ url('/admin/members') }}"
+           class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/members*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            <span>개인(온라인)회원관리</span>
         </a>
 
         @endif
@@ -269,24 +283,12 @@
 
         @if($can('online'))
         {{-- 온라인접수 --}}
-        <a href="{{ url('/admin/online-applications') }}"
-           class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/online-applications*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
+        <a href="{{ url('/admin/reception') }}"
+           class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/reception*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
             </svg>
             <span>온라인접수</span>
-        </a>
-
-        @endif
-
-        @if($can('members'))
-        {{-- 회원관리 --}}
-        <a href="{{ url('/admin/members') }}"
-           class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/members*') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
-            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-            </svg>
-            <span>회원관리</span>
         </a>
 
         @endif
@@ -298,7 +300,7 @@
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
             </svg>
-            <span>계정관리</span>
+            <span>계정관리(관리자·직원)</span>
         </a>
 
         @endif

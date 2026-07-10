@@ -277,11 +277,14 @@
 
             /* 테이블이 넘치면 테이블만 가로 스크롤 (페이지 스크롤 X) */
             .sub-section > .sub-table,
-            .sub-section .sub-table-wrap {
+            .sub-section .sub-table-wrap,
+            .sub-table-wrap {
                 display: block;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
             }
+            /* 게시판 목록: 좁은 화면에서 제목란이 뭉개지지 않도록 최소너비 확보 후 가로 스크롤 */
+            .sub-table-wrap .sub-table { min-width: 620px; }
 
             /* 이미지 — 원본 지정 width 무시하고 컨테이너 맞춤 */
             .sub-content-card img { max-width: 100% !important; height: auto !important; }
@@ -431,6 +434,13 @@
             mainMenu.addEventListener('click', function(e) {
                 if (e.target === mainMenu) mainMenu.classList.remove('active');
             });
+            // 닫기(X) 버튼
+            var mainMenuClose = document.getElementById('mainMenuClose');
+            if (mainMenuClose) {
+                mainMenuClose.addEventListener('click', function() {
+                    mainMenu.classList.remove('active');
+                });
+            }
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && mainMenu.classList.contains('active')) mainMenu.classList.remove('active');
             });

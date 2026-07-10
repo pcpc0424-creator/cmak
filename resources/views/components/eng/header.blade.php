@@ -37,7 +37,7 @@
     <div class="eng-header-inner">
         <h1 class="eng-logo">
             <a href="{{ $bp }}/eng">
-                <img src="{{ $bp }}/images/logo_header.png" alt="CMAK" style="height:50px; width:auto;">
+                <img src="{{ $bp }}/images/logo_eng.png" alt="CMAK" style="height:50px; width:auto;">
             </a>
         </h1>
 

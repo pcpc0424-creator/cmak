@@ -29,11 +29,11 @@
             <dt>Address</dt>
             <dd>(06673) 4F, Union Bldg. 88, Seocho-daero, Seocho-gu, Seoul, Republic of Korea</dd>
             <dt>Telephone</dt>
-            <dd>(+82)10-2858-8788</dd>
+            <dd>(+82) 2-585-4712~4</dd>
             <dt>Fax</dt>
-            <dd>(+82)2-585-2689</dd>
+            <dd>(+82) 2-585-2689</dd>
             <dt>Email</dt>
-            <dd>margaretwon@cmak.or.kr</dd>
+            <dd>cm@cmak.or.kr</dd>
             <dt>Homepage</dt>
             <dd>www.cmak.or.kr</dd>
             <dt>Office Hours</dt>

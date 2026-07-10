@@ -28,6 +28,9 @@ class HeroSlideController extends Controller
             'highlight' => ['nullable', 'string', 'max:255'],
             'image' => ['required', 'image', 'max:8192'],
             'is_active' => ['boolean'],
+            'show_eyebrow' => ['boolean'],
+            'title_bold' => ['boolean'],
+            'highlight_bold' => ['boolean'],
             'sort_order' => ['nullable', 'integer'],
         ]);
 
@@ -35,6 +38,9 @@ class HeroSlideController extends Controller
         unset($validated['image']);
 
         $validated['is_active'] = $request->boolean('is_active');
+        $validated['show_eyebrow'] = $request->boolean('show_eyebrow');
+        $validated['title_bold'] = $request->boolean('title_bold');
+        $validated['highlight_bold'] = $request->boolean('highlight_bold');
         if (!isset($validated['sort_order'])) {
             $validated['sort_order'] = (HeroSlide::max('sort_order') ?? 0) + 1;
         }
@@ -58,6 +64,9 @@ class HeroSlideController extends Controller
             'highlight' => ['nullable', 'string', 'max:255'],
             'image' => ['nullable', 'image', 'max:8192'],
             'is_active' => ['boolean'],
+            'show_eyebrow' => ['boolean'],
+            'title_bold' => ['boolean'],
+            'highlight_bold' => ['boolean'],
             'sort_order' => ['nullable', 'integer'],
         ]);
 
@@ -71,6 +80,9 @@ class HeroSlideController extends Controller
         unset($validated['image']);
 
         $validated['is_active'] = $request->boolean('is_active');
+        $validated['show_eyebrow'] = $request->boolean('show_eyebrow');
+        $validated['title_bold'] = $request->boolean('title_bold');
+        $validated['highlight_bold'] = $request->boolean('highlight_bold');
 
         $heroSlide->update($validated);
 

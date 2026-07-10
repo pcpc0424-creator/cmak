@@ -18,8 +18,11 @@
         $slides = \App\Models\HeroSlide::active()->orderBy('sort_order')->orderBy('id')->get()
             ->map(fn($s) => [
                 'eyebrow' => $s->eyebrow,
+                'show_eyebrow' => $s->show_eyebrow,
                 'title' => $s->title,
                 'highlight' => $s->highlight,
+                'title_bold' => $s->title_bold,
+                'highlight_bold' => $s->highlight_bold,
                 'image' => $basePath . '/' . ltrim($s->image_path, '/'),
             ])->all();
         if (empty($slides)) {
@@ -87,17 +90,25 @@
                 class="icak-hero-slide-text"
                 style="will-change: opacity, transform;"
             >
-                <span class="icak-hero-eyebrow">{{ $slide['eyebrow'] }}</span>
-                <h2>{{ $slide['title'] }}<br><strong>{{ $slide['highlight'] }}</strong></h2>
+                @if(($slide['show_eyebrow'] ?? true) && !empty($slide['eyebrow']))
+                    <span class="icak-hero-eyebrow">{{ $slide['eyebrow'] }}</span>
+                @endif
+                @php
+                    $line1Bold = $slide['title_bold'] ?? false;
+                    $line2Bold = $slide['highlight_bold'] ?? true;
+                @endphp
+                <h2>@if($line1Bold)<strong>{{ $slide['title'] }}</strong>@else<span class="font-normal">{{ $slide['title'] }}</span>@endif<br>@if($line2Bold)<strong>{{ $slide['highlight'] }}</strong>@else<span class="font-normal">{{ $slide['highlight'] }}</span>@endif</h2>
             </div>
         @endforeach
     </div>
 
-    {{-- 스크롤 다운 --}}
-    <div class="icak-scroll-txt hidden lg:block">
+    {{-- 스크롤 다운 (클릭 시 다음 섹션으로 이동) --}}
+    <button type="button" class="icak-scroll-txt hidden lg:block"
+            onclick="if (window.cmakGoToSection) window.cmakGoToSection(1);"
+            aria-label="다음 섹션으로 이동">
         <div class="icak-scroll-dot w-1.5 h-1.5 bg-white rounded-full mx-auto mb-2"></div>
         <span>SCROLL DOWN</span>
-    </div>
+    </button>
 
     {{-- 하단 광고 배너 바 --}}
     @php

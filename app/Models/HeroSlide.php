@@ -12,8 +12,11 @@ class HeroSlide extends Model
 
     protected $fillable = [
         'eyebrow',
+        'show_eyebrow',
         'title',
         'highlight',
+        'title_bold',
+        'highlight_bold',
         'image_path',
         'is_active',
         'sort_order',
@@ -23,6 +26,9 @@ class HeroSlide extends Model
     {
         return [
             'is_active' => 'boolean',
+            'show_eyebrow' => 'boolean',
+            'title_bold' => 'boolean',
+            'highlight_bold' => 'boolean',
         ];
     }
 

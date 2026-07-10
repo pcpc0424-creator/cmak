@@ -86,6 +86,11 @@ class PopupController extends Controller
             if ($old && file_exists(public_path($old))) {
                 @unlink(public_path($old));
             }
+        } elseif ($request->boolean('remove_image')) {
+            if ($popup->image_path && file_exists(public_path($popup->image_path))) {
+                @unlink(public_path($popup->image_path));
+            }
+            $validated['image_path'] = null;
         }
         unset($validated['image']);
         $validated['is_active'] = $request->boolean('is_active');

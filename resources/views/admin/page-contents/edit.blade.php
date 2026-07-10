@@ -97,6 +97,64 @@
                           class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">{{ old('content', $page->content) }}</textarea>
             </div>
 
+            {{-- 관련자료(첨부파일) 업로드 도우미 --}}
+            <div class="border border-dashed border-gray-300 rounded-md p-4 bg-gray-50" x-data="pageFileUploader()">
+                <label class="block text-sm font-medium text-gray-700 mb-1">관련자료(첨부파일) 추가</label>
+                <p class="mb-2 text-xs text-gray-500">HWP·PDF 등 파일을 업로드한 뒤 <strong>본문에 링크 삽입</strong>을 누르면 위 편집기에 다운로드 링크가 추가됩니다. 기존 첨부를 바꾸려면 새 파일을 올리고 본문의 이전 링크를 지우세요.</p>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <input type="file" x-ref="file" class="text-sm">
+                    <button type="button" @click="upload()" :disabled="busy"
+                            class="px-3 py-1.5 bg-gray-700 text-white text-sm rounded hover:bg-gray-800 disabled:opacity-50" x-text="busy ? '업로드 중...' : '파일 업로드'"></button>
+                </div>
+                <template x-if="uploaded">
+                    <div class="mt-3 text-sm">
+                        <span class="text-gray-700">업로드됨: </span>
+                        <a :href="uploaded.url" target="_blank" class="text-blue-600 underline" x-text="uploaded.name"></a>
+                        <button type="button" @click="insertLink()" class="ml-2 px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700">본문에 링크 삽입</button>
+                        <input type="text" readonly :value="uploaded.url" class="mt-2 w-full rounded border-gray-300 text-xs bg-white" onclick="this.select()">
+                    </div>
+                </template>
+                <p x-show="error" x-text="error" class="mt-2 text-sm text-red-600"></p>
+            </div>
+            <script>
+                function pageFileUploader() {
+                    return {
+                        busy: false, uploaded: null, error: '',
+                        upload() {
+                            const f = this.$refs.file.files[0];
+                            if (!f) { this.error = '파일을 선택하세요.'; return; }
+                            this.busy = true; this.error = '';
+                            const fd = new FormData();
+                            fd.append('file', f);
+                            fd.append('_token', '{{ csrf_token() }}');
+                            fetch('{{ url('/admin/page-contents/upload-file') }}', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+                                .then(r => r.json())
+                                .then(d => {
+                                    if (d.success) {
+                                        // /cmak 프리픽스 보정 (Storage::url 은 /storage/... 로 반환)
+                                        if (d.file.url && d.file.url.indexOf('/cmak/') !== 0) {
+                                            d.file.url = '/cmak' + d.file.url;
+                                        }
+                                        this.uploaded = d.file;
+                                    } else { this.error = '업로드 실패'; }
+                                })
+                                .catch(() => { this.error = '업로드 중 오류가 발생했습니다.'; })
+                                .finally(() => { this.busy = false; });
+                        },
+                        insertLink() {
+                            if (!this.uploaded) return;
+                            const html = '<a href="' + this.uploaded.url + '" target="_blank" rel="noopener">' + this.uploaded.name + '</a>';
+                            if (window.tinymce && tinymce.get('content')) {
+                                tinymce.get('content').insertContent(html);
+                            } else {
+                                const ta = document.getElementById('content');
+                                ta.value += '\n' + html;
+                            }
+                        }
+                    };
+                }
+            </script>
+
             {{-- 게시 여부 --}}
             <div class="flex items-center">
                 <input type="checkbox" name="is_published" id="is_published" value="1"

@@ -50,10 +50,14 @@
                     <label for="company_type" class="block text-sm font-medium text-gray-700 mb-1">업종</label>
                     <select name="company_type" id="company_type"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                        @php $ctypes = ['용역','시공']; $curType = old('company_type', $memberCompany->company_type); @endphp
                         <option value="">선택하세요</option>
-                        @foreach(['용역','시공','설계','감리','엔지니어링','CM','기타'] as $type)
-                            <option value="{{ $type }}" {{ old('company_type', $memberCompany->company_type) == $type ? 'selected' : '' }}>{{ $type }}</option>
+                        @foreach($ctypes as $type)
+                            <option value="{{ $type }}" {{ $curType == $type ? 'selected' : '' }}>{{ $type }}</option>
                         @endforeach
+                        @if($curType && !in_array($curType, $ctypes, true))
+                            <option value="{{ $curType }}" selected>{{ $curType }} (기존값)</option>
+                        @endif
                     </select>
                     @error('company_type')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

@@ -50,7 +50,7 @@
                     <select name="company_type" id="company_type"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         <option value="">선택하세요</option>
-                        @foreach(['용역','시공','설계','감리','엔지니어링','CM','기타'] as $type)
+                        @foreach(['용역','시공'] as $type)
                             <option value="{{ $type }}" {{ old('company_type') == $type ? 'selected' : '' }}>{{ $type }}</option>
                         @endforeach
                     </select>

@@ -21,6 +21,11 @@
                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                        placeholder="예: CMAK · Since 1996">
                 @error('eyebrow')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                <label class="mt-2 flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" name="show_eyebrow" value="1" {{ old('show_eyebrow', '1') ? 'checked' : '' }}
+                           class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500">
+                    <span class="text-sm text-gray-700">상단 라벨 표시 (해제 시 라벨 숨김)</span>
+                </label>
             </div>
 
             {{-- 제목 --}}
@@ -30,15 +35,25 @@
                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                        placeholder="예: 대한민국 건설사업관리의">
                 @error('title')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                <label class="mt-2 flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" name="title_bold" value="1" {{ old('title_bold') ? 'checked' : '' }}
+                           class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500">
+                    <span class="text-sm text-gray-700">제목(첫 줄) 굵게(볼드) 표시</span>
+                </label>
             </div>
 
             {{-- 강조 문구 --}}
             <div>
-                <label for="highlight" class="block text-sm font-medium text-gray-700 mb-1">강조 문구 (둘째 줄, 굵게)</label>
+                <label for="highlight" class="block text-sm font-medium text-gray-700 mb-1">강조 문구 (둘째 줄)</label>
                 <input type="text" name="highlight" id="highlight" value="{{ old('highlight') }}"
                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                        placeholder="예: 미래를 선도합니다">
                 @error('highlight')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                <label class="mt-2 flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" name="highlight_bold" value="1" {{ old('highlight_bold', '1') ? 'checked' : '' }}
+                           class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500">
+                    <span class="text-sm text-gray-700">강조 문구(둘째 줄) 굵게(볼드) 표시</span>
+                </label>
             </div>
 
             {{-- 배경 이미지 --}}

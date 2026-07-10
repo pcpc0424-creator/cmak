@@ -16,7 +16,7 @@
     <div class="icak-footer-bottom">
         <div class="icak-footer-bottom-inner">
             <div class="icak-footer-logo">
-                <img src="/cmak/images/logo.png" alt="한국CM협회 CMAK" style="height:45px; width:auto; filter:brightness(0) invert(1);">
+                <img src="/cmak/images/emblem_dark.png" alt="한국CM협회 CMAK" style="height:45px; width:auto;">
             </div>
             <div class="icak-footer-info">
                 <p><strong>(06673) 서울특별시 서초구 서초대로88 (방배동 938-7, 유니온빌딩 4층) &nbsp; TEL : 02-585-4712~4 &nbsp; FAX : 02-585-2689</strong></p>

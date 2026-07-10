@@ -13,31 +13,46 @@ class MemberCompanyController extends Controller
     public function index(Request $request)
     {
         $query = MemberCompany::query();
+        $this->applyFilters($query, $request);
 
+        $memberCompanies = $query->orderBy('company_name')->paginate(20)->withQueryString();
+
+        $counts = [
+            'active' => MemberCompany::where('is_active', true)->count(),
+            'inactive' => MemberCompany::where('is_active', false)->count(),
+            'all' => MemberCompany::count(),
+        ];
+        $status = $request->input('status', 'active');
+
+        return view('admin.member-companies.index', compact('memberCompanies', 'counts', 'status'));
+    }
+
+    /** 목록/엑셀 공통 필터: 검색(회사명)·구분(용역/시공)·상태(노출/비노출/전체) */
+    protected function applyFilters($query, Request $request): void
+    {
         if ($request->filled('search')) {
-            $search = $request->input('search');
-            $query->where('company_name', 'like', "%{$search}%");
+            $query->where('company_name', 'like', '%' . $request->input('search') . '%');
         }
-
+        if ($request->filled('company_type')) {
+            $query->where('company_type', $request->input('company_type'));
+        }
         if ($request->filled('region')) {
             $query->where('region', $request->input('region'));
         }
-
-        $memberCompanies = $query->latest()->paginate(20)->withQueryString();
-
-        return view('admin.member-companies.index', compact('memberCompanies'));
+        // 상태 기본값 = active(회비납부·CM사소개 노출 = 현행 회원사, 약 181개). 전체(815)는 status=all
+        $status = $request->input('status', 'active');
+        if ($status === 'active') {
+            $query->where('is_active', true);
+        } elseif ($status === 'inactive') {
+            $query->where('is_active', false);
+        }
     }
 
     /** 회원사 현황 CSV 다운로드 (엑셀 호환, UTF-8 BOM) */
     public function export(Request $request)
     {
         $query = MemberCompany::query();
-        if ($request->filled('search')) {
-            $query->where('company_name', 'like', '%' . $request->input('search') . '%');
-        }
-        if ($request->filled('region')) {
-            $query->where('region', $request->input('region'));
-        }
+        $this->applyFilters($query, $request);
         $companies = $query->orderBy('company_name')->get();
 
         $filename = 'member_companies_' . date('Ymd_His') . '.csv';

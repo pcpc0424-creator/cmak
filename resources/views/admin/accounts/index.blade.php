@@ -7,7 +7,7 @@
     {{-- 헤더 --}}
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-gray-900">계정 관리</h1>
-        <p class="mt-1 text-sm text-gray-500">총 {{ $accounts->total() }}개의 계정</p>
+        <p class="mt-1 text-sm text-gray-500">관리자·직원 계정 {{ $accounts->total() }}개 · 온라인 개인회원은 <a href="{{ url('/admin/members') }}" class="text-blue-600 underline">개인(온라인)회원관리</a>에서 관리</p>
     </div>
 
     {{-- 검색 & 버튼 --}}

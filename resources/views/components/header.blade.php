@@ -60,7 +60,8 @@
         {{-- 로고 (25%) --}}
         <h1 class="icak-logo">
             <a href="{{ $basePath }}">
-                <img src="{{ $basePath }}/images/logo_header.png" alt="CMAK" style="height:50px; width:auto;">
+                <img src="{{ $basePath }}/images/logo_header_white.png" alt="CMAK" class="icak-logo-img icak-logo-img--light" style="height:50px; width:auto;">
+                <img src="{{ $basePath }}/images/logo_header.png" alt="CMAK" class="icak-logo-img icak-logo-img--dark" style="height:50px; width:auto;">
             </a>
         </h1>
 
@@ -69,7 +70,7 @@
             $bp = $basePath;
             $menus = [
                 ['title' => '협회업무', 'link' => "$bp/business", 'sub' => [
-                    ['title' => '회원가입', 'link' => "$bp/business/membership"],
+                    ['title' => '일반·특별회원 가입', 'link' => "$bp/business/membership"],
                     ['title' => 'CM능력평가공시', 'link' => "$bp/business/certification"],
                     ['title' => 'CM실적 관리 및 확인서 발급', 'link' => "$bp/business/confirm"],
                     ['title' => '건설사업관리사자격검정', 'link' => "$bp/business/inspection"],
@@ -78,8 +79,9 @@
                     ['title' => 'CM Herald', 'link' => "$bp/business/herald"],
                     ['title' => '건설사업관리(CM)표어', 'link' => "$bp/business/slogan"],
                 ]],
-                ['title' => 'CM자료방', 'link' => "$bp/cmdata", 'sub' => [
-                    ['title' => 'CM이란', 'link' => "$bp/cmdata/about"],
+                ['title' => 'CM 소개', 'link' => "$bp/cmdata", 'sub' => [
+                    ['title' => 'CM이란?', 'link' => "$bp/cmdata/about"],
+                    ['title' => 'CM 가이드', 'link' => "$bp/business/cm-forms"],
                     ['title' => '법령정보조회', 'link' => "$bp/cmdata/law"],
                     ['title' => '논문 및 연구보고서', 'link' => "$bp/cmdata/report"],
                     ['title' => 'CM해외공급사업', 'link' => "$bp/cmdata/overseas"],
@@ -99,7 +101,7 @@
                     ['title' => '인사경조사', 'link' => "$bp/notice/personnel"],
                     ['title' => '회원동향', 'link' => "$bp/notice/member"],
                     ['title' => '유관기관소식', 'link' => "$bp/notice/org"],
-                    ['title' => 'Word Book', 'link' => "$bp/notice/wordbook"],
+                    ['title' => 'CM을 부탁해', 'link' => "$bp/notice/wordbook"],
                     ['title' => 'Book Review', 'link' => "$bp/notice/bookreview"],
                 ]],
                 ['title' => '참여마당', 'link' => "$bp/community", 'sub' => [
@@ -108,6 +110,7 @@
                     ['title' => '구인', 'link' => "$bp/community/job-offer"],
                     ['title' => '구직', 'link' => "$bp/community/job-seek"],
                 ]],
+                ['title' => '온라인접수', 'link' => "$bp/reception"],
                 ['title' => '협회소개', 'link' => "$bp/intro", 'sub' => [
                     ['title' => '협회장 인사말', 'link' => "$bp/intro/greeting"],
                     ['title' => '협회안내', 'link' => "$bp/intro/about"],
@@ -160,7 +163,7 @@
                 @auth
                     <a href="{{ $basePath }}/mypage" class="icak-login-btn">마이페이지</a>
                 @else
-                    <a href="{{ $basePath }}/login" class="icak-login-btn">로그인/회원가입</a>
+                    <a href="{{ $basePath }}/login" class="icak-login-btn">로그인</a>
                 @endauth
                 <a href="https://www.ipma.world/" target="_blank" rel="noopener noreferrer" class="icak-special-btn">IPMA KOREA</a>
                 <a href="{{ $basePath }}/eng" class="icak-lang-btn">ENG</a>
@@ -208,7 +211,7 @@
     </div>
 
     {{-- 모바일 메뉴 --}}
-    <div x-show="mobileOpen" x-cloak class="lg:hidden bg-white border-t border-gray-200">
+    <div x-show="mobileOpen" x-cloak id="mobileMenuPanel" class="lg:hidden bg-white border-t border-gray-200 max-h-[calc(100vh-125px)] overflow-y-auto">
         <nav class="max-w-[1420px] mx-auto px-4 py-4 space-y-1">
             {{-- 모바일 검색 + 유틸 버튼 --}}
             <form action="{{ $basePath }}/search" method="GET" class="flex items-center border border-gray-300 rounded-full overflow-hidden mb-3 bg-white">
@@ -221,7 +224,7 @@
                 @auth
                     <a href="{{ $basePath }}/mypage" class="flex-1 text-center py-2 rounded-full bg-[#265de8] text-white text-sm font-medium">마이페이지</a>
                 @else
-                    <a href="{{ $basePath }}/login" class="flex-1 text-center py-2 rounded-full bg-[#265de8] text-white text-sm font-medium">로그인/회원가입</a>
+                    <a href="{{ $basePath }}/login" class="flex-1 text-center py-2 rounded-full bg-[#265de8] text-white text-sm font-medium">로그인</a>
                 @endauth
                 <a href="{{ $basePath }}/eng" class="flex-1 text-center py-2 rounded-full bg-[#515151] text-white text-sm font-medium">ENG</a>
                 <a href="https://www.ipma.world/" target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-2 rounded-full bg-[#f56800] text-white text-sm font-medium">IPMA KOREA</a>

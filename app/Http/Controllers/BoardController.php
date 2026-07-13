@@ -18,6 +18,44 @@ class BoardController extends Controller
     ];
 
     /**
+     * 게시글 상세(/board/{type}/{id})에서 사이드메뉴 하이라이트용:
+     * board_type → 해당 목록 메뉴 경로. URL slug가 board_type과 달라 상세페이지에서
+     * request()->is()로는 active 매칭이 안 되므로 여기서 명시적으로 매핑한다.
+     * (routes/web.php의 $noticeBoards·$cmdataBoards·$communityBoards 매핑과 일치시킬 것)
+     */
+    public const BOARD_ACTIVE_PATH = [
+        // 알림마당
+        'news_domestic'     => 'notice/news',
+        'news_bid'          => 'notice/bids',
+        'news_law'          => 'notice/law',
+        'news_association'  => 'notice/association',
+        'news_press'        => 'notice/press',
+        'member_trend'      => 'notice/member',
+        'news_org'          => 'notice/org',
+        'news_personnel'    => 'notice/personnel',
+        'wordbook'          => 'notice/wordbook',
+        'book_review'       => 'notice/bookreview',
+        // CM자료방
+        'research'          => 'cmdata/report',
+        'cm_overseas'       => 'cmdata/overseas',
+        'cm_case'           => 'cmdata/case',
+        'education_seminar' => 'cmdata/seminar',
+        'expert_column'     => 'cmdata/expert',
+        'special_feature'   => 'cmdata/special',
+        'etc_data'          => 'cmdata/etc',
+        'cm_forms'          => 'business/cm-forms',
+        // 참여마당
+        'faq'               => 'community/faq',
+        'free_board'        => 'community/board',
+        'job_offer'         => 'community/job-offer',
+        'job_seek'          => 'community/job-seek',
+        // 협회업무
+        'herald'            => 'business/herald',
+        'certification_exam'=> 'business/inspection',
+        'cm_performance'    => 'business/certification',
+    ];
+
+    /**
      * 제한 게시판이면 권한 검사. 통과 못하면 안내 뷰/로그인 리다이렉트 반환, 통과면 null.
      */
     private function guardRestricted(string $boardType, array $boardConfig)
@@ -132,6 +170,9 @@ class BoardController extends Controller
         // 조회수 증가
         $post->increment('view_count');
 
-        return view('board.show', compact('post', 'boardType', 'boardConfig'));
+        // 상세페이지에서 사이드메뉴 active 하이라이트용 목록 경로
+        $activeMenuPath = self::BOARD_ACTIVE_PATH[$boardType] ?? null;
+
+        return view('board.show', compact('post', 'boardType', 'boardConfig', 'activeMenuPath'));
     }
 }

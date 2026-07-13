@@ -30,3 +30,17 @@ Thumbs.db
 /public/images/banners/footer
 /ftp_download.sh
 /ftp_upload_download.sh
+
+# 대용량 런타임 자산(첨부/다운로드) — 서버 디스크 보관, git 미포함(별도 백업)
+/public/eng_uploads
+/public/herald
+/public/downloads
+
+# 작업 자료·빌드 산출물·백업 (커밋 대상 아님)
+/manual_build
+/other
+/other2
+/chlwhd
+/image
+/public/images/_backup_260706
+/CMAK_관리자_사용설명서.pdf

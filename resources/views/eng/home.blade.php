@@ -573,19 +573,19 @@
         </div>
         <div class="eng-highlight-stats">
             <div class="eng-stat">
-                <div class="num">28+</div>
+                <div class="num">29</div>
                 <div class="label">Years of CMAK</div>
             </div>
             <div class="eng-stat">
-                <div class="num">300+</div>
-                <div class="label">Member Firms</div>
+                <div class="num">20,000+</div>
+                <div class="label">Members</div>
             </div>
             <div class="eng-stat">
-                <div class="num">20+</div>
+                <div class="num">9</div>
                 <div class="label">Partner Countries</div>
             </div>
             <div class="eng-stat">
-                <div class="num">1996</div>
+                <div class="num">1997</div>
                 <div class="label">Established</div>
             </div>
         </div>

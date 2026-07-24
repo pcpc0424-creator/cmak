@@ -14,33 +14,38 @@
     <h2 class="sub-content-title">설립목적</h2>
 
     <div class="sub-section">
-        <img src="/cmak/images/intro/about/intro2_1img1.gif" alt="한국CM협회 설립근거는, 민법 제32조 (비영리 사단법인)" style="max-width:314px; width:100%;">
-
-        <div style="max-width:553px; margin:10px 0 0;">
-            <div style="display:flex; gap:6px;">
-                <img src="/cmak/images/intro/about/intro2_1img2.gif" alt="회원의 품위 보전, 권익 옹호" style="flex:1; min-width:0; height:auto;">
-                <img src="/cmak/images/intro/about/intro2_1img3.gif" alt="CM 체계확립 및 확대 보급" style="flex:1; min-width:0; height:auto;">
-                <img src="/cmak/images/intro/about/intro2_1img4.gif" alt="CM 체계를 통한 건설산업 및 국민경제 발전에 기여" style="flex:1; min-width:0; height:auto;">
-            </div>
-
-            <img src="/cmak/images/intro/about/intro2_1img5.gif" alt="" style="width:100%; display:block;">
-
-            <img src="/cmak/images/intro/about/intro2_1img6.gif" alt="주요사업" style="width:100%; display:block;">
-            <img src="/cmak/images/intro/about/intro2_1img7.gif" alt="주요사업 및 활동" style="width:100%; display:block;">
+        {{-- 설립근거 --}}
+        <div style="text-align:center; margin-bottom:26px;">
+            <span style="display:inline-block; padding:13px 30px; background:#0061c2; color:#fff; border-radius:30px; font-size:15px; font-weight:600;">한국CM협회 설립근거 : 민법 제32조 (비영리 사단법인)</span>
         </div>
-    </div>
 
-    <div class="sub-section" style="margin-top:30px;">
-        <h3 class="sub-section-title">주요사업 목록 (텍스트)</h3>
-        <ul style="padding-left:22px; line-height:2;">
-            <li>CM의 이론체계확립을 위한 조사연구</li>
-            <li>CM의 실용화 방안 구축을 위한 산·학협동 활동</li>
-            <li>관련제도의 발전을 위한 조사·연구 및 개선건의</li>
-            <li>CM관련 인력 및 기술의 개발관리 지원</li>
-            <li>각종 자료 및 정보의 수집·보급과 관련 정보화사업 지원</li>
-            <li>정부 또는 다른 기관이나 단체로부터 위탁받은 업무의 수행</li>
-            <li>기타 CM의 발전에 필요한 제반 사업의 수행 등</li>
-        </ul>
+        {{-- 설립목적 3 --}}
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            @foreach([
+                '회원의 품위 보전, 권익 옹호',
+                'CM 체계확립 및 확대 보급',
+                'CM 체계를 통한 건설산업 및 국민경제 발전에 기여',
+            ] as $goal)
+                <div style="flex:1; min-width:180px; padding:26px 18px; background:#e8f4f1; border:1px solid #cfe6df; border-radius:8px; text-align:center; color:#2a7a68; font-weight:600; line-height:1.6;">{{ $goal }}</div>
+            @endforeach
+        </div>
+
+        {{-- 연결 화살표 --}}
+        <div style="text-align:center; color:#b7d0c9; font-size:24px; line-height:1; margin:12px 0;">▼</div>
+
+        {{-- 주요사업 및 활동 --}}
+        <div style="display:flex; border:1px solid #cfe0f3; border-radius:8px; overflow:hidden;">
+            <div style="width:78px; flex-shrink:0; background:#0061c2; color:#fff; display:flex; align-items:center; justify-content:center; text-align:center; font-weight:700; font-size:15px; line-height:1.5;">주요<br>사업</div>
+            <ul style="flex:1; margin:0; padding:18px 22px; line-height:2; list-style:none;">
+                <li>· CM의 이론체계확립을 위한 조사연구</li>
+                <li>· CM의 실용화 방안 구축을 위한 산·학협동 활동</li>
+                <li>· 관련제도의 발전을 위한 조사·연구 및 개선건의</li>
+                <li>· CM관련 인력 및 기술의 개발관리 지원</li>
+                <li>· 각종 자료 및 정보의 수집·보급과 관련 정보화사업 지원</li>
+                <li>· 정부 또는 다른 기관이나 단체로부터 위탁받은 업무의 수행</li>
+                <li>· 기타 CM의 발전에 필요한 제반 사업의 수행 등</li>
+            </ul>
+        </div>
     </div>
 </div>
 

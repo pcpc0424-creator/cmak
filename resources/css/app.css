@@ -852,7 +852,7 @@ html.fp-enabled,
     border-top: 1px solid #ebedef;
     transform: translateY(-100%);
     transition: 0.3s;
-    min-height: 174px;
+    min-height: 140px;
 }
 
 .icak-gnb > li:hover .icak-sub-area {
@@ -893,12 +893,12 @@ html.fp-enabled,
 
 .icak-sub-list a {
     width: 25%;
-    padding: 14px 10px;
+    padding: 8px 10px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 56px;
+    min-height: 40px;
     border: 1px solid #cdd3dd;
     font-size: 0.889rem;
     font-weight: 500;

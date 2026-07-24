@@ -13,16 +13,87 @@
 <div class="sub-content-card">
     <h2 class="sub-content-title">일반·특별회원 가입 안내</h2>
 
-    <div class="sub-section" style="text-align:center;">
-        <img src="/cmak/images/business/membership/member_type.png" alt="회원구분" style="max-width:100%; margin-bottom:20px;">
+    <div class="sub-section">
+        <h3 class="sub-section-title">회원구분</h3>
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:240px; border:1px solid #e2e8f0; border-radius:8px; overflow:hidden;">
+                <div style="background:#0061c2; color:#fff; padding:11px 16px; font-weight:700; font-size:15px;">일반회원</div>
+                <div style="padding:16px; line-height:1.75; color:#444; font-size:14px;">건설산업기본법 제2조 제8호 및 제9호의 규정에 의한 건설사업관리 업으로 영위하고자 하는 자</div>
+            </div>
+            <div style="flex:1; min-width:240px; border:1px solid #e2e8f0; border-radius:8px; overflow:hidden;">
+                <div style="background:#3FA6B9; color:#fff; padding:11px 16px; font-weight:700; font-size:15px;">특별회원</div>
+                <div style="padding:16px; line-height:1.75; color:#444; font-size:14px;">협회의 목적과 사업에 찬동하는 일반회원 이외의 자</div>
+            </div>
+        </div>
+        <div style="margin-top:14px;">
+            <a href="/cmak/intro/members" style="display:inline-block; padding:8px 16px; background:#0061c2; color:#fff; border-radius:4px; text-decoration:none; font-size:13px; font-weight:600;">회원현황 보기 ›</a>
+        </div>
     </div>
 
-    <div class="sub-section" style="text-align:center;">
-        <img src="/cmak/images/business/membership/join_process.png" alt="입회절차" style="max-width:100%; margin-bottom:20px;">
+    <div class="sub-section">
+        <h3 class="sub-section-title">입회절차</h3>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:8px;">
+            @foreach([
+                '입회원서 작성·제출',
+                '입회원서 접수·통보',
+                '입·연회비 납부',
+                '회원증 교부',
+            ] as $i => $step)
+                @if($i > 0)
+                    <span style="color:#0061c2; font-weight:700; font-size:18px; line-height:1;">›</span>
+                @endif
+                <div style="flex:1; min-width:120px; text-align:center; padding:16px 10px; background:#f6f9fc; border:1px solid #dde3ed; border-radius:8px;">
+                    <div style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; margin-bottom:8px; background:#0061c2; color:#fff; border-radius:50%; font-size:13px; font-weight:700;">{{ $i + 1 }}</div>
+                    <div style="font-size:14px; color:#333; font-weight:600; line-height:1.4;">{{ $step }}</div>
+                </div>
+            @endforeach
+        </div>
     </div>
 
-    <div class="sub-section" style="text-align:center;">
-        <img src="/cmak/images/business/membership/join_form.png" alt="입회원서" style="max-width:600px; width:100%; margin-bottom:20px;">
+    <div class="sub-section">
+        <h3 class="sub-section-title">입회원서</h3>
+        <div style="border:1px solid #dde3ed; border-radius:8px; padding:24px; max-width:640px; margin:0 auto;">
+            <h4 style="text-align:center; font-size:18px; color:#0061c2; margin-bottom:18px;">일반회원 입회원서</h4>
+            <table style="width:100%; border-collapse:collapse; font-size:14px;">
+                <tbody>
+                    <tr>
+                        <th style="width:18%; padding:10px; border:1px solid #e2e8f0; background:#f6f9fc; text-align:left; font-weight:600;">① 명칭</th>
+                        <td style="width:32%; padding:10px; border:1px solid #e2e8f0;"></td>
+                        <th style="width:18%; padding:10px; border:1px solid #e2e8f0; background:#f6f9fc; text-align:left; font-weight:600;">② 전화번호</th>
+                        <td style="width:32%; padding:10px; border:1px solid #e2e8f0;"></td>
+                    </tr>
+                    <tr>
+                        <th style="padding:10px; border:1px solid #e2e8f0; background:#f6f9fc; text-align:left; font-weight:600;">③ 페이지</th>
+                        <td style="padding:10px; border:1px solid #e2e8f0;"></td>
+                        <th style="padding:10px; border:1px solid #e2e8f0; background:#f6f9fc; text-align:left; font-weight:600;">④ 팩스번호</th>
+                        <td style="padding:10px; border:1px solid #e2e8f0;"></td>
+                    </tr>
+                    <tr>
+                        <th style="padding:10px; border:1px solid #e2e8f0; background:#f6f9fc; text-align:left; font-weight:600;">⑤ 소재지</th>
+                        <td colspan="3" style="padding:10px; border:1px solid #e2e8f0;"></td>
+                    </tr>
+                    <tr>
+                        <th style="padding:10px; border:1px solid #e2e8f0; background:#f6f9fc; text-align:left; font-weight:600;">⑥ 대표자</th>
+                        <td style="padding:10px; border:1px solid #e2e8f0;"></td>
+                        <th style="padding:10px; border:1px solid #e2e8f0; background:#f6f9fc; text-align:left; font-weight:600;">⑦ 주민등록번호</th>
+                        <td style="padding:10px; border:1px solid #e2e8f0;"></td>
+                    </tr>
+                    <tr>
+                        <th style="padding:10px; border:1px solid #e2e8f0; background:#f6f9fc; text-align:left; font-weight:600;">⑧ 업종 등</th>
+                        <td style="padding:10px; border:1px solid #e2e8f0;"></td>
+                        <th style="padding:10px; border:1px solid #e2e8f0; background:#f6f9fc; text-align:left; font-weight:600;">⑨ 면허등의 취득일</th>
+                        <td style="padding:10px; border:1px solid #e2e8f0;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top:16px; font-size:13px; color:#555; text-align:center;">정관 제5조 및 제6조의 규정에 의하여 귀 협회의 회원이 되고자 입회원을 제출합니다.</p>
+            <div style="margin-top:18px; text-align:right; font-size:14px; line-height:2;">
+                20&nbsp;&nbsp;&nbsp;년&nbsp;&nbsp;&nbsp;월&nbsp;&nbsp;&nbsp;일<br>
+                제출인명칭 : ________________<br>
+                대표자 : ________________ (인)
+            </div>
+            <p style="margin-top:18px; font-size:17px; font-weight:700; color:#333;">한국CM협회장 귀하</p>
+        </div>
     </div>
 
     <div class="sub-section">

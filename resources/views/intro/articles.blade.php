@@ -15,13 +15,10 @@
     <p class="sub-content-desc">한국CM협회의 정관 및 제규정을 열람할 수 있습니다.</p>
 
     {{-- 탭 메뉴 --}}
-    <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:28px; padding-bottom:22px; border-bottom:2px solid #064277;">
-        <button @click="tab='articles'" :style="tab==='articles' ? 'background:#064277; color:#fff; font-weight:700; border:2px solid #064277;' : 'background:#fff; color:#064277; font-weight:600; border:2px solid #064277;'"
-            style="padding:13px 32px; border-radius:6px; font-size:14px; letter-spacing:0.5px; cursor:pointer;">정관</button>
-        <button @click="tab='fee'" :style="tab==='fee' ? 'background:#064277; color:#fff; font-weight:700; border:2px solid #064277;' : 'background:#fff; color:#064277; font-weight:600; border:2px solid #064277;'"
-            style="padding:13px 32px; border-radius:6px; font-size:14px; letter-spacing:0.5px; cursor:pointer;">회비규정</button>
-        <button @click="tab='evaluation'" :style="tab==='evaluation' ? 'background:#064277; color:#fff; font-weight:700; border:2px solid #064277;' : 'background:#fff; color:#064277; font-weight:600; border:2px solid #064277;'"
-            style="padding:13px 32px; border-radius:6px; font-size:14px; letter-spacing:0.5px; cursor:pointer;">CM능력평가공시업무처리규정</button>
+    <div class="reg-tabs">
+        <button @click="tab='articles'" class="reg-tab" :class="tab==='articles' && 'reg-tab--on'">정관</button>
+        <button @click="tab='fee'" class="reg-tab" :class="tab==='fee' && 'reg-tab--on'">회비규정</button>
+        <button @click="tab='evaluation'" class="reg-tab" :class="tab==='evaluation' && 'reg-tab--on'">CM능력평가공시업무처리규정</button>
     </div>
 
     {{-- 정관 --}}
@@ -208,4 +205,38 @@
         </div>
     </div>
 </div>
+
+<style>
+    .reg-tabs {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 28px;
+        border-bottom: 2px solid #e3e8ef;
+    }
+    .reg-tab {
+        position: relative;
+        padding: 13px 26px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        color: #6a7889;
+        background: transparent;
+        border: none;
+        border-bottom: 3px solid transparent;
+        margin-bottom: -2px;
+        cursor: pointer;
+        transition: color .2s, border-color .2s, background-color .2s;
+        border-radius: 6px 6px 0 0;
+    }
+    .reg-tab:hover {
+        color: #064277;
+        background: #f4f7fb;
+    }
+    .reg-tab--on {
+        color: #064277;
+        font-weight: 800;
+        border-bottom-color: #064277;
+    }
+</style>
 @endsection

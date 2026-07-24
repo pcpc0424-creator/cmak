@@ -5,9 +5,6 @@
 @endphp
 <a href="{{ $base }}/cmdata/about" class="{{ $isActive('cmdata/about') ? 'active' : '' }}">CM이란?</a>
 <a href="{{ $base }}/business/cm-forms" class="{{ $isActive('business/cm-forms') ? 'active' : '' }}">CM 가이드</a>
-<a href="{{ $base }}/cmdata/procedure" class="{{ $isActive('cmdata/procedure') ? 'active' : '' }}">CM업무절차서</a>
-<a href="{{ $base }}/cmdata/task-spec" class="{{ $isActive('cmdata/task-spec') ? 'active' : '' }}">CM표준과업내용서</a>
-<a href="{{ $base }}/cmdata/contract" class="{{ $isActive('cmdata/contract') ? 'active' : '' }}">CM표준계약서</a>
 <a href="{{ $base }}/cmdata/law" class="{{ $isActive('cmdata/law') ? 'active' : '' }}">법령정보조회</a>
 <a href="{{ $base }}/cmdata/report" class="{{ $isActive('cmdata/report') ? 'active' : '' }}">논문 및 연구보고서</a>
 <a href="{{ $base }}/cmdata/overseas" class="{{ $isActive('cmdata/overseas') ? 'active' : '' }}">CM해외공급사업</a>

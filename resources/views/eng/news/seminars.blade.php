@@ -16,7 +16,7 @@
 
 @section('content')
 <div class="eng-card">
-    <h2>{{ $page->title ?? 'Educations &amp; Seminars' }}</h2>
+    <h2>{{ $page->title ?? 'Educations & Seminars' }}</h2>
     <p class="desc">{{ $page->description ?? 'Presentation materials and papers from CMAK educations and seminars.' }}</p>
 
     @include('eng.news._board-list', ['items' => $items, 'empty' => 'No seminar materials yet.'])

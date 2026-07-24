@@ -187,12 +187,12 @@
                                 </div>
                             </div>
 
-                            {{-- 그룹 2: 회원동향 / 전문가 칼럼 / 인사경조사 --}}
+                            {{-- 그룹 2: 회원동향 / 전문가 칼럼 / 인사·경조사 --}}
                             <div class="icak-tabs-section" x-data="{ activeTab: 'member' }">
                                 <div class="icak-tabs-header">
                                     <button class="icak-tab-btn" :class="{ 'active': activeTab === 'member' }" @click="activeTab = 'member'">회원동향</button>
                                     <button class="icak-tab-btn" :class="{ 'active': activeTab === 'column' }" @click="activeTab = 'column'">전문가 칼럼</button>
-                                    <button class="icak-tab-btn" :class="{ 'active': activeTab === 'personnel' }" @click="activeTab = 'personnel'">인사경조사</button>
+                                    <button class="icak-tab-btn" :class="{ 'active': activeTab === 'personnel' }" @click="activeTab = 'personnel'">인사·경조사</button>
                                 </div>
                                 <div class="icak-tabs-body">
                                     {{-- 회원동향 --}}
@@ -213,7 +213,7 @@
                                         </ul>
                                         <a href="/cmak/cmdata/expert" class="icak-cell-more">더보기 +</a>
                                     </div>
-                                    {{-- 인사경조사 --}}
+                                    {{-- 인사·경조사 --}}
                                     <div x-show="activeTab === 'personnel'" x-transition>
                                         <ul class="icak-cell-list">
                                             @foreach(array_slice($personnelEvents, 0, 4) as $item)
@@ -281,7 +281,7 @@
                                         </div>
                                         <div class="icak-image-card-text">
                                             <strong>{{ $featuredCompany->company_name }}</strong>
-                                            <span>CM사 소개@if($featuredCompany->representative) · 대표 {{ $featuredCompany->representative }}@endif</span>
+                                            <span>{{ $card['subtitle'] ?: '회원사 안내' }}@if($featuredCompany->representative) · 대표 {{ $featuredCompany->representative }}@endif</span>
                                         </div>
                                     </a>
                                 @elseif($img)

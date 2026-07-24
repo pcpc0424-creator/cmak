@@ -132,7 +132,7 @@
             border-top: 1px solid #ebedef;
             transform: translateY(-100%);
             transition: 0.3s;
-            min-height: 174px;
+            min-height: 140px;
         }
         .eng-gnb > li:hover .eng-sub-area {
             transform: translateY(0);
@@ -166,14 +166,17 @@
         }
         .eng-sub-list a {
             width: calc(25% - 10px);
-            padding: 10px;
+            padding: 8px 10px;
             box-sizing: border-box;
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
             border: 1px solid #cdd3dd;
             font-size: 0.889rem;
             font-weight: 500;
             color: #333;
-            line-height: 2.5rem;
+            line-height: 1.35;
             text-align: center;
             transition: 0.3s;
             background-color: #f6f8fa;

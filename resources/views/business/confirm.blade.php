@@ -33,8 +33,21 @@
 
     <div class="sub-section">
         <h3 class="sub-section-title">1. CM용역수행실적확인서 발급 절차</h3>
-        <div style="text-align:center; margin:20px 0;">
-            <img src="/cmak/images/business/confirm-flow.gif" alt="실적확인 신청서 FAX(02-585-2689) 제출 → 수수료 온라인 입금(KEB하나은행 064-22-00743-0) → 신청서 접수 및 심사 → 확인서 발급" style="max-width:100%;">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:20px 0;">
+            @foreach([
+                '실적확인 신청서 FAX(02-585-2689) 제출',
+                '수수료 온라인 입금 (KEB하나은행 064-22-00743-0)',
+                '신청서 접수 및 심사',
+                '확인서 발급',
+            ] as $i => $step)
+                @if($i > 0)
+                    <span style="color:#0061c2; font-weight:700; font-size:18px; line-height:1;">›</span>
+                @endif
+                <div style="flex:1; min-width:130px; text-align:center; padding:16px 10px; background:#f6f9fc; border:1px solid #dde3ed; border-radius:8px;">
+                    <div style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; margin-bottom:8px; background:#0061c2; color:#fff; border-radius:50%; font-size:13px; font-weight:700;">{{ $i + 1 }}</div>
+                    <div style="font-size:13px; color:#333; font-weight:600; line-height:1.45;">{{ $step }}</div>
+                </div>
+            @endforeach
         </div>
         <div style="margin-top:14px; display:flex; gap:16px; flex-wrap:wrap; align-items:center; padding:14px; background:#f6f9fc; border-radius:6px;">
             <a href="/cmak/legacy/upload/data/건설사업관리용역내용확인신청서.hwp" style="font-weight:600;">

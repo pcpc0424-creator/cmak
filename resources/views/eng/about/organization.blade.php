@@ -18,6 +18,20 @@
 .eng-org-line { width: 2px; height: 28px; background: #0061c2; }
 .eng-org-row { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
 .eng-org-bracket { width: 80%; max-width: 720px; height: 2px; background: #0061c2; margin: 0 auto; }
+/* 하단 본부 행: 상단 브래킷 + 각 박스 수직 연결선 */
+.eng-org-divisions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; position: relative; padding-top: 20px; }
+.eng-org-divisions::before { content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 2px; background: #0061c2; }
+.eng-org-divisions .eng-org-box { position: relative; }
+.eng-org-divisions .eng-org-box::before { content: ''; position: absolute; top: -20px; left: 50%; width: 2px; height: 20px; background: #0061c2; }
+/* 상단 회장 행: 좌우 부속 박스 연결선 */
+.eng-org-siderow { position: relative; }
+.eng-org-siderow .sub::after { content: ''; position: absolute; top: 50%; width: 18px; height: 2px; background: #0061c2; transform: translateY(-50%); }
+.eng-org-siderow .sub:nth-child(1)::after { left: 100%; }
+.eng-org-siderow .sub:nth-child(3)::after,
+.eng-org-siderow .sub:nth-child(4)::after { right: 100%; }
+/* National Chapters 한 줄 배치 */
+.eng-org-chapters { flex-wrap: nowrap; justify-content: center; overflow-x: auto; padding-bottom: 6px; }
+.eng-org-chapters .eng-org-box { min-width: 0; flex: 1 1 0; padding: 12px 10px; font-size: 13px; white-space: nowrap; }
 .eng-dept-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 24px; }
 .eng-dept { background: #f8f9fb; border: 1px solid #e8ecf1; border-radius: 12px; padding: 24px 26px; }
 .eng-dept h4 { font-size: 16px; font-weight: 700; color: #0061c2; margin: 0 0 8px; }
@@ -34,7 +48,7 @@
     <div class="eng-org-chart">
         <div class="eng-org-box">General Assembly</div>
         <div class="eng-org-line"></div>
-        <div class="eng-org-row" style="align-items:center;">
+        <div class="eng-org-row eng-org-siderow" style="align-items:center;">
             <div class="eng-org-box sub">Board of Directors</div>
             <div class="eng-org-box">Chairman</div>
             <div class="eng-org-box sub">Auditor</div>
@@ -43,9 +57,7 @@
         <div class="eng-org-line"></div>
         <div class="eng-org-box">Standing Director</div>
         <div class="eng-org-line"></div>
-        <div class="eng-org-bracket"></div>
-        <div style="height:18px;"></div>
-        <div class="eng-org-row">
+        <div class="eng-org-divisions">
             <div class="eng-org-box sub">Operation Support Division</div>
             <div class="eng-org-box sub">Policy &amp; Projects Division</div>
             <div class="eng-org-box sub">Education &amp; Training Division</div>
@@ -67,7 +79,7 @@
     </div>
 
     <h3>National Chapters</h3>
-    <div class="eng-org-row" style="justify-content:flex-start;">
+    <div class="eng-org-row eng-org-chapters">
         <div class="eng-org-box sub">Seoul</div>
         <div class="eng-org-box sub">Jungbu (Central)</div>
         <div class="eng-org-box sub">Chungcheong</div>

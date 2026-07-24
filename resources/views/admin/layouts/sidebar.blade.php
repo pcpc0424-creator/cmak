@@ -138,7 +138,7 @@
                 <a href="{{ url('/admin/posts/news_law') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_law*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">법령소식</a>
                 <a href="{{ url('/admin/posts/news_association') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_association*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">협회소식</a>
                 <a href="{{ url('/admin/posts/news_press') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_press*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">보도자료</a>
-                <a href="{{ url('/admin/posts/news_personnel') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_personnel*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">인사경조사</a>
+                <a href="{{ url('/admin/posts/news_personnel') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_personnel*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">인사·경조사</a>
                 <a href="{{ url('/admin/posts/member_trend') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/member_trend*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">회원동향</a>
                 <a href="{{ url('/admin/posts/news_org') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/news_org*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">유관기관소식</a>
                 <a href="{{ url('/admin/posts/wordbook') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/wordbook*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM을 부탁해</a>

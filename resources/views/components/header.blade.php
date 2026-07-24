@@ -98,7 +98,7 @@
                     ['title' => '법령소식', 'link' => "$bp/notice/law"],
                     ['title' => '협회소식', 'link' => "$bp/notice/association"],
                     ['title' => '보도자료', 'link' => "$bp/notice/press"],
-                    ['title' => '인사경조사', 'link' => "$bp/notice/personnel"],
+                    ['title' => '인사·경조사', 'link' => "$bp/notice/personnel"],
                     ['title' => '회원동향', 'link' => "$bp/notice/member"],
                     ['title' => '유관기관소식', 'link' => "$bp/notice/org"],
                     ['title' => 'CM을 부탁해', 'link' => "$bp/notice/wordbook"],

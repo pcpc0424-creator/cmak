@@ -477,7 +477,7 @@
 }" @mouseenter="stop()" @mouseleave="start()">
     @php
         $slides = ($page?->activeItems && count($page->activeItems)) ? $page->activeItems : collect([
-            (object)['image_path' => '/cmak/images/eng/eng1.jpg', 'tag' => 'CMAK · Since 1996', 'title' => "Leading Korea's Construction Management", 'description' => 'For nearly three decades, the Construction Management Association of Korea has been at the forefront of advancing CM practice.', 'link' => null],
+            (object)['image_path' => '/cmak/images/eng/eng1.jpg', 'tag' => 'CMAK · Since 1997', 'title' => "Leading Korea's Construction Management", 'description' => 'For nearly three decades, the Construction Management Association of Korea has been at the forefront of advancing CM practice.', 'link' => null],
         ]);
     @endphp
 
@@ -521,7 +521,7 @@
         <div class="eng-section-head">
             <span class="eyebrow">About CMAK</span>
             <h2>The Voice of CM in Korea</h2>
-            <p>Founded in 1996, CMAK represents construction management firms and professionals committed to advancing the practice and elevating industry standards across Korea.</p>
+            <p>Founded in 1997, CMAK represents construction management firms and professionals committed to advancing the practice and elevating industry standards across Korea.</p>
         </div>
 
         <div class="eng-about-grid">

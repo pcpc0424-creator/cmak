@@ -50,7 +50,7 @@
                 {{-- 뱃지 --}}
                 <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8">
                     <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span class="text-sm font-medium text-white/90">Since 1996 · 대한민국 CM의 중심</span>
+                    <span class="text-sm font-medium text-white/90">Since 1997 · 대한민국 CM의 중심</span>
                 </div>
 
                 {{-- 메인 타이틀 (슬라이드) - 고정 높이 컨테이너 --}}

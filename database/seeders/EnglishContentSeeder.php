@@ -13,8 +13,8 @@ class EnglishContentSeeder extends Seeder
             // Home
             ['slug' => 'home', 'section' => 'home', 'sort_order' => 0,
              'title' => 'CMAK - Construction Management Association of Korea',
-             'description' => 'Leading Korea\'s Construction Management since 1996.',
-             'eyebrow' => 'CMAK · Since 1996',
+             'description' => 'Leading Korea\'s Construction Management since 1997.',
+             'eyebrow' => 'CMAK · Since 1997',
              'hero_image' => '/cmak/images/eng/eng1.jpg'],
 
             // About CMAK

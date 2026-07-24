@@ -41,7 +41,7 @@ class HomeData
             [
                 'id' => 1,
                 'title' => '건설사업관리의 미래를 선도합니다',
-                'subtitle' => '1996년 설립 이래 대한민국 CM 분야 발전을 위해 노력하고 있습니다',
+                'subtitle' => '1997년 설립 이래 대한민국 CM 분야 발전을 위해 노력하고 있습니다',
                 'image' => '/images/hero/slide1.jpg',
                 'link' => '/intro/about',
             ],
@@ -213,7 +213,7 @@ class HomeData
     public static function getStatistics(): array
     {
         return [
-            ['label' => '설립연도', 'value' => '1996', 'suffix' => '년'],
+            ['label' => '설립연도', 'value' => '1997', 'suffix' => '년'],
             ['label' => '회원사', 'value' => '500', 'suffix' => '+'],
             ['label' => '인증 전문가', 'value' => '5,000', 'suffix' => '+'],
             ['label' => '교육 수료생', 'value' => '20,000', 'suffix' => '+'],

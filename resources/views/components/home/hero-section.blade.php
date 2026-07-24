@@ -6,7 +6,7 @@
 
     // DB(hero_slides)에서 노출 슬라이드를 읽고, 없으면 기본값으로 폴백
     $fallbackSlides = [
-        ['eyebrow' => 'CMAK · Since 1996', 'title' => '대한민국 건설사업관리의', 'highlight' => '미래를 선도합니다', 'image' => $basePath . '/images/banners/main_visual1.jpg'],
+        ['eyebrow' => 'CMAK · Since 1997', 'title' => '대한민국 건설사업관리의', 'highlight' => '미래를 선도합니다', 'image' => $basePath . '/images/banners/main_visual1.jpg'],
         ['eyebrow' => '2026 CM 능력평가 공시', 'title' => '신뢰받는 CM,', 'highlight' => '능력으로 증명합니다', 'image' => $basePath . '/images/banners/main_visual2.jpg'],
         ['eyebrow' => '전문가 양성', 'title' => '체계적인 교육과 자격으로', 'highlight' => 'CM 전문가를 양성합니다', 'image' => $basePath . '/images/banners/main_visual3.jpg'],
         ['eyebrow' => 'CM 전문교육', 'title' => '함께 배우고 함께 성장하는', 'highlight' => 'CMAK 전문교육 프로그램', 'image' => $basePath . '/images/banners/main_visual4.jpg'],

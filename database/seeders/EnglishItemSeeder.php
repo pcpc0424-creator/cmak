@@ -14,7 +14,7 @@ class EnglishItemSeeder extends Seeder
         // Home page slides
         // ===========================================================
         $this->seed('home', [
-            ['type' => 'slide', 'image_path' => '/cmak/images/eng/eng1.jpg', 'tag' => 'CMAK · Since 1996',
+            ['type' => 'slide', 'image_path' => '/cmak/images/eng/eng1.jpg', 'tag' => 'CMAK · Since 1997',
              'title' => "Leading Korea's Construction Management",
              'description' => "For nearly three decades, the Construction Management Association of Korea has been at the forefront of advancing CM practice and shaping the future of the construction industry."],
             ['type' => 'slide', 'image_path' => '/cmak/images/eng/eng2.jpg', 'tag' => 'Professional Excellence',
@@ -38,7 +38,7 @@ class EnglishItemSeeder extends Seeder
         // About / History
         // ===========================================================
         $this->seed('about/history', [
-            ['type' => 'history', 'date_text' => '1996', 'description' => 'Construction Management Association of Korea (CMAK) founded with approval from the Ministry of Construction & Transportation'],
+            ['type' => 'history', 'date_text' => '1997', 'description' => 'Construction Management Association of Korea (CMAK) founded with approval from the Ministry of Construction & Transportation'],
             ['type' => 'history', 'date_text' => '2001', 'description' => 'Construction Manager qualification examination introduced; CM educational programs launched'],
             ['type' => 'history', 'date_text' => '2005', 'description' => 'CM Capability Evaluation and Disclosure system implemented in cooperation with the government'],
             ['type' => 'history', 'date_text' => '2010', 'description' => 'CMAK established international cooperation programs with major global CM associations'],

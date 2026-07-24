@@ -6,7 +6,7 @@
     $stats = [
         [
             'label' => '설립연도',
-            'value' => 1996,
+            'value' => 1997,
             'suffix' => '년',
             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>',
         ],
@@ -78,7 +78,7 @@
                 숫자로 보는 한국CM협회
             </h2>
             <p class="text-gray-400 max-w-2xl mx-auto">
-                1996년 설립 이래 대한민국 건설사업관리 산업의 발전을 이끌어 왔습니다
+                1997년 설립 이래 대한민국 건설사업관리 산업의 발전을 이끌어 왔습니다
             </p>
         </div>
 

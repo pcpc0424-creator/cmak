@@ -15,21 +15,21 @@ class BusinessPageContentSeeder extends Seeder
      */
     public function run(): void
     {
-        // 협회업무 GNB 순서대로
+        // 협회업무 GNB 순서대로.
+        // consma(consma_editions) / herald(herald_issues) 는 전용 컨트롤러·테이블로 관리하므로 제외.
+        // sort_order 는 GNB 위치를 유지하기 위해 값을 직접 지정한다.
         $slugs = [
-            'membership',
-            'certification',
-            'confirm',
-            'inspection',
-            'education',
-            'herald',
-            'consma',
-            'slogan',
+            'membership'    => 0,
+            'certification' => 1,
+            'confirm'       => 2,
+            'inspection'    => 3,
+            'education'     => 4,
+            'slogan'        => 7,
         ];
 
         $base = resource_path('views/business');
 
-        foreach ($slugs as $i => $slug) {
+        foreach ($slugs as $slug => $sortOrder) {
             $path = "{$base}/{$slug}.blade.php";
             if (!is_file($path)) {
                 $this->command?->warn("건너뜀(파일 없음): {$slug}");
@@ -55,7 +55,7 @@ class BusinessPageContentSeeder extends Seeder
                     'category_link' => $categoryLink,
                     'content'       => $html,
                     'is_published'  => true,
-                    'sort_order'    => $i,
+                    'sort_order'    => $sortOrder,
                 ]
             );
 

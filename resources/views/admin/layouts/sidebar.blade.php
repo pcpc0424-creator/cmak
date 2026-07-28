@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        {{-- 협회소개(조직 및 구성) --}}
+        {{-- 협회소개 --}}
         <div>
             <button @click="openMenu = openMenu === 'intro' ? '' : 'intro'"
                     class="w-full flex items-center justify-between px-5 py-2.5 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors">
@@ -53,7 +53,7 @@
                     <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 100-8 4 4 0 000 8zm6 0a4 4 0 00-3-3.87M9 7a4 4 0 00-3 3.87"/>
                     </svg>
-                    <span>조직 및 구성</span>
+                    <span>협회소개</span>
                 </div>
                 <svg class="w-4 h-4 transition-transform" :class="openMenu === 'intro' ? 'rotate-90' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -63,6 +63,28 @@
                 @foreach(\App\Models\PageContent::ofMenu('협회소개')->orderBy('sort_order')->orderBy('id')->get() as $introPage)
                     <a href="{{ url('/admin/page-contents/' . $introPage->id . '/edit') }}"
                        class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/page-contents/' . $introPage->id . '*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">{{ $introPage->page_title }}</a>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- CM 소개 --}}
+        <div>
+            <button @click="openMenu = openMenu === 'cmintro' ? '' : 'cmintro'"
+                    class="w-full flex items-center justify-between px-5 py-2.5 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>CM 소개</span>
+                </div>
+                <svg class="w-4 h-4 transition-transform" :class="openMenu === 'cmintro' ? 'rotate-90' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+            <div x-show="openMenu === 'cmintro'" x-collapse x-cloak class="bg-slate-900/50">
+                @foreach(\App\Models\PageContent::ofMenu('CM 소개')->orderBy('sort_order')->orderBy('id')->get() as $cmPage)
+                    <a href="{{ url('/admin/page-contents/' . $cmPage->id . '/edit') }}"
+                       class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/page-contents/' . $cmPage->id . '*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">{{ $cmPage->page_title }}</a>
                 @endforeach
             </div>
         </div>

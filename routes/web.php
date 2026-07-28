@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\FileUploadController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\BusinessPageController;
 use App\Http\Controllers\Auth\AccountRecoveryController;
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+
+// 에디터 단독 업로드 첨부 공개 다운로드 (원본 한글 파일명 유지)
+Route::get('/file/{attachment}/download', [FileUploadController::class, 'download'])->name('file.download');
 
 // 회원 로그인 / 회원가입 (공개)
 Route::get('/login', [LoginController::class, 'show'])->name('login');
@@ -78,8 +82,8 @@ Route::get('/search', function (\Illuminate\Http\Request $r) {
 // ============================================
 // 협회소개 (정적 페이지)
 // ============================================
-Route::get('/intro/greeting', fn() => view('intro.greeting'));
-Route::get('/intro/about', fn() => view('intro.about'));
+Route::get('/intro/greeting', fn() => app(\App\Http\Controllers\IntroPageController::class)->show('greeting'));
+Route::get('/intro/about', fn() => app(\App\Http\Controllers\IntroPageController::class)->show('about'));
 Route::get('/intro/members', function(\Illuminate\Http\Request $r) {
     $q = \App\Models\MemberCompany::query()->active();
 
@@ -130,15 +134,15 @@ Route::get('/intro/members', function(\Illuminate\Http\Request $r) {
         'selectedInitial' => $initial,
     ]);
 });
-Route::get('/intro/departments', fn() => view('intro.departments'));
-Route::get('/intro/articles', fn() => view('intro.articles'));
-Route::get('/intro/location', fn() => view('intro.location'));
-Route::get('/intro/history', fn() => view('intro.history'));
+Route::get('/intro/departments', fn() => app(\App\Http\Controllers\IntroPageController::class)->show('departments'));
+Route::get('/intro/articles', fn() => app(\App\Http\Controllers\IntroPageController::class)->show('articles'));
+Route::get('/intro/location', fn() => app(\App\Http\Controllers\IntroPageController::class)->show('location'));
+Route::get('/intro/history', fn() => app(\App\Http\Controllers\IntroPageController::class)->show('history'));
 Route::get('/intro/organization', [\App\Http\Controllers\OrganizationPageController::class, 'show']);
 Route::get('/intro/organization/{tab}', [\App\Http\Controllers\OrganizationPageController::class, 'show'])
     ->whereIn('tab', ['chart', 'executives', 'branches', 'committees']);
-Route::get('/intro/presidents', fn() => view('intro.presidents'));
-Route::get('/intro/plan', fn() => view('intro.plan'));
+Route::get('/intro/presidents', fn() => app(\App\Http\Controllers\IntroPageController::class)->show('presidents'));
+Route::get('/intro/plan', fn() => app(\App\Http\Controllers\IntroPageController::class)->show('plan'));
 Route::get('/intro', fn() => redirect('intro/greeting'));
 
 // ============================================
@@ -182,13 +186,13 @@ Route::get('/cm30', fn(\Illuminate\Http\Request $r) => app(BoardController::clas
 // CM자료방 (DB 연동 게시판)
 // ============================================
 // CM이란 - 정적 페이지
-Route::get('/cmdata/about', fn() => view('cmdata.about'));
-Route::get('/cmdata/procedure', fn() => view('cmdata.procedure'));
-Route::get('/cmdata/task-spec', fn() => view('cmdata.task-spec'));
-Route::get('/cmdata/contract', fn() => view('cmdata.contract'));
+Route::get('/cmdata/about', fn() => app(\App\Http\Controllers\CmDataPageController::class)->show('about'));
+Route::get('/cmdata/procedure', fn() => app(\App\Http\Controllers\CmDataPageController::class)->show('procedure'));
+Route::get('/cmdata/task-spec', fn() => app(\App\Http\Controllers\CmDataPageController::class)->show('task-spec'));
+Route::get('/cmdata/contract', fn() => app(\App\Http\Controllers\CmDataPageController::class)->show('contract'));
 
 // 법령정보 조회 - 국가법령정보센터 안내 정적 페이지
-Route::get('/cmdata/law', fn() => view('cmdata.law'));
+Route::get('/cmdata/law', fn() => app(\App\Http\Controllers\CmDataPageController::class)->show('law'));
 
 // DB 연동 게시판들
 $cmdataBoards = [
@@ -257,7 +261,10 @@ Route::get('/reference', fn() => redirect('reference/domestic'));
 // ============================================
 // 기타
 // ============================================
-Route::get('/privacy', fn() => view('privacy'));
+Route::get('/privacy', function () {
+    $page = \App\Models\PageContent::bySlug('privacy');
+    return $page ? view('privacy-dynamic', compact('page')) : view('privacy');
+});
 
 // ============================================
 // English pages
@@ -266,29 +273,29 @@ Route::prefix('eng')->group(function () {
     Route::get('/', fn() => view('eng.home'));
 
     // About CMAK
-    Route::get('/about/greeting',     fn() => view('eng.about.greeting'));
-    Route::get('/about/purpose',      fn() => view('eng.about.purpose'));
-    Route::get('/about/history',      fn() => view('eng.about.history'));
-    Route::get('/about/organization', fn() => view('eng.about.organization'));
-    Route::get('/about/scheme',       fn() => view('eng.about.scheme'));
-    Route::get('/about/contact',      fn() => view('eng.about.contact'));
+    Route::get('/about/greeting',     fn() => app(\App\Http\Controllers\EngPageController::class)->show('about', 'greeting'));
+    Route::get('/about/purpose',      fn() => app(\App\Http\Controllers\EngPageController::class)->show('about', 'purpose'));
+    Route::get('/about/history',      fn() => app(\App\Http\Controllers\EngPageController::class)->show('about', 'history'));
+    Route::get('/about/organization', fn() => app(\App\Http\Controllers\EngPageController::class)->show('about', 'organization'));
+    Route::get('/about/scheme',       fn() => app(\App\Http\Controllers\EngPageController::class)->show('about', 'scheme'));
+    Route::get('/about/contact',      fn() => app(\App\Http\Controllers\EngPageController::class)->show('about', 'contact'));
     Route::get('/about/qna',          fn() => view('eng.about.qna'));
     Route::get('/about',              fn() => redirect('eng/about/greeting'));
 
     // International CM Day
-    Route::get('/cmday/introduction', fn() => view('eng.cmday.introduction'));
-    Route::get('/cmday/members',      fn() => view('eng.cmday.members'));
+    Route::get('/cmday/introduction', fn() => app(\App\Http\Controllers\EngPageController::class)->show('cmday', 'introduction'));
+    Route::get('/cmday/members',      fn() => app(\App\Http\Controllers\EngPageController::class)->show('cmday', 'members'));
     Route::get('/cmday/celebrations', fn() => view('eng.cmday.celebrations'));
-    Route::get('/cmday/registration', fn() => view('eng.cmday.registration'));
+    Route::get('/cmday/registration', fn() => app(\App\Http\Controllers\EngPageController::class)->show('cmday', 'registration'));
     Route::get('/cmday',              fn() => redirect('eng/cmday/introduction'));
 
     // IPMA Korea
-    Route::get('/ipma/about',         fn() => view('eng.ipma.about'));
-    Route::get('/ipma/certification', fn() => view('eng.ipma.certification'));
-    Route::get('/ipma/education',     fn() => view('eng.ipma.education'));
+    Route::get('/ipma/about',         fn() => app(\App\Http\Controllers\EngPageController::class)->show('ipma', 'about'));
+    Route::get('/ipma/certification', fn() => app(\App\Http\Controllers\EngPageController::class)->show('ipma', 'certification'));
+    Route::get('/ipma/education',     fn() => app(\App\Http\Controllers\EngPageController::class)->show('ipma', 'education'));
     Route::get('/ipma/news',          fn() => view('eng.ipma.news'));
-    Route::get('/ipma/membership',    fn() => view('eng.ipma.membership'));
-    Route::get('/ipma/resources',     fn() => view('eng.ipma.resources'));
+    Route::get('/ipma/membership',    fn() => app(\App\Http\Controllers\EngPageController::class)->show('ipma', 'membership'));
+    Route::get('/ipma/resources',     fn() => app(\App\Http\Controllers\EngPageController::class)->show('ipma', 'resources'));
     Route::get('/ipma',               fn() => redirect('eng/ipma/about'));
 
     // CMAK News

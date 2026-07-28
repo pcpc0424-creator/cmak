@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', '협회업무 페이지 수정')
+@section('title', ($page->menu ?: '페이지') . ' 페이지 수정')
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -39,7 +39,7 @@
                 <input type="text" name="page_title" id="page_title"
                        value="{{ old('page_title', $page->page_title) }}"
                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm" required>
-                <p class="mt-1 text-xs text-gray-400">화면 상단에 크게 표시되는 제목입니다.</p>
+                <p class="mt-1 text-xs text-gray-400">사용자 페이지 상단의 큰 제목(서브히어로)과 관리자 사이드바 메뉴 이름에 함께 적용됩니다. 본문 안에 표시되는 제목은 아래 편집기에서 수정하세요.</p>
             </div>
 
             {{-- 고급 설정 (메타) --}}
@@ -127,18 +127,32 @@
                             const fd = new FormData();
                             fd.append('file', f);
                             fd.append('_token', '{{ csrf_token() }}');
-                            fetch('{{ url('/admin/page-contents/upload-file') }}', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
-                                .then(r => r.json())
-                                .then(d => {
-                                    if (d.success) {
-                                        // /cmak 프리픽스 보정 (Storage::url 은 /storage/... 로 반환)
+                            fetch('{{ url('/admin/page-contents/upload-file') }}', {
+                                method: 'POST',
+                                body: fd,
+                                headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+                            })
+                                .then(async (r) => {
+                                    let d = null;
+                                    try { d = await r.json(); } catch (e) { d = null; }
+                                    if (r.ok && d && d.success) {
+                                        // 반환 URL(/file/..)에 /cmak 프리픽스 보정
                                         if (d.file.url && d.file.url.indexOf('/cmak/') !== 0) {
                                             d.file.url = '/cmak' + d.file.url;
                                         }
                                         this.uploaded = d.file;
-                                    } else { this.error = '업로드 실패'; }
+                                        this.error = '';
+                                    } else if (d && d.message) {
+                                        this.error = d.message; // 서버가 알려준 원인(용량초과/확장자/서버오류 등)
+                                    } else if (r.status === 413) {
+                                        this.error = '파일 용량이 서버 허용치를 초과했습니다. (최대 50MB)';
+                                    } else if (r.status === 419) {
+                                        this.error = '세션이 만료되었습니다. 페이지를 새로고침한 뒤 다시 시도해주세요.';
+                                    } else {
+                                        this.error = '업로드 실패 (오류코드 ' + r.status + ')';
+                                    }
                                 })
-                                .catch(() => { this.error = '업로드 중 오류가 발생했습니다.'; })
+                                .catch(() => { this.error = '네트워크 오류로 업로드에 실패했습니다.'; })
                                 .finally(() => { this.busy = false; });
                         },
                         insertLink() {

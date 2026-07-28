@@ -50,13 +50,16 @@ class PageContent extends Model
     public function publicUrl(): string
     {
         return match ($this->menu) {
-            '약관/정책' => url('/register'),
-            '협회소개' => url('/intro/organization' . match ($this->slug) {
-                'org-executives' => '/executives',
-                'org-branches'   => '/branches',
-                'org-committees' => '/committees',
-                default          => '',
-            }),
+            '약관/정책' => $this->slug === 'privacy' ? url('/privacy') : url('/register'),
+            '협회소개' => str_starts_with($this->slug, 'org-')
+                ? url('/intro/organization' . match ($this->slug) {
+                    'org-executives' => '/executives',
+                    'org-branches'   => '/branches',
+                    'org-committees' => '/committees',
+                    default          => '',
+                })
+                : url('/intro/' . \Illuminate\Support\Str::after($this->slug, 'intro-')),
+            'CM 소개' => url('/cmdata/' . \Illuminate\Support\Str::after($this->slug, 'cm-')),
             default => url('/business/' . $this->slug),
         };
     }

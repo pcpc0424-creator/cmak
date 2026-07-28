@@ -111,6 +111,11 @@ $ftpHost = 'cmak.or.kr';
 // 인자 처리
 $targetBoard = $argv[1] ?? null;
 $dryRun = in_array('--dry-run', $argv);
+// 최신 N페이지만 크롤(테스트용 최근글 빠른 적재). 예: php crawl_boards.php news_bid 5
+$maxPages = null;
+foreach (array_slice($argv, 2) as $a) {
+    if (is_numeric($a)) { $maxPages = (int) $a; break; }
+}
 
 if (!$targetBoard || ($targetBoard !== 'all' && !isset($boards[$targetBoard]))) {
     echo "사용법: php scripts/crawl_boards.php [board_key|all] [--dry-run]\n\n";
@@ -297,8 +302,9 @@ foreach ($boardsToProcess as $boardKey => $config) {
     $totalCount = getTotalCount($config['list_url']);
     $pageSize = 10;
     $totalPages = $totalCount > 0 ? ceil($totalCount / $pageSize) : 200;
+    if ($maxPages) { $totalPages = min($totalPages, $maxPages); }
     $existingCount = Post::where('board_type', $boardKey)->count();
-    echo "원본: {$totalCount}건 / 현재DB: {$existingCount}건 / 예상 페이지: {$totalPages}\n";
+    echo "원본: {$totalCount}건 / 현재DB: {$existingCount}건 / 크롤 페이지: {$totalPages}" . ($maxPages ? " (최신 {$maxPages}p 제한)" : "") . "\n";
 
     $newCount = 0;
     $skipCount = 0;

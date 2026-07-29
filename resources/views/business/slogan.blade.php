@@ -19,6 +19,9 @@
             $slogans = [];
             for ($y = 2025; $y >= 2006; $y--) {
                 $files = glob(public_path("images/slogan/slogan_{$y}*.jpg"));
+                // 같은 연도에 여러 회차가 있으면 최신 회차가 먼저 오도록 역순 정렬
+                // (2024: slogan_2024_1=제18회, slogan_2024_2=제19회)
+                rsort($files, SORT_NATURAL);
                 foreach ($files as $f) {
                     $slogans[] = ['year' => $y, 'file' => basename($f)];
                 }

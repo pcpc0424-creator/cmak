@@ -4,7 +4,7 @@
     $isActive = fn($p) => request()->is($p) || ($activeMenuPath === $p);
 @endphp
 <a href="{{ $base }}/cmdata/about" class="{{ $isActive('cmdata/about') ? 'active' : '' }}">CM이란?</a>
-<a href="{{ $base }}/business/cm-forms" class="{{ $isActive('business/cm-forms') ? 'active' : '' }}">CM 가이드</a>
+<a href="{{ $base }}/business/cm-forms" class="{{ $isActive('business/cm-forms') ? 'active' : '' }}">CM 관련 서식</a>
 <a href="{{ $base }}/cmdata/law" class="{{ $isActive('cmdata/law') ? 'active' : '' }}">법령정보조회</a>
 <a href="{{ $base }}/cmdata/report" class="{{ $isActive('cmdata/report') ? 'active' : '' }}">논문 및 연구보고서</a>
 <a href="{{ $base }}/cmdata/overseas" class="{{ $isActive('cmdata/overseas') ? 'active' : '' }}">CM해외공급사업</a>

@@ -162,6 +162,8 @@ Route::get('/business/consma', [\App\Http\Controllers\ConsmaController::class, '
 Route::get('/business/consma/{year}', [\App\Http\Controllers\ConsmaController::class, 'show'])->where('year', '[0-9]{4}');
 Route::get('/business/slogan', [BusinessPageController::class, 'show'])->defaults('slug', 'slogan');
 Route::get('/business/cm-forms', fn(\Illuminate\Http\Request $r) => app(BoardController::class)->index($r, 'cm_forms', 'business.cm-forms'));
+// CM 업무 가이드북: 헤더/사이드바 하위메뉴에는 노출하지 않고 인덱스 바로가기 카드에서만 진입
+Route::get('/business/guidebook', fn() => view('business.guidebook'));
 Route::get('/business', fn() => redirect('business/membership'));
 
 // 윈도우형 팝업 전용 창(window.open 대상)

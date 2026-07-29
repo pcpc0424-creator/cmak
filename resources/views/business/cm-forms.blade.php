@@ -1,9 +1,9 @@
 @extends('layouts.sub')
 
-@section('title', 'CM 가이드 - 한국CM협회')
+@section('title', 'CM 관련 서식 - 한국CM협회')
 @section('category', 'CM 소개')
 @section('category-link', '/cmak/cmdata/about')
-@section('page-title', 'CM 가이드')
+@section('page-title', 'CM 관련 서식')
 
 @section('side-menu')
     @include('cmdata._side-menu')
@@ -11,7 +11,7 @@
 
 @section('content')
 <div class="sub-content-card">
-    <h2 class="sub-content-title">CM 가이드</h2>
+    <h2 class="sub-content-title">CM 관련 서식</h2>
     <p class="sub-content-desc">건설사업관리(CM) 업무 관련 각종 서식·안내 자료입니다.</p>
 
     @include('components.board-list')

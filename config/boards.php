@@ -30,7 +30,7 @@ return [
         'fields' => [],
     ],
     'cm_forms' => [
-        'name' => 'CM 가이드',
+        'name' => 'CM 관련 서식',
         'menu' => 'CM자료방',
         'category' => null,
         'has_attachments' => true,

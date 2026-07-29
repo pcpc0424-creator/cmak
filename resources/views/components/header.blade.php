@@ -81,7 +81,7 @@
                 ]],
                 ['title' => 'CM 소개', 'link' => "$bp/cmdata", 'sub' => [
                     ['title' => 'CM이란?', 'link' => "$bp/cmdata/about"],
-                    ['title' => 'CM 가이드', 'link' => "$bp/business/cm-forms"],
+                    ['title' => 'CM 관련 서식', 'link' => "$bp/business/cm-forms"],
                     ['title' => '법령정보조회', 'link' => "$bp/cmdata/law"],
                     ['title' => '논문 및 연구보고서', 'link' => "$bp/cmdata/report"],
                     ['title' => 'CM해외공급사업', 'link' => "$bp/cmdata/overseas"],

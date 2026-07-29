@@ -231,7 +231,7 @@
                     {{-- 우측: 이미지 카드 6개 (2x3 그리드) — 관리자(home_cards) 연동 --}}
                     @php
                         $fallbackCards = [
-                            ['title' => 'CM 가이드', 'subtitle' => 'CM 업무 관련 서식·안내', 'link_url' => '/business/cm-forms', 'icon' => 'doc', 'image_path' => null],
+                            ['title' => 'CM 관련 서식', 'subtitle' => 'CM 업무 관련 서식·안내', 'link_url' => '/business/cm-forms', 'icon' => 'doc', 'image_path' => null],
                             ['title' => 'Book Review', 'subtitle' => '추천 도서', 'link_url' => '/notice/bookreview', 'icon' => 'book', 'image_path' => null],
                             ['title' => 'CM을 부탁해', 'subtitle' => 'CM 용어집', 'link_url' => '/notice/wordbook', 'icon' => 'search', 'image_path' => null],
                             ['title' => 'CM헤럴드', 'subtitle' => '월간 소식지', 'link_url' => '/business/herald', 'icon' => 'monitor', 'image_path' => null],
@@ -251,7 +251,7 @@
                                 ->whereNotNull('website')->where('website', '!=', '')
                                 ->orderBy('id')->get(['company_name', 'representative', 'website']);
                             if ($cos->isNotEmpty()) {
-                                $featuredCompany = $cos[(int) floor(time() / 86400) % $cos->count()];
+                                $featuredCompany = $cos->random(); // 노출 순서 랜덤
                             }
                         } catch (\Throwable $e) { $featuredCompany = null; }
                     @endphp
@@ -281,7 +281,8 @@
                                         </div>
                                         <div class="icak-image-card-text">
                                             <strong>{{ $featuredCompany->company_name }}</strong>
-                                            <span>{{ $card['subtitle'] ?: '회원사 안내' }}@if($featuredCompany->representative) · 대표 {{ $featuredCompany->representative }}@endif</span>
+                                            {{-- 보조텍스트는 대표자명만 노출(업체명과 대표자명 사이 안내문구 제거) --}}
+                                            <span>{{ $featuredCompany->representative ? '대표 ' . $featuredCompany->representative : ($card['subtitle'] ?: '회원사 안내') }}</span>
                                         </div>
                                     </a>
                                 @elseif($img)

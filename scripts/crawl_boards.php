@@ -21,9 +21,10 @@ $boards = [
         'list_url' => '/html/notice/news.asp?code=0&GotoPage=',
         'detail_url' => '/html/notice/news_r.asp?code=0&no=',
     ],
+    // 협회소식은 code=1 필수(파라미터 없으면 원본이 빈 목록·Total 0으로 응답함)
     'news_association' => [
-        'list_url' => '/html/notice/nleague1.asp?GotoPage=',
-        'detail_url' => '/html/notice/nleague1_r.asp?no=',
+        'list_url' => '/html/notice/nleague1.asp?code=1&GotoPage=',
+        'detail_url' => '/html/notice/nleague1_r.asp?code=1&no=',
     ],
     'news_law' => [
         'list_url' => '/html/notice/nlow.asp?GotoPage=',
@@ -134,23 +135,30 @@ $boardsToProcess = $targetBoard === 'all' ? $boards : [$targetBoard => $boards[$
 // ============================================
 // HTTP 요청 - raw EUC-KR 반환
 // ============================================
-function fetchRaw(string $url): string
+function fetchRaw(string $url, int $retries = 5): string
 {
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        CURLOPT_HTTPHEADER => ['Accept-Language: ko-KR,ko;q=0.9'],
-    ]);
-    $html = curl_exec($ch);
-    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+    // 원본 서버가 연결을 무작위로 절반가량 끊음(성공 시 응답은 0.1~0.4초).
+    // 연결 타임아웃을 짧게 두고 여러 번 재시도하는 편이 훨씬 빠름.
+    for ($attempt = 1; $attempt <= $retries; $attempt++) {
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_TIMEOUT => 25,
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            CURLOPT_HTTPHEADER => ['Accept-Language: ko-KR,ko;q=0.9'],
+        ]);
+        $html = curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
 
-    if ($code !== 200 || !$html || strpos($html, 'WAF') !== false) return '';
-    return $html;
+        if ($code === 200 && $html && strpos($html, 'WAF') === false) return $html;
+
+        if ($attempt < $retries) usleep(300000); // 0.3초 후 재시도
+    }
+    return '';
 }
 
 function toUtf8(string $raw): string
@@ -159,7 +167,49 @@ function toUtf8(string $raw): string
 }
 
 // ============================================
-// FTP 다운로드
+// 첨부 다운로드 - HTTP 우선(FTP 계정은 현재 530 로그인 실패)
+// ============================================
+function downloadHttpFile(string $remotePath, string $localPath): bool
+{
+    global $baseUrl;
+
+    $dir = dirname($localPath);
+    if (!is_dir($dir)) mkdir($dir, 0755, true);
+
+    // HTML에 적힌 경로를 그대로 사용하되, 미인코딩 문자만 보정
+    $encoded = implode('/', array_map(
+        fn ($seg) => rawurlencode(rawurldecode($seg)),
+        explode('/', ltrim($remotePath, '/'))
+    ));
+
+    for ($attempt = 1; $attempt <= 4; $attempt++) {
+        $fp = fopen($localPath, 'w');
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $baseUrl . '/' . $encoded,
+            CURLOPT_FILE => $fp,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_TIMEOUT => 120,
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        ]);
+        curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        fclose($fp);
+
+        if ($code === 200 && file_exists($localPath) && filesize($localPath) > 0) return true;
+
+        @unlink($localPath);
+        if ($attempt < 4) usleep(300000);
+    }
+
+    // HTTP 실패 시 FTP 폴백
+    return downloadFtpFile($remotePath, $localPath);
+}
+
+// ============================================
+// FTP 다운로드 (폴백)
 // ============================================
 function downloadFtpFile(string $remotePath, string $localPath): bool
 {
@@ -249,6 +299,25 @@ function parseDetail(string $detailUrl, int $postId): ?array
         $content = toUtf8(trim($body[1]));
         $content = preg_replace('/<img[^>]*space\.gif[^>]*>/i', '', $content);
         $content = trim($content);
+    }
+
+    // 구인/구직 게시판은 class=low 없이 '모집내용' 라벨 뒤 colspan=3 셀에 본문이 들어감
+    if ($content === '') {
+        foreach (['모집내용', '상세내용', '구직내용'] as $label) {
+            $labelKR = mb_convert_encoding($label, 'EUC-KR', 'UTF-8');
+            $pos = strpos($raw, $labelKR);
+            if ($pos === false) continue;
+
+            if (preg_match('/<td[^>]*colspan=["\']?3["\']?[^>]*>(.*?)<\/td>/si', substr($raw, $pos), $body)) {
+                $candidate = toUtf8(trim($body[1]));
+                $candidate = preg_replace('/<img[^>]*space\.gif[^>]*>/i', '', $candidate);
+                $candidate = trim($candidate);
+                if ($candidate !== '') {
+                    $content = $candidate;
+                    break;
+                }
+            }
+        }
     }
 
     // 첨부파일
@@ -373,7 +442,7 @@ foreach ($boardsToProcess as $boardKey => $config) {
                 $safeName = preg_replace('/[\/\\\\]/', '_', $att['file_name']);
                 $localPath = $localDir . '/' . $safeName;
 
-                if (downloadFtpFile($att['remote_path'], $localPath)) {
+                if (downloadHttpFile($att['remote_path'], $localPath)) {
                     $post->attachments()->create([
                         'file_name' => $att['file_name'],
                         'file_path' => 'storage/attachments/' . $boardKey . '/' . $safeName,

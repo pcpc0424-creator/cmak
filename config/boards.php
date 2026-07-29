@@ -220,7 +220,7 @@ return [
         'fields' => [],
     ],
     'news_personnel' => [
-        'name' => '인사경조사',
+        'name' => '인사·경조사',
         'menu' => '알림마당',
         'category' => null,
         'has_attachments' => true,

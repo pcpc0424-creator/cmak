@@ -73,6 +73,11 @@
             'October 17 : MOU with the Construction Management Association of America (CMAA)',
             'June 9 : MOU with the Overseas Construction Association of Korea (ICAK)',
         ]],
+        // 구 영문홈 History(eng/html1/in_history.html) 원문 복원
+        ['year' => '2003', 'events' => [
+            'March 6 : Designated by the Ministry of Education Science and Technology as the agency for elective professional education',
+            'January 21 : Designated by the Ministry of Public Administration and Security as the agency for elective professional education for regional public servants',
+        ]],
         ['year' => '2002', 'events' => [
             'November 8 : Designated by the Ministry of Construction and Transportation as the agency for CM capability evaluation and public disclosure',
         ]],

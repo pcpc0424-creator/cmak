@@ -887,6 +887,7 @@ html.fp-enabled,
 .icak-sub-list {
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start; /* 한 줄짜리 메뉴(참여마당 등)가 패널 높이만큼 늘어나지 않도록 */
     width: 60%;
     padding: 30px 20px;
 }

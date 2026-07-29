@@ -153,7 +153,7 @@ Route::get('/business/membership', [BusinessPageController::class, 'show'])->def
 Route::get('/business/certification', [BusinessPageController::class, 'show'])->defaults('slug', 'certification');
 Route::get('/business/confirm', [BusinessPageController::class, 'show'])->defaults('slug', 'confirm');
 // CM 실적 관리 페이지 통합: 기존 confirm-online → confirm 으로 리다이렉트
-Route::get('/business/confirm-online', fn() => redirect('/cmak/business/confirm'));
+Route::get('/business/confirm-online', fn() => redirect('/business/confirm'));
 Route::get('/business/inspection', [BusinessPageController::class, 'show'])->defaults('slug', 'inspection');
 Route::get('/business/education', [BusinessPageController::class, 'show'])->defaults('slug', 'education');
 // CM Herald — 로그인 회원만 열람 (책장형 표지 + 웹진보기)
@@ -189,9 +189,11 @@ Route::get('/cm30', fn(\Illuminate\Http\Request $r) => app(BoardController::clas
 // ============================================
 // CM이란 - 정적 페이지
 Route::get('/cmdata/about', fn() => app(\App\Http\Controllers\CmDataPageController::class)->show('about'));
-Route::get('/cmdata/procedure', fn() => app(\App\Http\Controllers\CmDataPageController::class)->show('procedure'));
-Route::get('/cmdata/task-spec', fn() => app(\App\Http\Controllers\CmDataPageController::class)->show('task-spec'));
-Route::get('/cmdata/contract', fn() => app(\App\Http\Controllers\CmDataPageController::class)->show('contract'));
+// CM업무절차서·CM표준과업내용서·CM표준계약서는 'CM 관련 서식' 게시판으로 통합되어
+// 사이드바/헤더 메뉴에서 삭제됨. 기존 URL 유입은 통합 페이지로 리다이렉트.
+Route::get('/cmdata/procedure', fn() => redirect('/business/cm-forms'));
+Route::get('/cmdata/task-spec', fn() => redirect('/business/cm-forms'));
+Route::get('/cmdata/contract', fn() => redirect('/business/cm-forms'));
 
 // 법령정보 조회 - 국가법령정보센터 안내 정적 페이지
 Route::get('/cmdata/law', fn() => app(\App\Http\Controllers\CmDataPageController::class)->show('law'));

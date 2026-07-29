@@ -16,7 +16,7 @@
     <div class="sub-section">
         {{-- 설립근거 --}}
         <div style="text-align:center; margin-bottom:26px;">
-            <span style="display:inline-block; padding:13px 30px; background:#0061c2; color:#fff; border-radius:30px; font-size:15px; font-weight:600;">한국CM협회 설립근거 : 민법 제32조 (비영리 사단법인)</span>
+            <span style="display:inline-block; padding:13px 30px; background:#0061c2; color:#fff; border-radius:30px; font-size:15px; font-weight:600;">한국CM협회 설립근거는, 민법 제32조 (비영리 사단법인)</span>
         </div>
 
         {{-- 설립목적 3 --}}
@@ -35,7 +35,7 @@
 
         {{-- 주요사업 및 활동 --}}
         <div style="display:flex; border:1px solid #cfe0f3; border-radius:8px; overflow:hidden;">
-            <div style="width:78px; flex-shrink:0; background:#0061c2; color:#fff; display:flex; align-items:center; justify-content:center; text-align:center; font-weight:700; font-size:15px; line-height:1.5;">주요<br>사업</div>
+            <div style="width:78px; flex-shrink:0; background:#0061c2; color:#fff; display:flex; align-items:center; justify-content:center; text-align:center; font-weight:700; font-size:15px; line-height:1.5;">주요사업<br>및 활동</div>
             <ul style="flex:1; margin:0; padding:18px 22px; line-height:2; list-style:none;">
                 <li>· CM의 이론체계확립을 위한 조사연구</li>
                 <li>· CM의 실용화 방안 구축을 위한 산·학협동 활동</li>
@@ -58,16 +58,16 @@
 
     <div class="sub-section" style="margin-top:20px;">
         <p style="line-height:2;">
-            투명성 또는 청렴성을 뜻하는 전체의 <span style="color:#0066cc;">파란 색상</span>은 하늘을 나타내며,
+            투명성 또는 청렴성을 뜻하는 전체의 파란 색상은 <span style="color:#0066cc;">하늘을 나타내며,</span>
         </p>
         <p style="line-height:2;">
-            맨 윗부분의 다섯개의 막대 형상은 <span style="color:#0066cc;">건설물과 CM의 비상 즉 세계화</span>를 상징하고,
+            맨 윗부분의 다섯개의 막대 형상은 <span style="color:#0066cc;">건설물과 CM의 비상 즉 세계화를 상징하고,</span>
         </p>
         <p style="line-height:2;">
-            맨 아래의 수평적 막대 형상은 <span style="color:#0066cc;">땅 위에 설치된 건설물을 사람이 이용 함으로서 3자가 조화를 이루며 영구히 살아갈 수 있도록 하는 건설산업의 탄탄한 기반구축</span>을 의미함.
+            맨 아래의 수평적 막대 형상은 <span style="color:#0066cc;">땅 위에 설치된 건설물을 사람이 이용 함으로서 3자가 조화를 이루며 영구히 살아갈 수 있도록 하는 건설산업의 탄탄한 기반구축을 의미함.</span>
         </p>
         <p style="line-height:2;">
-            또한 이들 중앙의 CMAK는 <span style="color:#0066cc;">이러한 건설산업을 우리 협회가 중심이 되어 견인해 나간다</span>는 뜻임.
+            또한 이들 중앙의 CMAK는 <span style="color:#0066cc;">이러한 건설산업을 우리 협회가 중심이 되어 견인해 나간다는 뜻임.</span>
         </p>
     </div>
 </div>

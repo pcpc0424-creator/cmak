@@ -58,17 +58,33 @@
         box-shadow: 0 8px 24px rgba(0,0,0,.12);
         transform: translateY(-3px);
     }
+    /* 3:4 비율 유지 - aspect-ratio 미지원 브라우저에서 높이가 0이 되어
+       썸네일이 안 보이는 문제가 있어 padding 방식으로 높이를 잡음 */
     .consma-thumb {
+        position: relative;
         width: 100%;
-        aspect-ratio: 3 / 4;
+        height: 0;
+        padding-top: 133.3333%;
         background: #f4f6f9;
+        overflow: hidden;
+    }
+    .consma-thumb img,
+    .consma-noimg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .consma-thumb img { object-fit: cover; }
+    .consma-noimg {
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
+        color: #b8c1cd;
+        font-size: 24px;
+        font-weight: 700;
     }
-    .consma-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .consma-noimg { color: #b8c1cd; font-size: 24px; font-weight: 700; }
     .consma-caption { padding: 12px 14px; }
     .consma-caption strong { display: block; font-size: 15px; color: #1a2b45; }
     .consma-caption span { display: block; font-size: 13px; color: #7a8699; margin-top: 3px; }

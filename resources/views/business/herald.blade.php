@@ -66,10 +66,12 @@
 }
 .herald-book { display: flex; flex-direction: column; align-items: center; }
 .herald-cover-link { display: block; width: 100%; }
+/* 3:4 비율 유지 - aspect-ratio 미지원 브라우저 대응(높이 0 방지) */
 .herald-cover {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 4;
+    height: 0;
+    padding-top: 133.3333%;
     border-radius: 4px;
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0,0,0,0.18);
@@ -78,6 +80,8 @@
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .herald-cover-link:hover .herald-cover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.25); }
+.herald-cover img,
+.herald-cover-placeholder { position: absolute; top: 0; left: 0; }
 .herald-cover img { width: 100%; height: 100%; object-fit: cover; }
 .herald-cover-placeholder {
     width: 100%; height: 100%;

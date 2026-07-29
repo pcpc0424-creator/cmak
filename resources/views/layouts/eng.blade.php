@@ -161,6 +161,9 @@
         .eng-sub-list {
             display: flex;
             flex-wrap: wrap;
+            /* 한 줄짜리 메뉴(International CM Day, CMAK News)가 .eng-sub-area 의
+               min-height 140px 를 흡수해 버튼이 늘어나지 않도록 고정 */
+            align-content: flex-start;
             width: 60%;
             padding: 30px 20px;
         }

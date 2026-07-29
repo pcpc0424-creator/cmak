@@ -25,9 +25,14 @@
     <div class="guidebook-grid">
         @foreach($guidebooks as $book)
             <a href="{{ $book['url'] }}" target="_blank" rel="noopener noreferrer" class="guidebook-item">
+                @php
+                    // 표지를 교체해도 파일명이 같아 브라우저가 예전 이미지를 계속 쓰는 것을 막는다
+                    $coverPath = public_path("images/business/guidebook/{$book['cover']}.jpg");
+                    $coverVer  = is_file($coverPath) ? filemtime($coverPath) : null;
+                @endphp
                 <div class="guidebook-cover">
-                    <img src="/cmak/images/business/guidebook/{{ $book['cover'] }}.jpg"
-                         alt="CM 업무 가이드북(개정판) {{ $book['title'] }}" loading="lazy">
+                    <img src="/cmak/images/business/guidebook/{{ $book['cover'] }}.jpg{{ $coverVer ? '?v=' . $coverVer : '' }}"
+                         alt="CM 업무 가이드북(개정판) {{ $book['title'] }}">
                 </div>
                 <div class="guidebook-caption">
                     <strong>CM 업무 가이드북(개정판)</strong>

@@ -29,15 +29,16 @@
                 @endphp
                 <div class="herald-book">
                     <a href="{{ $webzine ?: '#' }}" {{ $webzine ? 'target=_blank rel=noopener' : '' }} class="herald-cover-link">
-                        <div class="herald-cover">
-                            @if($cover)
-                                <img src="{{ $cover }}" alt="{{ $issue->title }}">
-                            @else
+                        {{-- 표지는 background-image로 출력: 전역 img 규칙의 영향을 받지 않음 --}}
+                        <div class="herald-cover"
+                             @if($cover) style="background-image:url('{{ $cover }}');" @endif
+                             role="img" aria-label="{{ $issue->title }}">
+                            @unless($cover)
                                 <div class="herald-cover-placeholder">
                                     <span>CM Herald</span>
                                     <strong>{{ $issue->title }}</strong>
                                 </div>
-                            @endif
+                            @endunless
                         </div>
                     </a>
                     <div class="herald-meta">
@@ -76,13 +77,14 @@
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0,0,0,0.18);
     border: 1px solid #e5e7eb;
-    background: #f3f4f6;
+    background-color: #f3f4f6;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .herald-cover-link:hover .herald-cover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.25); }
-.herald-cover img,
 .herald-cover-placeholder { position: absolute; top: 0; left: 0; }
-.herald-cover img { width: 100%; height: 100%; object-fit: cover; }
 .herald-cover-placeholder {
     width: 100%; height: 100%;
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;

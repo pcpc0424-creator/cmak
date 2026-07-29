@@ -20,12 +20,14 @@
         <div class="consma-grid">
             @foreach($editions as $e)
                 <a href="/cmak/business/consma/{{ $e->year }}" class="consma-card">
-                    <div class="consma-thumb">
-                        @if($e->thumb_path)
-                            <img src="/cmak/{{ ltrim($e->thumb_path, '/') }}" alt="ConsMa {{ $e->year }}" loading="lazy">
-                        @else
+                    {{-- 포스터는 background-image로 출력: 전역 img 규칙(height:auto !important 등)의
+                         영향을 받지 않아 어떤 화면 폭·브라우저에서도 동일하게 보임 --}}
+                    <div class="consma-thumb"
+                         @if($e->thumb_path) style="background-image:url('/cmak/{{ ltrim($e->thumb_path, '/') }}');" @endif
+                         role="img" aria-label="ConsMa {{ $e->year }} 포스터">
+                        @unless($e->thumb_path)
                             <span class="consma-noimg">{{ $e->year }}</span>
-                        @endif
+                        @endunless
                     </div>
                     <div class="consma-caption">
                         <strong>{{ $e->main_text ?: 'ConsMa ' . $e->year }}</strong>
@@ -64,20 +66,19 @@
         position: relative;
         width: 100%;
         height: 0;
-        padding-top: 133.3333%;
-        background: #f4f6f9;
+        padding-top: 133.3333%;   /* 3:4 비율(aspect-ratio 미지원 브라우저 대응) */
+        background-color: #f4f6f9;
+        background-position: center top;
+        background-repeat: no-repeat;
+        background-size: cover;
         overflow: hidden;
     }
-    .consma-thumb img,
     .consma-noimg {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-    }
-    .consma-thumb img { object-fit: cover; }
-    .consma-noimg {
         display: flex;
         align-items: center;
         justify-content: center;

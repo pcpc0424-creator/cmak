@@ -458,8 +458,24 @@
 @endpush
 
 @section('content')
+@php
+    // 인덱스 각 섹션은 english_items 에서 type 으로 골라 쓴다(관리자 편집 대상).
+    // 항목이 없으면 아래 기본값으로 렌더해 화면이 비지 않게 한다.
+    $engItems = fn(string $type) => ($page?->activeItems ?? collect())->where('type', $type)->values();
+    $engOne   = fn(string $type) => $engItems($type)->first();
+
+    $heroSlides = $engItems('hero');
+    if ($heroSlides->isEmpty()) {
+        $heroSlides = collect([(object) [
+            'image_path' => '/cmak/images/eng/eng1.jpg', 'tag' => 'CMAK · Since 1997',
+            'title' => "Leading Korea's Construction Management",
+            'description' => 'For nearly three decades, the Construction Management Association of Korea has been at the forefront of advancing CM practice.',
+            'link' => null,
+        ]]);
+    }
+@endphp
 {{-- Main visual slider --}}
-@php $slideCount = $page?->activeItems?->count() ?: 1; @endphp
+@php $slideCount = $heroSlides->count() ?: 1; @endphp
 <section class="eng-hero" x-data="{
     current: 0,
     total: {{ $slideCount }},
@@ -475,11 +491,7 @@
     next() { this.current = (this.current + 1) % this.total; },
     prev() { this.current = (this.current - 1 + this.total) % this.total; }
 }" @mouseenter="stop()" @mouseleave="start()">
-    @php
-        $slides = ($page?->activeItems && count($page->activeItems)) ? $page->activeItems : collect([
-            (object)['image_path' => '/cmak/images/eng/eng1.jpg', 'tag' => 'CMAK · Since 1997', 'title' => "Leading Korea's Construction Management", 'description' => 'For nearly three decades, the Construction Management Association of Korea has been at the forefront of advancing CM practice.', 'link' => null],
-        ]);
-    @endphp
+    @php $slides = $heroSlides; @endphp
 
     @foreach($slides as $i => $slide)
         <div class="eng-hero-slide" :class="{ 'active': current === {{ $i }} }">
@@ -518,43 +530,34 @@
 {{-- About cards --}}
 <section class="eng-section">
     <div class="eng-section-inner">
+        @php
+            $aboutHead  = $engOne('about_head');
+            $aboutCards = $engItems('about_card');
+            if ($aboutCards->isEmpty()) {
+                $aboutCards = collect([
+                    (object) ['tag' => '01', 'title' => "Chairman's Message", 'description' => 'A welcome message from the chairman of the Construction Management Association of Korea.', 'link' => '/cmak/eng/about/greeting'],
+                    (object) ['tag' => '02', 'title' => 'Purpose & Vision', 'description' => 'Our mission to promote construction management as a recognized profession and advance the industry.', 'link' => '/cmak/eng/about/purpose'],
+                    (object) ['tag' => '03', 'title' => 'History', 'description' => 'Nearly three decades of milestones, growth and contribution to the Korean construction industry.', 'link' => '/cmak/eng/about/history'],
+                    (object) ['tag' => '04', 'title' => 'Organization', 'description' => "Meet the leadership, board of directors, committees and staff that guide CMAK's work.", 'link' => '/cmak/eng/about/organization'],
+                    (object) ['tag' => '05', 'title' => 'Scheme of Work', 'description' => 'Our core programs in policy, research, education, certification and international cooperation.', 'link' => '/cmak/eng/about/scheme'],
+                    (object) ['tag' => '06', 'title' => 'Contact Us', 'description' => 'Get in touch with the CMAK secretariat in Seoul, Korea — we welcome inquiries from members and partners.', 'link' => '/cmak/eng/about/contact'],
+                ]);
+            }
+        @endphp
         <div class="eng-section-head">
-            <span class="eyebrow">About CMAK</span>
-            <h2>The Voice of CM in Korea</h2>
-            <p>Founded in 1997, CMAK represents construction management firms and professionals committed to advancing the practice and elevating industry standards across Korea.</p>
+            <span class="eyebrow">{{ $aboutHead->tag ?? 'About CMAK' }}</span>
+            <h2>{{ $aboutHead->title ?? 'The Voice of CM in Korea' }}</h2>
+            <p>{{ $aboutHead->description ?? 'Founded in 1997, CMAK represents construction management firms and professionals committed to advancing the practice and elevating industry standards across Korea.' }}</p>
         </div>
 
         <div class="eng-about-grid">
-            <a href="/cmak/eng/about/greeting" class="eng-about-card">
-                <div class="num">01</div>
-                <h3>Chairman's Message</h3>
-                <p>A welcome message from the chairman of the Construction Management Association of Korea.</p>
-            </a>
-            <a href="/cmak/eng/about/purpose" class="eng-about-card">
-                <div class="num">02</div>
-                <h3>Purpose & Vision</h3>
-                <p>Our mission to promote construction management as a recognized profession and advance the industry.</p>
-            </a>
-            <a href="/cmak/eng/about/history" class="eng-about-card">
-                <div class="num">03</div>
-                <h3>History</h3>
-                <p>Nearly three decades of milestones, growth and contribution to the Korean construction industry.</p>
-            </a>
-            <a href="/cmak/eng/about/organization" class="eng-about-card">
-                <div class="num">04</div>
-                <h3>Organization</h3>
-                <p>Meet the leadership, board of directors, committees and staff that guide CMAK's work.</p>
-            </a>
-            <a href="/cmak/eng/about/scheme" class="eng-about-card">
-                <div class="num">05</div>
-                <h3>Scheme of Work</h3>
-                <p>Our core programs in policy, research, education, certification and international cooperation.</p>
-            </a>
-            <a href="/cmak/eng/about/contact" class="eng-about-card">
-                <div class="num">06</div>
-                <h3>Contact Us</h3>
-                <p>Get in touch with the CMAK secretariat in Seoul, Korea — we welcome inquiries from members and partners.</p>
-            </a>
+            @foreach($aboutCards as $card)
+                <a href="{{ $card->link ?: '#' }}" class="eng-about-card">
+                    @if($card->tag) <div class="num">{{ $card->tag }}</div> @endif
+                    <h3>{{ $card->title }}</h3>
+                    <p>{{ $card->description }}</p>
+                </a>
+            @endforeach
         </div>
     </div>
 </section>
@@ -562,32 +565,34 @@
 {{-- International CM Day highlight --}}
 <section class="eng-highlight">
     <div class="eng-highlight-inner">
+        @php
+            $dayHead  = $engOne('cmday_head');
+            $dayStats = $engItems('cmday_stat');
+            if ($dayStats->isEmpty()) {
+                $dayStats = collect([
+                    (object) ['title' => '29', 'subtitle' => 'Years of CMAK'],
+                    (object) ['title' => '20,000+', 'subtitle' => 'Members'],
+                    (object) ['title' => '9', 'subtitle' => 'Partner Countries'],
+                    (object) ['title' => '1997', 'subtitle' => 'Established'],
+                ]);
+            }
+        @endphp
         <div>
-            <span class="eyebrow">International CM Day</span>
-            <h2>Celebrating Construction Management Worldwide</h2>
-            <p>International CM Day brings together construction management professionals from around the globe to celebrate the value of CM and to share knowledge, achievements and best practices that shape the built environment.</p>
-            <a href="/cmak/eng/cmday/introduction" class="eng-highlight-cta">
-                Learn About CM Day
+            <span class="eyebrow">{{ $dayHead->tag ?? 'International CM Day' }}</span>
+            <h2>{{ $dayHead->title ?? 'Celebrating Construction Management Worldwide' }}</h2>
+            <p>{{ $dayHead->description ?? 'International CM Day brings together construction management professionals from around the globe to celebrate the value of CM and to share knowledge, achievements and best practices that shape the built environment.' }}</p>
+            <a href="{{ $dayHead->link ?? '/cmak/eng/cmday/introduction' }}" class="eng-highlight-cta">
+                {{ $dayHead->subtitle ?? 'Learn About CM Day' }}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
         </div>
         <div class="eng-highlight-stats">
-            <div class="eng-stat">
-                <div class="num">29</div>
-                <div class="label">Years of CMAK</div>
-            </div>
-            <div class="eng-stat">
-                <div class="num">20,000+</div>
-                <div class="label">Members</div>
-            </div>
-            <div class="eng-stat">
-                <div class="num">9</div>
-                <div class="label">Partner Countries</div>
-            </div>
-            <div class="eng-stat">
-                <div class="num">1997</div>
-                <div class="label">Established</div>
-            </div>
+            @foreach($dayStats as $stat)
+                <div class="eng-stat">
+                    <div class="num">{{ $stat->title }}</div>
+                    <div class="label">{{ $stat->subtitle }}</div>
+                </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -595,43 +600,36 @@
 {{-- News --}}
 <section class="eng-section">
     <div class="eng-section-inner">
+        @php
+            $newsHead  = $engOne('news_head');
+            $newsCards = $engItems('news_card');
+            if ($newsCards->isEmpty()) {
+                $newsCards = collect([
+                    (object) ['tag' => 'Publications', 'date_text' => 'Latest Issue', 'title' => 'CM Herald Magazine and CMAK Annual Reports', 'image_path' => '/cmak/images/eng/eng2.jpg', 'link' => '/cmak/eng/news/publications'],
+                    (object) ['tag' => 'Education', 'date_text' => 'Ongoing Programs', 'title' => 'Educations and Seminars for CM Professionals', 'image_path' => '/cmak/images/eng/eng5.jpg', 'link' => '/cmak/eng/news/seminars'],
+                    (object) ['tag' => 'Events', 'date_text' => 'Annual', 'title' => 'CMAK International Conferences and Forums', 'image_path' => '/cmak/images/eng/eng4.jpg', 'link' => '/cmak/eng/news/conferences'],
+                ]);
+            }
+        @endphp
         <div class="eng-section-head">
-            <span class="eyebrow">CMAK News</span>
-            <h2>What's Happening at CMAK</h2>
-            <p>Stay up to date with our latest publications, educations and events from CMAK and the global CM community.</p>
+            <span class="eyebrow">{{ $newsHead->tag ?? 'CMAK News' }}</span>
+            <h2>{{ $newsHead->title ?? "What's Happening at CMAK" }}</h2>
+            <p>{{ $newsHead->description ?? 'Stay up to date with our latest publications, educations and events from CMAK and the global CM community.' }}</p>
         </div>
 
         <div class="eng-news-grid">
-            <a href="/cmak/eng/news/publications" class="eng-news-card">
-                <div class="eng-news-thumb">
-                    <img src="/cmak/images/eng/eng2.jpg" alt="Publications">
-                    <span class="tag">Publications</span>
-                </div>
-                <div class="eng-news-body">
-                    <div class="date">Latest Issue</div>
-                    <h3>CM Herald Magazine and CMAK Annual Reports</h3>
-                </div>
-            </a>
-            <a href="/cmak/eng/news/seminars" class="eng-news-card">
-                <div class="eng-news-thumb">
-                    <img src="/cmak/images/eng/eng5.jpg" alt="Educations">
-                    <span class="tag">Education</span>
-                </div>
-                <div class="eng-news-body">
-                    <div class="date">Ongoing Programs</div>
-                    <h3>Educations and Seminars for CM Professionals</h3>
-                </div>
-            </a>
-            <a href="/cmak/eng/news/conferences" class="eng-news-card">
-                <div class="eng-news-thumb">
-                    <img src="/cmak/images/eng/eng4.jpg" alt="Conferences">
-                    <span class="tag">Events</span>
-                </div>
-                <div class="eng-news-body">
-                    <div class="date">Annual</div>
-                    <h3>CMAK International Conferences and Forums</h3>
-                </div>
-            </a>
+            @foreach($newsCards as $card)
+                <a href="{{ $card->link ?: '#' }}" class="eng-news-card">
+                    <div class="eng-news-thumb">
+                        <img src="{{ $card->image_path }}" alt="{{ $card->tag ?: $card->title }}">
+                        @if($card->tag) <span class="tag">{{ $card->tag }}</span> @endif
+                    </div>
+                    <div class="eng-news-body">
+                        @if($card->date_text) <div class="date">{{ $card->date_text }}</div> @endif
+                        <h3>{{ $card->title }}</h3>
+                    </div>
+                </a>
+            @endforeach
         </div>
     </div>
 </section>
@@ -639,40 +637,40 @@
 {{-- Quick links --}}
 <section class="eng-section eng-quick">
     <div class="eng-section-inner">
+        @php
+            $quickHead  = $engOne('quick_head');
+            $quickLinks = $engItems('quick_link');
+            if ($quickLinks->isEmpty()) {
+                $quickLinks = collect([
+                    (object) ['tag' => 'globe', 'title' => 'IPMA Korea', 'description' => 'International project management certification', 'link' => '/cmak/eng/ipma/about'],
+                    (object) ['tag' => 'certificate', 'title' => 'Certification', 'description' => 'Become an internationally certified PM', 'link' => '/cmak/eng/ipma/certification'],
+                    (object) ['tag' => 'users', 'title' => 'Membership', 'description' => 'Join the CMAK community', 'link' => '/cmak/eng/membership'],
+                    (object) ['tag' => 'pin', 'title' => 'Contact Us', 'description' => 'Visit or reach out to CMAK', 'link' => '/cmak/eng/about/contact'],
+                ]);
+            }
+            // 태그값으로 아이콘 선택. 모르는 값이면 globe.
+            $quickIcons = [
+                'globe'       => '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/>',
+                'certificate' => '<path d="M12 15l-2-2m4 0l-2 2m0 0v6"/><circle cx="12" cy="9" r="6"/>',
+                'users'       => '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>',
+                'pin'         => '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>',
+            ];
+        @endphp
         <div class="eng-section-head">
-            <span class="eyebrow">Quick Links</span>
-            <h2>Explore CMAK</h2>
+            <span class="eyebrow">{{ $quickHead->tag ?? 'Quick Links' }}</span>
+            <h2>{{ $quickHead->title ?? 'Explore CMAK' }}</h2>
         </div>
 
         <div class="eng-quick-grid">
-            <a href="/cmak/eng/ipma/about" class="eng-quick-item">
-                <div class="eng-quick-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg>
-                </div>
-                <h3>IPMA Korea</h3>
-                <p>International project management certification</p>
-            </a>
-            <a href="/cmak/eng/ipma/certification" class="eng-quick-item">
-                <div class="eng-quick-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15l-2-2m4 0l-2 2m0 0v6"/><circle cx="12" cy="9" r="6"/></svg>
-                </div>
-                <h3>Certification</h3>
-                <p>Become an internationally certified PM</p>
-            </a>
-            <a href="/cmak/eng/membership" class="eng-quick-item">
-                <div class="eng-quick-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-                </div>
-                <h3>Membership</h3>
-                <p>Join the CMAK community</p>
-            </a>
-            <a href="/cmak/eng/about/contact" class="eng-quick-item">
-                <div class="eng-quick-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                </div>
-                <h3>Contact Us</h3>
-                <p>Visit or reach out to CMAK</p>
-            </a>
+            @foreach($quickLinks as $link)
+                <a href="{{ $link->link ?: '#' }}" class="eng-quick-item">
+                    <div class="eng-quick-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">{!! $quickIcons[$link->tag] ?? $quickIcons['globe'] !!}</svg>
+                    </div>
+                    <h3>{{ $link->title }}</h3>
+                    <p>{{ $link->description }}</p>
+                </a>
+            @endforeach
         </div>
     </div>
 </section>

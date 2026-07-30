@@ -9,6 +9,20 @@ use Illuminate\Http\Request;
 
 class EnglishItemController extends Controller
 {
+    public function store(Request $request, EnglishContent $englishContent)
+    {
+        $validated = $this->validateRequest($request);
+        $validated['is_active'] = $request->has('is_active');
+        $validated['english_content_id'] = $englishContent->id;
+        // 순서를 비우면 맨 뒤로
+        $validated['sort_order'] = $validated['sort_order']
+            ?? ((int) $englishContent->items()->max('sort_order') + 10);
+
+        EnglishItem::create($validated);
+
+        return back()->with('success', '항목이 추가되었습니다.');
+    }
+
     public function update(Request $request, EnglishContent $englishContent, EnglishItem $item)
     {
         abort_unless($item->english_content_id === $englishContent->id, 404);

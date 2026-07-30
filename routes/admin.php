@@ -139,6 +139,7 @@ Route::middleware('permission:english')->group(function () {
     Route::resource('english-contents', EnglishContentController::class)
         ->only(['index', 'edit', 'update', 'destroy'])
         ->names('admin.english-contents');
+    Route::post('english-contents/{englishContent}/items', [EnglishItemController::class, 'store'])->name('admin.english-items.store');
     Route::put('english-contents/{englishContent}/items/{item}', [EnglishItemController::class, 'update'])->name('admin.english-items.update');
     Route::delete('english-contents/{englishContent}/items/{item}', [EnglishItemController::class, 'destroy'])->name('admin.english-items.destroy');
 });

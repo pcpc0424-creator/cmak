@@ -113,4 +113,72 @@
             이 페이지에는 리스트형 항목이 없습니다.
         </div>
     @endif
+
+    {{-- 새 항목 추가 --}}
+    <details class="border-t border-gray-200">
+        <summary class="px-6 py-3 cursor-pointer list-none text-sm font-semibold text-blue-700 hover:bg-blue-50">
+            + 항목 추가
+        </summary>
+        <form action="{{ url('/admin/english-contents/' . $content->id . '/items') }}" method="POST"
+              class="px-6 pb-6 grid grid-cols-2 gap-3">
+            @csrf
+            <div class="col-span-2 text-xs text-gray-500 bg-gray-50 rounded p-3">
+                <strong>타입</strong>은 페이지가 항목을 어디에 쓸지 구분하는 값입니다. 기존 항목과 같은 값을 넣으세요.
+                @if($items->count())
+                    현재 이 페이지가 쓰는 타입: <span class="font-mono">{{ $items->pluck('type')->unique()->implode(', ') }}</span>
+                @endif
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">타입</label>
+                <input type="text" name="type" value="{{ old('type', $items->first()->type ?? '') }}" required
+                       list="eng-item-types" class="w-full rounded border-gray-300 text-sm font-mono">
+                <datalist id="eng-item-types">
+                    @foreach($items->pluck('type')->unique() as $t)
+                        <option value="{{ $t }}"></option>
+                    @endforeach
+                </datalist>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">정렬 순서</label>
+                <input type="number" name="sort_order" value="{{ old('sort_order') }}" placeholder="비우면 맨 뒤"
+                       class="w-full rounded border-gray-300 text-sm">
+            </div>
+            <div class="col-span-2">
+                <label class="block text-xs font-medium text-gray-700 mb-1">제목 (Title)</label>
+                <input type="text" name="title" value="{{ old('title') }}" class="w-full rounded border-gray-300 text-sm">
+            </div>
+            <div class="col-span-2">
+                <label class="block text-xs font-medium text-gray-700 mb-1">부제 / 서브타이틀 (Subtitle)</label>
+                <input type="text" name="subtitle" value="{{ old('subtitle') }}" class="w-full rounded border-gray-300 text-sm">
+            </div>
+            <div class="col-span-2">
+                <label class="block text-xs font-medium text-gray-700 mb-1">설명 (Description)</label>
+                <textarea name="description" rows="3" class="w-full rounded border-gray-300 text-sm">{{ old('description') }}</textarea>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">이미지 경로</label>
+                <input type="text" name="image_path" value="{{ old('image_path') }}" placeholder="/cmak/images/eng/eng1.jpg"
+                       class="w-full rounded border-gray-300 text-sm font-mono">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">링크 URL</label>
+                <input type="text" name="link" value="{{ old('link') }}" class="w-full rounded border-gray-300 text-sm font-mono">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">태그 / 라벨</label>
+                <input type="text" name="tag" value="{{ old('tag') }}" class="w-full rounded border-gray-300 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">날짜 / 기간 표기</label>
+                <input type="text" name="date_text" value="{{ old('date_text') }}" class="w-full rounded border-gray-300 text-sm">
+            </div>
+            <div class="col-span-2 flex items-center justify-between">
+                <label class="inline-flex items-center text-sm">
+                    <input type="checkbox" name="is_active" value="1" checked class="rounded border-gray-300 text-blue-600">
+                    <span class="ml-2">활성</span>
+                </label>
+                <button type="submit" class="px-4 py-1.5 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-700">추가</button>
+            </div>
+        </form>
+    </details>
 </div>

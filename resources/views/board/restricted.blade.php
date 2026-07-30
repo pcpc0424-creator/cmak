@@ -8,7 +8,7 @@
     @php
         $menuToSideMenu = [
             '알림마당' => 'notice._side-menu',
-            'CM자료방' => 'cmdata._side-menu',
+            'CM 소개' => 'cmdata._side-menu',
             '협회업무' => 'business._side-menu',
             '참여마당' => 'community._side-menu',
         ];

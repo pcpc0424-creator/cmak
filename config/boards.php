@@ -1,10 +1,11 @@
 <?php
 
 return [
-    // CM30년 — 다른 메뉴와 연결되지 않는 완전 별도 독립 게시판
+    // CM30년 — 유저홈은 'CM 소개' 하위, 관리자만 별도 최상위 메뉴
     'cm30' => [
         'name' => 'CM30년',
-        'menu' => null,
+        // 유저홈에서는 'CM 소개' 하위 항목(헤더 드롭다운 기준). 관리자에서만 별도 최상위 메뉴다.
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => false,
@@ -31,7 +32,7 @@ return [
     ],
     'cm_forms' => [
         'name' => 'CM 관련 서식',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => false,
@@ -49,7 +50,7 @@ return [
     ],
     'research' => [
         'name' => '논문 및 연구보고서',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => true,
@@ -58,7 +59,7 @@ return [
     ],
     'cm_law' => [
         'name' => '법령정보조회',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => false,
@@ -67,7 +68,7 @@ return [
     ],
     'education_seminar' => [
         'name' => '교육 및 세미나사례',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => false,
@@ -80,7 +81,7 @@ return [
     ],
     've' => [
         'name' => 'VE자료',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => false,
@@ -89,7 +90,7 @@ return [
     ],
     'expert_column' => [
         'name' => '전문가칼럼',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => true,
@@ -98,7 +99,7 @@ return [
     ],
     'special_feature' => [
         'name' => '기획/특집',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => true,
@@ -107,7 +108,7 @@ return [
     ],
     'etc_data' => [
         'name' => '기타자료',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => false,
@@ -116,7 +117,7 @@ return [
     ],
     'press' => [
         'name' => '언론보도',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => false,
@@ -125,7 +126,7 @@ return [
     ],
     'cm_overseas' => [
         'name' => 'CM해외공급사업',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => false,
@@ -134,7 +135,7 @@ return [
     ],
     'cm_case' => [
         'name' => '수행사례',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => true,
@@ -147,7 +148,7 @@ return [
     ],
     'education' => [
         'name' => '교육자료',
-        'menu' => 'CM자료방',
+        'menu' => 'CM 소개',
         'category' => null,
         'has_attachments' => true,
         'has_summary' => false,

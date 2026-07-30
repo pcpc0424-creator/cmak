@@ -12,4 +12,5 @@
 <a href="{{ $base }}/cmdata/seminar" class="{{ $isActive('cmdata/seminar') ? 'active' : '' }}">교육 및 세미나 자료</a>
 <a href="{{ $base }}/cmdata/expert" class="{{ $isActive('cmdata/expert') ? 'active' : '' }}">전문가 칼럼</a>
 <a href="{{ $base }}/cmdata/special" class="{{ $isActive('cmdata/special') ? 'active' : '' }}">기획/특집</a>
+<a href="{{ $base }}/cm30" class="{{ $isActive('cm30') ? 'active' : '' }}">CM30년</a>
 <a href="{{ $base }}/cmdata/etc" class="{{ $isActive('cmdata/etc') ? 'active' : '' }}">기타자료</a>

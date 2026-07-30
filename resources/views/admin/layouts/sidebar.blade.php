@@ -9,8 +9,31 @@
     </div>
 
     {{-- Navigation --}}
-    <nav class="flex-1 overflow-y-auto sidebar-scroll py-3" x-data="{ openMenu: '' }">
-        @php $can = fn($k) => auth()->check() && auth()->user()->hasPermission($k); @endphp
+    @php
+        $can = fn($k) => auth()->check() && auth()->user()->hasPermission($k);
+
+        // 현재 보고 있는 화면이 속한 그룹을 펼친 상태로 시작한다.
+        // (그룹이 전부 접힌 채로 열리면 편집 화면에 직접 들어왔을 때 내 위치를 찾을 수 없다)
+        $menuToKey = [
+            '협회업무'   => 'association',
+            '협회소개'   => 'intro',
+            'CM 소개'    => 'cmintro',
+            '약관/정책'  => 'policy',
+            '알림마당'   => 'notices',
+            '참여마당'   => 'community',
+        ];
+        $openDefault = '';
+        if (preg_match('#admin/page-contents/(\d+)#', request()->path(), $m)) {
+            $openDefault = $menuToKey[\App\Models\PageContent::find($m[1])?->menu] ?? '';
+        } elseif (preg_match('#admin/posts/([a-z0-9_]+)#', request()->path(), $m)) {
+            // CM30년은 관리자에서만 최상위 별도 메뉴라 그룹을 펼칠 필요가 없다
+            $standalone = ['cm30'];
+            $openDefault = in_array($m[1], $standalone, true)
+                ? ''
+                : ($menuToKey[config('boards.' . $m[1] . '.menu')] ?? '');
+        }
+    @endphp
+    <nav class="flex-1 overflow-y-auto sidebar-scroll py-3" x-data="{ openMenu: '{{ $openDefault }}' }">
         {{-- 대시보드 --}}
         <a href="{{ url('/admin/dashboard') }}"
            class="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors {{ request()->is('*/admin/dashboard') ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}">
@@ -67,7 +90,10 @@
             </div>
         </div>
 
-        {{-- CM 소개 --}}
+        @endif
+
+        {{-- CM 소개 : 유저홈 2번 대메뉴와 동일 구성(편집페이지 + 게시판이 섞여 있어 권한을 개별로 확인) --}}
+        @if($can('page_contents') || $can('posts'))
         <div>
             <button @click="openMenu = openMenu === 'cmintro' ? '' : 'cmintro'"
                     class="w-full flex items-center justify-between px-5 py-2.5 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors">
@@ -82,12 +108,39 @@
                 </svg>
             </button>
             <div x-show="openMenu === 'cmintro'" x-collapse x-cloak class="bg-slate-900/50">
-                @foreach(\App\Models\PageContent::ofMenu('CM 소개')->orderBy('sort_order')->orderBy('id')->get() as $cmPage)
-                    <a href="{{ url('/admin/page-contents/' . $cmPage->id . '/edit') }}"
-                       class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/page-contents/' . $cmPage->id . '*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">{{ $cmPage->page_title }}</a>
+                @php
+                    // 유저홈 좌측 메뉴(cmdata/_side-menu) 순서 그대로. page=편집페이지, board=게시판
+                    $cmPages = \App\Models\PageContent::ofMenu('CM 소개')->get()->keyBy('slug');
+                    $cmItems = [
+                        ['type' => 'page',  'key' => 'cm-about'],
+                        ['type' => 'board', 'key' => 'cm_forms',          'label' => 'CM 관련 서식'],
+                        ['type' => 'page',  'key' => 'cm-law'],
+                        ['type' => 'board', 'key' => 'research',          'label' => '논문 및 연구보고서'],
+                        ['type' => 'board', 'key' => 'cm_overseas',       'label' => 'CM해외공급사업'],
+                        ['type' => 'board', 'key' => 'cm_case',           'label' => '수행사례'],
+                        ['type' => 'board', 'key' => 'education_seminar', 'label' => '교육 및 세미나 자료'],
+                        ['type' => 'board', 'key' => 'expert_column',     'label' => '전문가 칼럼'],
+                        ['type' => 'board', 'key' => 'special_feature',   'label' => '기획/특집'],
+                        ['type' => 'board', 'key' => 'etc_data',          'label' => '기타자료'],
+                    ];
+                @endphp
+                @foreach($cmItems as $item)
+                    @if($item['type'] === 'page')
+                        @php $p = $cmPages[$item['key']] ?? null; @endphp
+                        @if($p && $can('page_contents'))
+                            <a href="{{ url('/admin/page-contents/' . $p->id . '/edit') }}"
+                               class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/page-contents/' . $p->id . '*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">{{ $p->page_title }}</a>
+                        @endif
+                    @elseif($can('posts'))
+                        <a href="{{ url('/admin/posts/' . $item['key']) }}"
+                           class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/' . $item['key'] . '*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">{{ $item['label'] }}</a>
+                    @endif
                 @endforeach
             </div>
         </div>
+        @endif
+
+        @if($can('page_contents'))
 
         {{-- 약관/정책 --}}
         <div>
@@ -114,31 +167,7 @@
         @endif
 
         @if($can('posts'))
-        {{-- CM자료방 --}}
-        <div>
-            <button @click="openMenu = openMenu === 'resources' ? '' : 'resources'"
-                    class="w-full flex items-center justify-between px-5 py-2.5 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors">
-                <div class="flex items-center gap-3">
-                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                    </svg>
-                    <span>CM자료방</span>
-                </div>
-                <svg class="w-4 h-4 transition-transform" :class="openMenu === 'resources' ? 'rotate-90' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </button>
-            <div x-show="openMenu === 'resources'" x-collapse x-cloak class="bg-slate-900/50">
-                <a href="{{ url('/admin/posts/cm_law') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_law*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">법령정보조회</a>
-                <a href="{{ url('/admin/posts/research') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/research*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">논문 및 연구보고서</a>
-                <a href="{{ url('/admin/posts/cm_overseas') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_overseas*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">CM해외공급사업</a>
-                <a href="{{ url('/admin/posts/cm_case') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/cm_case*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">수행사례</a>
-                <a href="{{ url('/admin/posts/education_seminar') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/education_seminar*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">교육 및 세미나사례</a>
-                <a href="{{ url('/admin/posts/expert_column') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/expert_column*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">전문가칼럼</a>
-                <a href="{{ url('/admin/posts/special_feature') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/special_feature*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">기획/특집</a>
-                <a href="{{ url('/admin/posts/etc_data') }}" class="block px-5 pl-14 py-2 text-sm {{ request()->is('*/admin/posts/etc_data*') ? 'text-blue-400' : 'text-slate-400 hover:text-white' }}">기타자료</a>
-            </div>
-        </div>
+        {{-- (CM자료방 그룹은 위 'CM 소개'로 통합됨) --}}
 
         {{-- 알림마당 --}}
         <div>

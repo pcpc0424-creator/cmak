@@ -1,12 +1,13 @@
 @extends('layouts.sub')
 
 @section('title', 'CM30년 - 한국CM협회')
-@section('category', 'CM30년')
-@section('category-link', '/cmak/cm30')
+@section('category', 'CM 소개')
+@section('category-link', '/cmak/cmdata/about')
 @section('page-title', 'CM30년')
 
 @section('side-menu')
-    <a href="{{ url('/cm30') }}" class="{{ request()->is('cmak/cm30') || request()->is('cm30') ? 'active' : '' }}">CM30년</a>
+    {{-- 헤더 드롭다운과 동일하게 CM 소개 하위 항목이므로 같은 사이드메뉴를 쓴다 --}}
+    @include('cmdata._side-menu')
 @endsection
 
 @section('content')

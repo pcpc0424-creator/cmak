@@ -69,18 +69,17 @@
                placeholder="/cmak/images/eng/eng1.jpg">
     </div>
 
-    {{-- Body content (HTML override) --}}
+    {{-- Body content (WYSIWYG editor) --}}
     <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-            본문 (HTML)
+        <label for="content" class="block text-sm font-medium text-gray-700 mb-1">
+            본문 (Body)
         </label>
-        <textarea name="content" rows="20"
-                  class="w-full rounded-md border-gray-300 shadow-sm text-sm font-mono"
-                  placeholder="비워두면 기본 디자인 본문이 표시됩니다. 여기에 HTML을 입력하면 본문 영역을 덮어씁니다.">{{ old('content', $content->content ?? '') }}</textarea>
-        <p class="mt-1 text-xs text-gray-500">
-            ※ 본문을 비워두면 코드에 작성된 기본 레이아웃 (히어로/타임라인/갤러리 등) 이 그대로 표시됩니다.<br>
-            ※ HTML을 입력하면 해당 영역을 덮어씁니다. <code class="px-1 bg-gray-100 rounded">&lt;h3&gt; &lt;p&gt; &lt;ul&gt; &lt;table&gt;</code> 등 사용 가능.
+        <p class="mb-2 text-xs text-gray-500">
+            국문 페이지와 동일한 편집기입니다. 글자·이미지·표 등을 워드처럼 자유롭게 수정할 수 있습니다.<br>
+            ※ 비워두면 코드에 작성된 기본 레이아웃(히어로/타임라인/갤러리 등)이 그대로 표시됩니다.
         </p>
+        <textarea name="content" id="content" rows="20"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">{{ old('content', $content->content ?? '') }}</textarea>
     </div>
 
     {{-- Sort order & Published --}}

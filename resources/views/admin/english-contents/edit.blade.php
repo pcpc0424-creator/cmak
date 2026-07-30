@@ -27,4 +27,7 @@
     {{-- 리스트형 항목: 항목이 없어도 '+ 항목 추가'를 쓸 수 있게 항상 노출 --}}
     @include('admin.english-contents._items', ['items' => $items])
 </div>
+
+{{-- 국문 페이지 편집과 동일한 TinyMCE 편집기 (textarea#content 에 적용) --}}
+@include('admin.partials.tinymce-editor')
 @endsection

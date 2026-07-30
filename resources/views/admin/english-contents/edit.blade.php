@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.eng-app')
 
 @section('title', '영문 페이지 수정')
 
@@ -24,8 +24,7 @@
         @include('admin.english-contents._form')
     </form>
 
-    @if($items->count() > 0)
-        @include('admin.english-contents._items', ['items' => $items])
-    @endif
+    {{-- 리스트형 항목: 항목이 없어도 '+ 항목 추가'를 쓸 수 있게 항상 노출 --}}
+    @include('admin.english-contents._items', ['items' => $items])
 </div>
 @endsection

@@ -244,15 +244,14 @@
                             if (empty($homeCards)) { $homeCards = $fallbackCards; }
                         } catch (\Throwable $e) { $homeCards = $fallbackCards; }
 
-                        // CM사 소개 카드: 납부(active) 회원사 기본정보를 매일 순환 노출 → 해당 업체 홈페이지로 연결
+                        // CM사 소개 카드: 회비납부(is_active) 회원사를 랜덤 노출.
+                        // 홈페이지가 있으면 해당 업체 사이트로, 없으면 회원현황 페이지로 연결한다.
+                        // (홈페이지 보유 업체로 한정하면 납부 회원사 181개 중 25개가 노출 대상에서 빠진다)
                         $featuredCompany = null;
                         try {
-                            $cos = \App\Models\MemberCompany::active()
-                                ->whereNotNull('website')->where('website', '!=', '')
-                                ->orderBy('id')->get(['company_name', 'representative', 'website']);
-                            if ($cos->isNotEmpty()) {
-                                $featuredCompany = $cos->random(); // 노출 순서 랜덤
-                            }
+                            $featuredCompany = \App\Models\MemberCompany::active()
+                                ->inRandomOrder()
+                                ->first(['company_name', 'representative', 'website']);
                         } catch (\Throwable $e) { $featuredCompany = null; }
                     @endphp
                     <div class="icak-content-right">

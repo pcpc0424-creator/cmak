@@ -175,7 +175,13 @@
                        {{ old('is_published', $page->is_published) ? 'checked' : '' }}
                        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                 <label for="is_published" class="ml-2 text-sm text-gray-700">이 페이지를 사이트에 게시</label>
-                <span class="ml-2 text-xs text-gray-400">(체크 해제 시 방문자에게는 이전 기본 내용이 보입니다)</span>
+                <span class="ml-2 text-xs text-gray-400">
+                    @if(str_starts_with($page->slug, 'org-'))
+                        (체크 해제 시 이 탭이 사이트에서 숨겨집니다. 4개 탭을 모두 해제하면 '조직 및 구성' 메뉴가 열리지 않습니다)
+                    @else
+                        (체크 해제 시 방문자에게는 이전 기본 내용이 보입니다)
+                    @endif
+                </span>
             </div>
         </div>
 

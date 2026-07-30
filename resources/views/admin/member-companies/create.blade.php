@@ -144,7 +144,7 @@
                 <label class="flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" name="is_active" value="1" {{ old('is_active', '1') ? 'checked' : '' }}
                            class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500">
-                    <span class="text-sm text-gray-700">활성</span>
+                    <span class="text-sm text-gray-700">활성(회비납부 · 회원현황/CM사 소개 카드 노출)</span>
                 </label>
                 <div class="flex items-center gap-2">
                     <label for="sort_order" class="text-sm text-gray-700">정렬순서</label>

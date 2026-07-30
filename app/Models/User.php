@@ -130,7 +130,7 @@ class User extends Authenticatable
 
     /** 관리자 권한 영역 정의 (계정관리 체크박스 + 라우트 보호 키) */
     public const PERMISSIONS = [
-        'posts' => '게시판 관리(협회업무·CM자료방·알림마당·참여마당)',
+        'posts' => '게시판 관리(협회업무·CM 소개·알림마당·참여마당)',
         'member_companies' => '회원사 관리',
         'members' => '개인회원 관리',
         'home' => '홈 화면 관리(히어로·카드·헤럴드·상단팝업)',

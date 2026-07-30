@@ -164,7 +164,7 @@ class HomeData
     }
 
     /**
-     * CM자료방
+     * CM 소개
      */
     public static function getCmResources(): array
     {

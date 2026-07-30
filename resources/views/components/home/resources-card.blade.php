@@ -1,5 +1,5 @@
 {{--
-    CM자료방 카드
+    CM 소개 카드
     2026 Modern Design
 --}}
 
@@ -12,7 +12,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
                 </svg>
             </span>
-            CM자료방
+            CM 소개
         </h3>
         <a href="/cmdata" class="text-sm text-violet-600 hover:text-violet-700 font-medium flex items-center gap-1 group">
             더보기

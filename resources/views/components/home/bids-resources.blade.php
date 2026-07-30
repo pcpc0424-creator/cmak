@@ -1,5 +1,5 @@
 {{--
-    입·낙찰정보 + CM자료방 섹션
+    입·낙찰정보 + CM 소개 섹션
 --}}
 @props(['bids' => [], 'resources' => []])
 
@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    {{-- CM자료방 --}}
+    {{-- CM 소개 --}}
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         {{-- 헤더 --}}
         <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
@@ -55,7 +55,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
                     </svg>
                 </div>
-                <h2 class="text-lg font-bold text-gray-900">CM자료방</h2>
+                <h2 class="text-lg font-bold text-gray-900">CM 소개</h2>
             </div>
             <a href="/cmdata" class="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1">
                 더보기

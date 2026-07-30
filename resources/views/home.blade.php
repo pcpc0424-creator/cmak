@@ -235,7 +235,7 @@
                             ['title' => 'Book Review', 'subtitle' => '추천 도서', 'link_url' => '/notice/bookreview', 'icon' => 'book', 'image_path' => null],
                             ['title' => 'CM을 부탁해', 'subtitle' => 'CM 용어집', 'link_url' => '/notice/wordbook', 'icon' => 'search', 'image_path' => null],
                             ['title' => 'CM헤럴드', 'subtitle' => '월간 소식지', 'link_url' => '/business/herald', 'icon' => 'monitor', 'image_path' => null],
-                            ['title' => 'CM자료방', 'subtitle' => '논문·연구자료', 'link_url' => '/cmdata/report', 'icon' => 'folder', 'image_path' => null],
+                            ['title' => 'CM 소개', 'subtitle' => '서식·논문·연구자료', 'link_url' => '/cmdata/report', 'icon' => 'folder', 'image_path' => null],
                             ['title' => 'CM사 소개', 'subtitle' => '회원사 안내', 'link_url' => '/intro/members', 'icon' => 'building', 'image_path' => null],
                         ];
                         try {

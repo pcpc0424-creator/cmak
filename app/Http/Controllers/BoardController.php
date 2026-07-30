@@ -9,7 +9,7 @@ class BoardController extends Controller
 {
     /**
      * 인터넷회원/비로그인 열람 제한 게시판 (클라이언트 요구 2026-06-23)
-     * CM자료방: 논문 및 연구보고서, CM해외공급사업, 수행사례, 교육 및 세미나 자료, 전문가칼럼, 기획/특집
+     * CM 소개: 논문 및 연구보고서, CM해외공급사업, 수행사례, 교육 및 세미나 자료, 전문가칼럼, 기획/특집
      * 알림마당: 입찰소식
      */
     public const RESTRICTED_BOARDS = [
@@ -35,7 +35,7 @@ class BoardController extends Controller
         'news_personnel'    => 'notice/personnel',
         'wordbook'          => 'notice/wordbook',
         'book_review'       => 'notice/bookreview',
-        // CM자료방
+        // CM 소개
         'research'          => 'cmdata/report',
         'cm_overseas'       => 'cmdata/overseas',
         'cm_case'           => 'cmdata/case',
